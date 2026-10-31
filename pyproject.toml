@@ -26,7 +26,7 @@ requires-python = ">=3.11"
 dependencies = [
   "torch>=2.8,<3", "transformers>=5.3,<6", "safetensors>=0.6",
   "fastapi>=0.115", "uvicorn>=0.34", "httpx>=0.28", "websockets>=15",
-  "grpcio>=1.70", "psutil>=6", "numpy>=2", "huggingface-hub>=1", "gdown>=5.2,<6",
+  "grpcio>=1.70", "psutil>=6", "numpy>=2", "huggingface-hub>=1", "gdown>=5.2,<7",
 ]
 
 [project.urls]
