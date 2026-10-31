@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible problem with Stageplane.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For vulnerabilities, use SECURITY.md instead. Remove credentials, private prompts, keys, and restricted weights from all attachments.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the problem and its impact.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include minimal commands or configuration. Prefer the tiny offline fixture where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and resources
+      description: Include the Stageplane commit, OS/architecture, Python, Docker if used, model/revision, precision/kernel, transport, node count, and node CPU/RAM/storage budgets.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted logs and measurements
+      description: Include relevant errors, timings, or resource measurements. Do not attach model files or secrets.
+      render: text

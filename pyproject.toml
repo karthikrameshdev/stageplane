@@ -1,17 +1,40 @@
 [build-system]
-requires = ["setuptools>=75"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "stageplane"
 version = "0.1.0"
 description = "Versioned transformer stages on a trusted heterogeneous worker pool"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "stageplane/ui/vendor/THREE-LICENSE.txt"]
+authors = [{ name = "Karthik Ramesh", email = "karthik.ramesh.dev@gmail.com" }]
+maintainers = [{ name = "Karthik Ramesh", email = "karthik.ramesh.dev@gmail.com" }]
+keywords = ["distributed-inference", "transformers", "open-weights", "llm"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 requires-python = ">=3.11"
 dependencies = [
   "torch>=2.8,<3", "transformers>=5.3,<6", "safetensors>=0.6",
   "fastapi>=0.115", "uvicorn>=0.34", "httpx>=0.28", "websockets>=15",
   "grpcio>=1.70", "psutil>=6", "numpy>=2", "huggingface-hub>=1", "gdown>=5.2,<6",
 ]
+
+[project.urls]
+Homepage = "https://github.com/karthikrameshdev/stageplane"
+Documentation = "https://github.com/karthikrameshdev/stageplane/blob/main/README.md"
+Repository = "https://github.com/karthikrameshdev/stageplane"
+Issues = "https://github.com/karthikrameshdev/stageplane/issues"
+Security = "https://github.com/karthikrameshdev/stageplane/blob/main/SECURITY.md"
 
 [project.optional-dependencies]
 test = ["pytest>=8", "pytest-asyncio>=1", "openai>=2"]
@@ -29,3 +52,4 @@ stageplane = ["ui/*", "ui/vendor/*"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
+pythonpath = ["."]

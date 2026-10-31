@@ -1,4 +1,26 @@
-# Stageplane
+<h1 align="center">Stageplane</h1>
+
+<p align="center">Run transformer layers across a trusted pool of heterogeneous workers.</p>
+
+<p align="center">
+  <a href="https://github.com/karthikrameshdev/stageplane/actions/workflows/test.yml"><img src="https://github.com/karthikrameshdev/stageplane/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License: Apache 2.0"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+"></a>
+  <a href="CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="Contributor Covenant 2.1"></a>
+</p>
+
+<p align="center">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="docs/architecture.md">Architecture</a> ·
+  <a href="docs/LOCAL_TESTING.md">Local testing</a> ·
+  <a href="#contributing">Contributing</a> ·
+  <a href="#license">License</a>
+</p>
+
+Stageplane is an **Apache-2.0-licensed open-source research project** for distributed
+transformer inference. You can use, modify, and redistribute the project under
+the terms of its [license](LICENSE). Model weights retain their own upstream
+licenses and access conditions.
 
 Validation reports: [ten-worker Qwen3 4B test](reports/ten-node/REPORT.md) and
 [repository migration with the direct/four-worker comparison](reports/migration/REPORT.md).
@@ -222,3 +244,29 @@ from hardlinked disk use. Local workers share one CPU, memory subsystem, and
 loopback network. This establishes correctness and local costs, not multi-host
 speedup or enterprise productivity. See [the report](reports/REPORT.md),
 [protocol](docs/protocol.md), and [implementation map](docs/architecture.md).
+
+## Contributing
+
+Contributions are welcome: bug reports, reproducible measurements, documentation,
+model adapters, and fixes. Start with [CONTRIBUTING.md](CONTRIBUTING.md), fork the
+repository, and open a pull request against `main`. The guide covers the offline
+fixture, required checks, and review expectations.
+
+[Karthik Ramesh (@karthikrameshdev)](https://github.com/karthikrameshdev) is the
+maintainer and code owner. See [MAINTAINERS.md](MAINTAINERS.md) and
+[CODEOWNERS](.github/CODEOWNERS) for ownership. Community contributions follow
+code-owner review; GitHub enforcement depends on repository branch settings.
+
+Please follow the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+Use the [issue templates](https://github.com/karthikrameshdev/stageplane/issues/new/choose)
+for bugs, feature requests, and questions. Report vulnerabilities privately using
+the contact in [SECURITY.md](SECURITY.md).
+
+## License
+
+Stageplane is licensed under the **Apache License, Version 2.0**. See [LICENSE](LICENSE)
+and [NOTICE](NOTICE) for the license and attribution information.
+
+The bundled Three.js code uses the [MIT license](stageplane/ui/vendor/THREE-LICENSE.txt).
+Other dependencies and downloaded model weights retain their respective licenses;
+Stageplane's license does not replace those terms.

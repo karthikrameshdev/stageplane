@@ -1,0 +1,6 @@
+# Code owners for Stageplane
+# Project maintainer and code owner: @karthikrameshdev
+# Community pull requests follow the review policy in CONTRIBUTING.md.
+# GitHub must separately configure branch rules to require code-owner approval.
+
+* @karthikrameshdev

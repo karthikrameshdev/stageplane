@@ -1,0 +1,28 @@
+name: Feature request
+description: Propose an improvement to Stageplane.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Describe the task you cannot currently complete and who it affects.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed behavior
+      description: Explain the expected user experience and any compatibility requirements.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: For model or performance requests, include architecture, revision, expected resource budgets, and a reproducible evaluation plan.

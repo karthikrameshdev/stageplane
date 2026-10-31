@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security reports
+    url: https://github.com/karthikrameshdev/stageplane/blob/main/SECURITY.md
+    about: Report vulnerabilities privately using the maintainer contact in the security policy.
+  - name: Local testing guide
+    url: https://github.com/karthikrameshdev/stageplane/blob/main/docs/LOCAL_TESTING.md
+    about: Setup, published bundles, node budgets, Qwen testing, and troubleshooting.

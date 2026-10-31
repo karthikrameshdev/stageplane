@@ -1,0 +1,15 @@
+Stageplane
+Copyright 2026 Karthik Ramesh (karthikrameshdev)
+
+This product includes software developed by Karthik Ramesh and contributors.
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+Third-party attribution
+-----------------------
+This product bundles Three.js in stageplane/ui/vendor/.
+Copyright (c) 2010-2025 three.js authors.
+Three.js is licensed under the MIT License; the full license is retained in
+stageplane/ui/vendor/THREE-LICENSE.txt.
+
+Other dependencies and downloaded model weights are governed by their own
+licenses and notices. Model weights are not included in the Stageplane package.
