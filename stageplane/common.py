@@ -32,7 +32,8 @@ def atomic_json(path: Path, value):
 
 
 def model_key(source: str, revision: str) -> str:
-    return re.sub(r"[^a-zA-Z0-9_-]", "--", source)[-100:] + "-" + revision[:12]
+    stem = re.sub(r"[^a-zA-Z0-9_-]", "--", source)[-100:].lstrip("-_") or "model"
+    return stem + "-" + revision[:12]
 
 
 def safe_path(root: Path, name: str) -> Path:

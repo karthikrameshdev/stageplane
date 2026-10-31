@@ -13,7 +13,7 @@ import pytest
 import torch
 
 from scripts.tiny_checkpoint import make
-from stageplane.bundles import export_bundle, import_bundle, read_manifest
+from stageplane.bundles import download, export_bundle, import_bundle, read_manifest
 from stageplane.common import NodeInfo
 from stageplane.distribution import distribute, rechunk
 from stageplane.executor import Coordinator, create_app
@@ -92,12 +92,35 @@ def test_drive_download_adapter_reuses_same_verified_import(bundle, tmp_path, mo
     import gdown
     m, archive = bundle
     def fake_download(**kwargs):
-        assert kwargs["fuzzy"] and not kwargs["use_cookies"]
+        assert "fuzzy" not in kwargs and not kwargs["use_cookies"]
         kwargs["output"].write(archive.read_bytes())
         return kwargs["output"]
     monkeypatch.setattr(gdown, "download", fake_download)
     imported = import_bundle("https://drive.google.com/file/d/public-fixture/view", tmp_path / "drive")
     assert imported["manifest_sha256"] == m["manifest_sha256"]
+
+
+def test_drive_real_downloader_preserves_verified_import_and_limits(bundle, tmp_path, monkeypatch):
+    m, archive = bundle
+    # Exercise gdown itself with a loopback HTTP fixture instead of public Drive.
+    # A fake gdown.download would miss removed arguments and stream requirements.
+    monkeypatch.setattr("stageplane.bundles.is_drive", lambda url: True)
+    with serve(archive.parent) as url:
+        source = url + "/model.stageplane"
+        imported = import_bundle(source, tmp_path / "drive-real")
+        assert imported["manifest_sha256"] == m["manifest_sha256"]
+        with pytest.raises(ValueError, match="size or disk budget"):
+            download(source, tmp_path / "too-large.stageplane", limit=1)
+    assert (tmp_path / "too-large.stageplane").stat().st_size == 0
+
+
+def test_drive_download_failure_remains_an_import_error(tmp_path, monkeypatch):
+    import gdown
+    def unavailable(**kwargs):
+        raise gdown.DownloadError("Download quota exceeded")
+    monkeypatch.setattr(gdown, "download", unavailable)
+    with pytest.raises(ValueError, match="Public Google Drive download failed"):
+        download("https://drive.google.com/file/d/public-fixture/view", tmp_path / "failed.stageplane")
 
 
 def test_bf16_cached_decode_and_rechunk_parity(bundle, tmp_path):

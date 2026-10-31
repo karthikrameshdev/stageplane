@@ -140,8 +140,13 @@ def download(url, path: Path, limit=MAX_BUNDLE, expected_bytes=None):
                 return self.file.write(data)
             def tell(self):
                 return self.file.tell()
-        with path.open("wb") as file:
-            result = gdown.download(url=url, output=BoundedOutput(file), fuzzy=True, quiet=True, use_cookies=False)
+            def flush(self):
+                return self.file.flush()
+        try:
+            with path.open("wb") as file:
+                result = gdown.download(url=url, output=BoundedOutput(file), quiet=True, use_cookies=False)
+        except gdown.DownloadError as error:
+            raise ValueError("Public Google Drive download failed; check sharing and download quota") from error
         if not result:
             raise ValueError("Public Google Drive download failed; check sharing and download quota")
         if path.stat().st_size > limit:

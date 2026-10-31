@@ -89,6 +89,10 @@ Push your branch to your fork and open a pull request against
 related issue, and state exactly which checks you ran and their results. Explain
 any resource limits that prevented a relevant check.
 
+The upstream repository keeps only `main`. Keep development branches in your
+fork, including dependency updates. Automatic Dependabot version-update branches
+are disabled; submit dependency updates through the same fork-and-review workflow.
+
 Community contributions require one code-owner approval under the project review
 policy. Address review feedback and keep applicable checks passing before merge.
 The maintainer may squash commits to keep a focused history. Ownership and the
