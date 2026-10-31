@@ -1,0 +1,9 @@
+{
+  "timestamp": 1793433048.68576,
+  "registered": 50,
+  "ready_stages": 0,
+  "loading_nodes": 23,
+  "oom_count": 1,
+  "running": 49,
+  "last_reported_loaded_weights": 0
+}

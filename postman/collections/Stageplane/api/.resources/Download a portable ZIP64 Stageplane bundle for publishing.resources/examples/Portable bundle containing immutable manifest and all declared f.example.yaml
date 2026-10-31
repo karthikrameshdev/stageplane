@@ -1,0 +1,28 @@
+$kind: http-example
+name: Portable bundle containing immutable manifest and all declared files
+request:
+  url: "{{baseUrl}}/api/bundles/:model"
+  method: GET
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+    - key: Accept
+      value: application/zip
+  pathVariables:
+    - key: model
+      value: string
+      disabled: false
+      description: "(Required) "
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/zip
+  body:
+    type: text
+    content: string
+order: 1000

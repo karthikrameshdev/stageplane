@@ -1,0 +1,53 @@
+{
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "cpu_count": 10,
+    "memory_bytes": 17179869184
+  },
+  "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+  "source": "Qwen/Qwen3.5-0.8B",
+  "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+  "artifact_bytes": 1746941336,
+  "parity": true,
+  "results": [
+    {
+      "mode": "direct-native",
+      "ttft_p50_ms": 1145.0960000511259,
+      "ttft_p95_ms": 1184.7734334412962,
+      "decode_p50_ms": 1107.9432498663664,
+      "decode_p95_ms": 1610.1793459383769,
+      "request_p50_ms": 19075.186959002167,
+      "tokens_per_second_median": 0.8387860121312787,
+      "peak_rss_bytes": 4177936384,
+      "max_worker_rss_bytes": 4177936384,
+      "logical_storage_bytes": 1746941336,
+      "load_s": 5.045208666939288
+    },
+    {
+      "mode": "distributed-1",
+      "ttft_p50_ms": 1438.977082958445,
+      "ttft_p95_ms": 1733.481308631599,
+      "decode_p50_ms": 1091.3285829592496,
+      "decode_p95_ms": 1448.8588545238597,
+      "request_p50_ms": 17711.993040982634,
+      "tokens_per_second_median": 0.8246645554355667,
+      "peak_rss_bytes": 4414504960,
+      "max_worker_rss_bytes": 4074061824,
+      "logical_storage_bytes": 1504831552,
+      "load_s": 7.90450262487866
+    },
+    {
+      "mode": "distributed-4",
+      "ttft_p50_ms": 1689.3557088915259,
+      "ttft_p95_ms": 2078.311483003199,
+      "decode_p50_ms": 1553.4752500243485,
+      "decode_p95_ms": 2190.0584500748664,
+      "request_p50_ms": 19565.40379091166,
+      "tokens_per_second_median": 0.6168827546521175,
+      "peak_rss_bytes": 5163040768,
+      "max_worker_rss_bytes": 1671757824,
+      "logical_storage_bytes": 2013391064,
+      "load_s": 11.302890582941473
+    }
+  ]
+}

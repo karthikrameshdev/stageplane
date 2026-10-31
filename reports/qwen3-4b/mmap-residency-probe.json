@@ -1,0 +1,8 @@
+{
+  "status": "aborted_mmap_residency_probe",
+  "reason": "BF16 tensors remained file-backed; resident weights were being evicted under host memory pressure. Materialize allocated weights before comparing inference.",
+  "wall_seconds": 143.08463311195374,
+  "cpu_seconds": 58.746961920000004,
+  "rss_bytes": 2997616640,
+  "kernel": "bounded-f32"
+}

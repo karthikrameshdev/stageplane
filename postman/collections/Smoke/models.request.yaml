@@ -1,0 +1,13 @@
+$kind: http-request
+name: models
+order: 2000
+method: GET
+url: "{{baseUrl}}/v1/models"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Response contract", () => { pm.expect(pm.response.json().data).to.be.an("array"); });

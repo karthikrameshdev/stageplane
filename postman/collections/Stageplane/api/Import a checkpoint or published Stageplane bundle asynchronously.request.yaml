@@ -1,0 +1,25 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/models/import"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "source": "string",
+      "revision": "main",
+      "layers_per_chunk": 2,
+      "kind": "checkpoint",
+      "manifest_sha256": "1aa0f449a10b5e1202c6140158b408270912165d16ac647827d8b63b6a19ee3a",
+      "subdir": "."
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Import a checkpoint or published Stageplane bundle asynchronously.resources/examples
+order: 6000

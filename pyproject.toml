@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stageplane"
+version = "0.1.0"
+description = "Versioned transformer stages on a trusted heterogeneous worker pool"
+requires-python = ">=3.11"
+dependencies = [
+  "torch>=2.8,<3", "transformers>=5.3,<6", "safetensors>=0.6",
+  "fastapi>=0.115", "uvicorn>=0.34", "httpx>=0.28", "websockets>=15",
+  "grpcio>=1.70", "psutil>=6", "numpy>=2", "huggingface-hub>=1", "gdown>=5.2,<6",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-asyncio>=1", "openai>=2"]
+
+[project.scripts]
+stageplane = "stageplane.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["stageplane*"]
+
+[tool.setuptools.package-data]
+stageplane = ["ui/*", "ui/vendor/*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

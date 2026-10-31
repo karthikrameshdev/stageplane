@@ -1,0 +1,28 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/models/import"
+  method: POST
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "source": "string",
+        "revision": "main",
+        "layers_per_chunk": 2,
+        "kind": "checkpoint",
+        "manifest_sha256": "00a4eac85c142a2ae02df9dda20ca288d09ab04410a75322702ae131bc96c88f",
+        "subdir": "."
+      }
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    Content-Type: text/plain
+  body:
+    type: text
+    content: ""
+order: 2000

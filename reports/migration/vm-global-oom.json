@@ -1,0 +1,47 @@
+{
+  "vm_memory_bytes": 14636097536,
+  "host_memory_bytes": 17179869184,
+  "scope": "VM-wide Linux OOM, not per-container limit",
+  "records": [
+    {
+      "time": "2026-10-31T07:50:45.441984259Z",
+      "kernel_message": "oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/docker/a6c94aecd61fedb0d3868d60375484ef45066b517d0defdb90b77981cce2084e,task=stageplane,pid=12149,uid=0"
+    },
+    {
+      "time": "2026-10-31T07:50:45.452940967Z",
+      "kernel_message": "Out of memory: Killed process 12149 (stageplane) total-vm:2522208kB, anon-rss:490604kB, file-rss:3580kB, shmem-rss:0kB, UID:0 pgtables:1596kB oom_score_adj:0"
+    },
+    {
+      "time": "2026-10-31T07:51:16.592161291Z",
+      "kernel_message": "oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=restricted,mems_allowed=0,global_oom,task_memcg=/docker/fbdaa497d5c6d68ff8478d7576c7b3923c61df7d11572444b02fbb40d695d9a9,task=stageplane,pid=12342,uid=0"
+    },
+    {
+      "time": "2026-10-31T07:51:16.598621625Z",
+      "kernel_message": "Out of memory: Killed process 12342 (stageplane) total-vm:2593432kB, anon-rss:522796kB, file-rss:1464kB, shmem-rss:0kB, UID:0 pgtables:1704kB oom_score_adj:0"
+    },
+    {
+      "time": "2026-10-31T07:52:00.103018041Z",
+      "kernel_message": "oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/docker/608fc9ebf9a22bb4ea9261c7cbcf18dbcaa7123fcb773301e75138a97f158c11,task=stageplane,pid=11568,uid=0"
+    },
+    {
+      "time": "2026-10-31T07:52:00.103342666Z",
+      "kernel_message": "Out of memory: Killed process 11568 (stageplane) total-vm:2596952kB, anon-rss:543788kB, file-rss:372kB, shmem-rss:0kB, UID:0 pgtables:1744kB oom_score_adj:0"
+    },
+    {
+      "time": "2026-10-31T07:52:12.009192630Z",
+      "kernel_message": "oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=e4786737047628d76455b36e57172bd0917a83c07f4f7def956f65cccc6d6ccd,mems_allowed=0,global_oom,task_memcg=/docker/17bcc580940d07117c9d9637416e3d79e925344a8e961582b401121f6e26526d,task=stageplane,pid=11888,uid=0"
+    },
+    {
+      "time": "2026-10-31T07:52:12.009228714Z",
+      "kernel_message": "Out of memory: Killed process 11888 (stageplane) total-vm:2593012kB, anon-rss:540176kB, file-rss:3960kB, shmem-rss:0kB, UID:0 pgtables:1744kB oom_score_adj:0"
+    },
+    {
+      "time": "2026-10-31T07:53:05.344314291Z",
+      "kernel_message": "oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/docker/5f2d70dae5c9a081b49a414727c2199e6d257f249b685c961a78ea45ad0cb53b,task=stageplane,pid=13193,uid=0"
+    },
+    {
+      "time": "2026-10-31T07:53:05.344805083Z",
+      "kernel_message": "Out of memory: Killed process 13193 (stageplane) total-vm:2593880kB, anon-rss:525692kB, file-rss:148kB, shmem-rss:0kB, UID:0 pgtables:1732kB oom_score_adj:0"
+    }
+  ]
+}

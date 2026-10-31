@@ -1,0 +1,85 @@
+Building wheel...
+running egg_info
+writing stageplane.egg-info/PKG-INFO
+writing dependency_links to stageplane.egg-info/dependency_links.txt
+writing entry points to stageplane.egg-info/entry_points.txt
+writing requirements to stageplane.egg-info/requires.txt
+writing top-level names to stageplane.egg-info/top_level.txt
+reading manifest file 'stageplane.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'stageplane.egg-info/SOURCES.txt'
+running bdist_wheel
+running build
+running build_py
+copying stageplane/placement.py -> build/lib/stageplane
+copying stageplane/node.py -> build/lib/stageplane
+copying stageplane/executor.py -> build/lib/stageplane
+running egg_info
+writing stageplane.egg-info/PKG-INFO
+writing dependency_links to stageplane.egg-info/dependency_links.txt
+writing entry points to stageplane.egg-info/entry_points.txt
+writing requirements to stageplane.egg-info/requires.txt
+writing top-level names to stageplane.egg-info/top_level.txt
+reading manifest file 'stageplane.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'stageplane.egg-info/SOURCES.txt'
+installing to build/bdist.macosx-11.0-arm64/wheel
+running install
+running install_lib
+creating build/bdist.macosx-11.0-arm64/wheel
+creating build/bdist.macosx-11.0-arm64/wheel/stageplane
+creating build/bdist.macosx-11.0-arm64/wheel/stageplane/ui
+copying build/lib/stageplane/ui/index.html -> build/bdist.macosx-11.0-arm64/wheel/./stageplane/ui
+copying build/lib/stageplane/ui/style.css -> build/bdist.macosx-11.0-arm64/wheel/./stageplane/ui
+copying build/lib/stageplane/ui/app.js -> build/bdist.macosx-11.0-arm64/wheel/./stageplane/ui
+creating build/bdist.macosx-11.0-arm64/wheel/stageplane/ui/vendor
+copying build/lib/stageplane/ui/vendor/three.core.min.js -> build/bdist.macosx-11.0-arm64/wheel/./stageplane/ui/vendor
+copying build/lib/stageplane/ui/vendor/THREE-LICENSE.txt -> build/bdist.macosx-11.0-arm64/wheel/./stageplane/ui/vendor
+copying build/lib/stageplane/ui/vendor/three.module.min.js -> build/bdist.macosx-11.0-arm64/wheel/./stageplane/ui/vendor
+copying build/lib/stageplane/bundles.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/runtime.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/distribution.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/wire.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/cli.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/common.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/kernels.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/resources.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/placement.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/node.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/cpu_governor.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/__main__.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+copying build/lib/stageplane/executor.py -> build/bdist.macosx-11.0-arm64/wheel/./stageplane
+running install_egg_info
+Copying stageplane.egg-info to build/bdist.macosx-11.0-arm64/wheel/./stageplane-0.1.0-py3.12.egg-info
+running install_scripts
+creating build/bdist.macosx-11.0-arm64/wheel/stageplane-0.1.0.dist-info/WHEEL
+creating '/tmp/stageplane-wheel/.tmp-v4s67yud/stageplane-0.1.0-py3-none-any.whl' and adding 'build/bdist.macosx-11.0-arm64/wheel' to it
+adding 'stageplane/__init__.py'
+adding 'stageplane/__main__.py'
+adding 'stageplane/bundles.py'
+adding 'stageplane/cli.py'
+adding 'stageplane/common.py'
+adding 'stageplane/cpu_governor.py'
+adding 'stageplane/distribution.py'
+adding 'stageplane/executor.py'
+adding 'stageplane/kernels.py'
+adding 'stageplane/node.py'
+adding 'stageplane/placement.py'
+adding 'stageplane/resources.py'
+adding 'stageplane/runtime.py'
+adding 'stageplane/wire.py'
+adding 'stageplane/ui/app.js'
+adding 'stageplane/ui/index.html'
+adding 'stageplane/ui/style.css'
+adding 'stageplane/ui/vendor/THREE-LICENSE.txt'
+adding 'stageplane/ui/vendor/three.core.min.js'
+adding 'stageplane/ui/vendor/three.module.min.js'
+adding 'stageplane-0.1.0.dist-info/licenses/LICENSE'
+adding 'stageplane-0.1.0.dist-info/METADATA'
+adding 'stageplane-0.1.0.dist-info/WHEEL'
+adding 'stageplane-0.1.0.dist-info/entry_points.txt'
+adding 'stageplane-0.1.0.dist-info/top_level.txt'
+adding 'stageplane-0.1.0.dist-info/RECORD'
+removing build/bdist.macosx-11.0-arm64/wheel
+Successfully built /tmp/stageplane-wheel/stageplane-0.1.0-py3-none-any.whl

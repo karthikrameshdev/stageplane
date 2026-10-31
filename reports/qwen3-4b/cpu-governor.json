@@ -1,0 +1,6 @@
+{
+  "requested_cpu_cores": 0.1,
+  "observed_average_cpu_cores": 0.1013764030154622,
+  "sample_seconds": 2.0056059591006488,
+  "bounded": true
+}

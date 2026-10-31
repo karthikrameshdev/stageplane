@@ -1,0 +1,190 @@
+{
+  "mode": "direct-native",
+  "load_s": 5.045208666939288,
+  "warmup": {
+    "prompt": "What is 2 plus 2? Answer briefly.",
+    "prompt_tokens": 23,
+    "token_ids": [
+      19,
+      248046
+    ],
+    "output": "4",
+    "elapsed_ms": 3182.388792047277,
+    "ttft_ms": 1988.6436250526458,
+    "token_ms": [
+      1988.6436250526458,
+      1193.4997078496963
+    ],
+    "tokens_per_second": 0.6284587241502226
+  },
+  "trials": [
+    {
+      "prompt": "What is 2 plus 2? Answer briefly.",
+      "prompt_tokens": 23,
+      "token_ids": [
+        19,
+        248046
+      ],
+      "output": "4",
+      "elapsed_ms": 2131.8423750344664,
+      "ttft_ms": 1126.6115000471473,
+      "token_ms": [
+        1126.6115000471473,
+        1005.1335410680622
+      ],
+      "tokens_per_second": 0.9381556645188954
+    },
+    {
+      "prompt": "Explain why distributed transformer inference needs to transfer activations between successive layers.",
+      "prompt_tokens": 26,
+      "token_ids": [
+        35,
+        24348,
+        41163,
+        42903,
+        7225,
+        48270,
+        89303,
+        1881,
+        47286,
+        13224,
+        1521,
+        2972,
+        4549,
+        261,
+        13224,
+        513
+      ],
+      "output": "Distributed transformer inference requires transferring activations between successive layers because **transformer layers are",
+      "elapsed_ms": 19075.186959002167,
+      "ttft_ms": 1105.8417081367224,
+      "token_ms": [
+        1105.8417081367224,
+        1077.63637509197,
+        1042.3962080385536,
+        1056.8344998173416,
+        1025.470957858488,
+        1022.7026250213385,
+        1012.5651669222862,
+        1009.9801670294255,
+        1041.8176669627428,
+        1048.3646669890732,
+        1068.6044578906149,
+        1492.4165420234203,
+        1484.5339579042047,
+        1634.6684999298304,
+        1504.6091249678284,
+        1445.6579168327153
+      ],
+      "tokens_per_second": 0.8387860121312787
+    },
+    {
+      "prompt": "Write one sentence about a reliable distributed system, mentioning worker health and recovery.",
+      "prompt_tokens": 27,
+      "token_ids": [
+        32,
+        14294,
+        4098,
+        1785,
+        24546,
+        421,
+        11525,
+        2730,
+        369,
+        38791,
+        29865,
+        321,
+        421,
+        866,
+        12964,
+        494
+      ],
+      "output": "A reliable distributed system ensures that worker health is monitored continuously and that any recovery from",
+      "elapsed_ms": 19637.61187507771,
+      "ttft_ms": 1192.0280000194907,
+      "token_ms": [
+        1192.0280000194907,
+        1007.4904998764396,
+        1224.0906672086567,
+        1462.1170829050243,
+        1152.6869582012296,
+        1138.7157919816673,
+        1075.9215420112014,
+        1123.6269581131637,
+        1240.0182920973748,
+        1141.7414168827236,
+        1346.5299580711871,
+        1270.2934159897268,
+        1499.5673750527203,
+        1329.3192500714213,
+        1250.750167062506,
+        1181.5110840834677
+      ],
+      "tokens_per_second": 0.8147630221934349
+    },
+    {
+      "prompt": "What is 2 plus 2? Answer briefly.",
+      "prompt_tokens": 23,
+      "token_ids": [
+        19,
+        248046
+      ],
+      "output": "4",
+      "elapsed_ms": 2204.226417001337,
+      "ttft_ms": 1145.0960000511259,
+      "token_ms": [
+        1145.0960000511259,
+        1059.0099580585957
+      ],
+      "tokens_per_second": 0.9073478044605011
+    },
+    {
+      "prompt": "Explain why distributed transformer inference needs to transfer activations between successive layers.",
+      "prompt_tokens": 26,
+      "token_ids": [
+        35,
+        24348,
+        41163,
+        42903,
+        7225,
+        48270,
+        89303,
+        1881,
+        47286,
+        13224,
+        1521,
+        2972,
+        4549,
+        261,
+        13224,
+        513
+      ],
+      "output": "Distributed transformer inference requires transferring activations between successive layers because **transformer layers are",
+      "elapsed_ms": 19352.706833044067,
+      "ttft_ms": 1155.7551671285182,
+      "token_ms": [
+        1155.7551671285182,
+        1056.301875039935,
+        1038.5113339871168,
+        1050.1827921252698,
+        1069.5517919957638,
+        1043.3772909455001,
+        1037.4747500754893,
+        1056.2527920119464,
+        1107.9432498663664,
+        1009.280167054385,
+        1237.4164999928325,
+        1493.8533338718116,
+        1695.1969580259174,
+        1622.668458148837,
+        1581.0380841139704,
+        1096.5479579754174
+      ],
+      "tokens_per_second": 0.8267577315169453
+    }
+  ],
+  "peak_rss_bytes": 4177936384,
+  "load_peak_rss_bytes": 2067808256,
+  "threads": 2,
+  "dtype": "float32"
+}

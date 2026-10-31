@@ -1,0 +1,868 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Stageplane distributed inference",
+    "version": "0.1.0",
+    "description": "Executor control plane and OpenAI compatible text generation. Worker tensor transport is specified in docs/protocol.md."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8080"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "health",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ]
+      }
+    },
+    "/api/state": {
+      "get": {
+        "operationId": "cluster_state",
+        "summary": "cluster state",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "operationId": "list_models",
+        "summary": "list models",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "inference"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/chat/completions": {
+      "post": {
+        "operationId": "chat_completions",
+        "summary": "chat completions",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "data: {\"object\":\"chat.completion.chunk\"}\n\ndata: [DONE]\n\n"
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "inference"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nodes/register": {
+      "post": {
+        "operationId": "register_node",
+        "summary": "register node",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Node"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nodes/{node_id}/heartbeat": {
+      "post": {
+        "operationId": "heartbeat",
+        "summary": "heartbeat",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Node"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/deployments": {
+      "post": {
+        "operationId": "deploy_model",
+        "summary": "deploy model",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "Insufficient memory, compute, or storage; deployment remains pending until capacity is added."
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Deployment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nodes/{node_id}/drain": {
+      "post": {
+        "operationId": "drain_node",
+        "summary": "drain node",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/manifests/{model}": {
+      "get": {
+        "operationId": "model_manifest",
+        "summary": "model manifest",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/artifacts/{model}/{name}": {
+      "get": {
+        "operationId": "download_artifact",
+        "summary": "download artifact",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/models/import": {
+      "post": {
+        "operationId": "import_model",
+        "summary": "Import a checkpoint or published Stageplane bundle asynchronously",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Job status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "status"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Another model import is in progress"
+          },
+          "401": {
+            "description": "Invalid bearer token"
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}": {
+      "get": {
+        "operationId": "get_import_job",
+        "summary": "Inspect import status",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "status"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown job"
+          }
+        }
+      }
+    },
+    "/api/bundles/{model}": {
+      "get": {
+        "operationId": "export_model_bundle",
+        "summary": "Download a portable ZIP64 Stageplane bundle for publishing",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Portable bundle containing immutable manifest and all declared files",
+            "content": {
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "404": {
+            "description": "Unknown model"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "detail": {
+            "type": "string"
+          }
+        }
+      },
+      "Health": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok"
+            ]
+          }
+        }
+      },
+      "ModelList": {
+        "type": "object",
+        "required": [
+          "object",
+          "data"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": [
+              "list"
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Node": {
+        "type": "object",
+        "required": [
+          "id",
+          "url"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "grpc_url": {
+            "type": "string"
+          },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "rest",
+              "grpc",
+              "websocket"
+            ]
+          },
+          "group": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "memory_bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Resolved allocated bytes; omitted node CLI options resolve to the full node/container capacity."
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.01
+          },
+          "failure_domain": {
+            "type": "string"
+          },
+          "ready": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metrics": {
+            "type": "object"
+          },
+          "cpu_cores": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "description": "Resolved maximum allocated CPU cores, e.g. 0.05 for 50m; never a percentage string."
+          }
+        }
+      },
+      "Deployment": {
+        "type": "object",
+        "required": [
+          "model"
+        ],
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "replicas": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32,
+            "default": 1
+          },
+          "groups": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 1
+          }
+        }
+      },
+      "ChatRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "messages"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "messages": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "role",
+                "content"
+              ],
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "system",
+                    "user",
+                    "assistant"
+                  ]
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "max_tokens": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2048,
+            "default": 64
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 0
+          },
+          "top_p": {
+            "type": "number",
+            "exclusiveMinimum": true,
+            "minimum": 0,
+            "maximum": 1,
+            "default": 1
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false
+          },
+          "seed": {
+            "type": "integer"
+          }
+        }
+      },
+      "ChatResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "object",
+          "choices",
+          "usage",
+          "model"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "chat.completion"
+            ]
+          },
+          "model": {
+            "type": "string"
+          },
+          "created": {
+            "type": "integer"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "usage": {
+            "type": "object"
+          }
+        }
+      },
+      "ImportRequest": {
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "string",
+            "default": "main"
+          },
+          "layers_per_chunk": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256,
+            "default": 2
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "checkpoint",
+              "bundle"
+            ],
+            "default": "checkpoint",
+            "description": "Bundle imports reuse published stages without rechunking."
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "Optional externally pinned canonical manifest digest."
+          },
+          "subdir": {
+            "type": "string",
+            "default": ".",
+            "description": "Bundle directory within a Git repository."
+          }
+        }
+      }
+    }
+  }
+}

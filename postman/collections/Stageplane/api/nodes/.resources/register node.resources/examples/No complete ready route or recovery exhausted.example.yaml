@@ -1,0 +1,36 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/nodes/register"
+  method: POST
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "id": "M9StZmwGWZwmMW6q6eFSCki1P062LcS",
+        "url": "http://umEzl.tunpy2MJRfOA6EVGvGgkSR4gDPxoQYQDX5mhXlQUv1YJrNTBV4IihaS6jKqRd-x-w3y6mZ0",
+        "grpc_url": "string",
+        "transport": "websocket",
+        "group": 4822,
+        "memory_bytes": 5561,
+        "speed": 3197.190607402725,
+        "failure_domain": "string",
+        "ready": [
+          "string",
+          "string"
+        ],
+        "metrics": {},
+        "cpu_cores": 4175.547711409861
+      }
+response:
+  statusCode: 503
+  statusText: Service Unavailable
+  headers:
+    Content-Type: text/plain
+  body:
+    type: text
+    content: ""
+order: 4000

@@ -1,0 +1,5 @@
+$kind: collection
+description: Executor control plane and OpenAI compatible text generation. Worker tensor transport is specified in docs/protocol.md.
+variables:
+  baseUrl: http://127.0.0.1:8080
+  bearerToken: ""

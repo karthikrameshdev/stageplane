@@ -1,0 +1,245 @@
+[
+    {
+        "Id": "4178bc69c846ab5a5f6c82c498a013cd144ae0f8db4d519c50e8a3c179e4bd24",
+        "Created": "2026-10-31T07:43:48.197308802Z",
+        "Path": "stageplane",
+        "Args": [
+            "node",
+            "--id",
+            "node-46",
+            "--executor",
+            "http://stageplane-review-49546-executor:8080",
+            "--host",
+            "0.0.0.0",
+            "--advertise-url",
+            "http://stageplane-review-49546-node-46:8101",
+            "--max-memory",
+            "1000MB",
+            "--max-cpu",
+            "50m",
+            "--threads",
+            "1",
+            "--dtype",
+            "bfloat16",
+            "--cpu-kernel",
+            "bounded-f32"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 137,
+            "Error": "",
+            "StartedAt": "2026-10-31T07:43:48.285070636Z",
+            "FinishedAt": "2026-10-31T07:53:38.139701293Z"
+        },
+        "Image": "sha256:460e0f67c1fe6e9801c93a086755ca35b5f94d36940c427bbed87e48a78ef3a3",
+        "ResolvConfPath": "/var/lib/docker/containers/4178bc69c846ab5a5f6c82c498a013cd144ae0f8db4d519c50e8a3c179e4bd24/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/4178bc69c846ab5a5f6c82c498a013cd144ae0f8db4d519c50e8a3c179e4bd24/hostname",
+        "HostsPath": "/var/lib/docker/containers/4178bc69c846ab5a5f6c82c498a013cd144ae0f8db4d519c50e8a3c179e4bd24/hosts",
+        "LogPath": "/var/lib/docker/containers/4178bc69c846ab5a5f6c82c498a013cd144ae0f8db4d519c50e8a3c179e4bd24/4178bc69c846ab5a5f6c82c498a013cd144ae0f8db4d519c50e8a3c179e4bd24-json.log",
+        "Name": "/stageplane-review-49546-node-46",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "stageplane-review-49546-network",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 1000000000,
+            "NanoCpus": 50000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 1000000000,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "4178bc69c846",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "8080/tcp": {},
+                "8101/tcp": {},
+                "9101/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "STAGEPLANE_TOKEN=local-resource-review",
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.13.18",
+                "PYTHON_SHA256=abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+                "PYTHONUNBUFFERED=1",
+                "TOKENIZERS_PARALLELISM=false"
+            ],
+            "Cmd": [
+                "node",
+                "--id",
+                "node-46",
+                "--executor",
+                "http://stageplane-review-49546-executor:8080",
+                "--host",
+                "0.0.0.0",
+                "--advertise-url",
+                "http://stageplane-review-49546-node-46:8101",
+                "--max-memory",
+                "1000MB",
+                "--max-cpu",
+                "50m",
+                "--threads",
+                "1",
+                "--dtype",
+                "bfloat16",
+                "--cpu-kernel",
+                "bounded-f32"
+            ],
+            "Image": "stageplane:qwen4-review",
+            "Volumes": null,
+            "WorkingDir": "/app",
+            "Entrypoint": [
+                "stageplane"
+            ],
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "stageplane-review-49546-network": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "a9a2822cebf49051b939e0b8cd68f74207a3e0fb59280e14741c401f22d7a025",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "stageplane-review-49546-node-46",
+                        "4178bc69c846"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:4d1ce3fbbd43b3d12825ebfa3d1fd930111799a6f99d05430a472e69706e4be7",
+            "size": 2196,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

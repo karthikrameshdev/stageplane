@@ -1,0 +1,19 @@
+{
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "torch": "2.15.0",
+  "transformers": "5.22.1",
+  "grpc": "1.85.1",
+  "httpx": "0.28.1",
+  "cpu_count": 10,
+  "physical_memory_bytes": 17179869184,
+  "available_memory_at_capture_bytes": 2713812992,
+  "swap_at_capture": {
+    "total": 21474836480,
+    "used": 20445069312,
+    "free": 1029767168,
+    "percent": 95.2,
+    "sin": 20823897079808,
+    "sout": 216025169920
+  }
+}

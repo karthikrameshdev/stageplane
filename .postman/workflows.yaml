@@ -1,0 +1,4 @@
+workflows:
+  syncSpecToCollection:
+    - spec: ../postman/specs/stageplane.openapi.json
+      collection: ../postman/collections/Stageplane

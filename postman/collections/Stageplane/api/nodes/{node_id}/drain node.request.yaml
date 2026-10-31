@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/nodes/:node_id/drain"
+method: POST
+headers:
+  Accept: application/json
+pathVariables:
+  - key: node_id
+    value: string
+    disabled: false
+    description: "(Required) "
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/drain node.resources/examples
+order: 2000

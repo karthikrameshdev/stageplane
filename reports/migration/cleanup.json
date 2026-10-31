@@ -1,0 +1,12 @@
+{
+  "remaining_test_model_pids": [],
+  "available_memory_bytes": 6336020480,
+  "artifacts_preserved": true,
+  "obsolete_package_importable": false,
+  "obsolete_cli_present": false,
+  "docker_desktop_stopped": true,
+  "preserved_apps": [
+    "Firefox",
+    "Codex"
+  ]
+}

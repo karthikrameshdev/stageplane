@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/manifests/:model"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: model
+    value: string
+    disabled: false
+    description: "(Required) "
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/model manifest.resources/examples
+order: 4000

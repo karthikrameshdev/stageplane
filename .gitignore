@@ -151,6 +151,8 @@ activemq-data/
 
 # Environments
 .env
+.env.*
+!.env.example
 .envrc
 .venv
 env/
@@ -207,6 +209,15 @@ tempCodeRunnerFile.py
 
 # Ruff stuff:
 .ruff_cache/
+
+# Local model weights, worker state, and private TLS material
+data/
+certs/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.partial
+reports/**/cache/
 
 # PyPI configuration file
 .pypirc

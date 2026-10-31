@@ -1,0 +1,44 @@
+{
+  "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "requested_nodes": 50,
+  "actual_nodes": 50,
+  "memory_tiers_MB": [
+    750,
+    1000,
+    1250,
+    2000,
+    2500
+  ],
+  "cpu_cores_per_node": 0.05,
+  "swap_allowed": false,
+  "storage_fallback": false,
+  "host_memory_bytes": 17179869184,
+  "docker_memory_bytes": 14636097536,
+  "image": "stageplane:qwen4-review",
+  "cpu_kernel": "bounded-f32",
+  "artifact_location": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/executor-models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "registered_nodes": 50,
+  "oom_count": 5,
+  "oom_count_source": "VM kernel global_oom events",
+  "oom_nodes_observed": [
+    "node-16",
+    "node-22",
+    "node-26",
+    "node-30",
+    "node-46"
+  ],
+  "deploy_status": 200,
+  "deploy_response": {
+    "capture_note": "HTTP status recovered from executor log; initial response body not retained."
+  },
+  "inference_status": 503,
+  "inference_response": {
+    "capture_note": "HTTP status recovered from executor log; response body not retained."
+  },
+  "completed_inference": false,
+  "capture_complete": false,
+  "capture_source": "Reconstructed from retained executor log, loading-observation.json, Docker inspect and vm-global-oom.json. No complete final registry/telemetry snapshot is claimed.",
+  "harness_error": "Docker log collection timed out after the inference request. The harness has been fixed to persist measurements before collecting logs, with a regression test.",
+  "last_observed_ready_stages": 0,
+  "cluster": null
+}

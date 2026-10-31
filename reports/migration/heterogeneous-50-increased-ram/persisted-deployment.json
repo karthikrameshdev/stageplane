@@ -1,0 +1,133 @@
+[
+  {
+    "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+    "deployment": {
+      "replicas": 1,
+      "groups": 1,
+      "placements": {
+        "embedding": [
+          "node-04"
+        ],
+        "blocks-000": [
+          "node-01"
+        ],
+        "blocks-001": [
+          "node-30"
+        ],
+        "blocks-002": [
+          "node-07"
+        ],
+        "blocks-003": [
+          "node-07"
+        ],
+        "blocks-006": [
+          "node-01"
+        ],
+        "blocks-007": [
+          "node-32"
+        ],
+        "blocks-008": [
+          "node-04"
+        ],
+        "blocks-009": [
+          "node-46"
+        ],
+        "blocks-012": [
+          "node-28"
+        ],
+        "blocks-013": [
+          "node-48"
+        ],
+        "blocks-014": [
+          "node-16"
+        ],
+        "blocks-015": [
+          "node-31"
+        ],
+        "blocks-016": [
+          "node-48"
+        ],
+        "blocks-018": [
+          "node-03"
+        ],
+        "blocks-019": [
+          "node-45"
+        ],
+        "blocks-020": [
+          "node-19"
+        ],
+        "blocks-021": [
+          "node-07"
+        ],
+        "blocks-024": [
+          "node-31"
+        ],
+        "blocks-025": [
+          "node-32"
+        ],
+        "blocks-026": [
+          "node-32"
+        ],
+        "blocks-030": [
+          "node-24"
+        ],
+        "blocks-032": [
+          "node-28"
+        ],
+        "blocks-033": [
+          "node-48"
+        ],
+        "blocks-034": [
+          "node-16"
+        ],
+        "blocks-035": [
+          "node-48"
+        ],
+        "head": [
+          "node-38"
+        ],
+        "blocks-010": [
+          "node-02"
+        ],
+        "blocks-011": [
+          "node-33"
+        ],
+        "blocks-017": [
+          "node-23"
+        ],
+        "blocks-022": [
+          "node-25"
+        ],
+        "blocks-023": [
+          "node-12"
+        ],
+        "blocks-027": [
+          "node-35"
+        ],
+        "blocks-028": [
+          "node-25"
+        ],
+        "blocks-029": [
+          "node-13"
+        ],
+        "blocks-031": [
+          "node-09"
+        ],
+        "blocks-004": [
+          "node-18"
+        ],
+        "blocks-005": [
+          "node-36"
+        ]
+      },
+      "capacity": {
+        "status": "planned",
+        "message": "Model placement fits the available nodes.",
+        "reason": null,
+        "unassigned_stages": [],
+        "available_weight_budget_bytes": 14017462272,
+        "required_stage_storage_bytes": 8822894624
+      }
+    }
+  }
+]

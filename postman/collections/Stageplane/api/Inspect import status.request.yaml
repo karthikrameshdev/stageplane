@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/jobs/:job_id"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: job_id
+    value: string
+    disabled: false
+    description: "(Required) "
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Inspect import status.resources/examples
+order: 7000

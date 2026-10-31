@@ -1,0 +1,263 @@
+{
+  "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+  "response": {
+    "id": "chatcmpl-a2918c61af344bb0b1f9a6def2b9dbc7",
+    "object": "chat.completion",
+    "created": 1793425801,
+    "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "4"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 23,
+      "completion_tokens": 2,
+      "total_tokens": 25
+    }
+  },
+  "elapsed_ms": 33547.15979192406,
+  "token_ids": [
+    19,
+    248046
+  ],
+  "parity": true,
+  "route_nodes": [
+    "node-0",
+    "node-1",
+    "node-2",
+    "node-3"
+  ],
+  "nodes": [
+    {
+      "id": "node-1",
+      "url": "http://node-1:8101",
+      "grpc_url": "node-1:9101",
+      "transport": "grpc",
+      "group": 0,
+      "memory_bytes": 4294967296,
+      "speed": 1.0,
+      "failure_domain": "node-1",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-010",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-000",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-009",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-011",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-003"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "blocks-000": 312.54066699995064,
+          "blocks-003": 101.59612500001458,
+          "blocks-009": 177.1218749999548,
+          "blocks-010": 116.67916700002934,
+          "blocks-011": 105.75999999997521
+        },
+        "calls": 10,
+        "bytes_received": 520912,
+        "bytes_sent": 522170,
+        "rss_bytes": 1815502848,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 411909392,
+        "transport": {
+          "request_payload_bytes": 311841,
+          "response_payload_bytes": 2991066,
+          "calls": 6
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793425801.0249684,
+      "active": true,
+      "draining": false
+    },
+    {
+      "id": "node-0",
+      "url": "http://node-0:8101",
+      "grpc_url": "node-0:9101",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 4294967296,
+      "speed": 1.0,
+      "failure_domain": "node-0",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:embedding",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-008",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-004",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-005",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-007"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "embedding": 1.476750000051652,
+          "blocks-004": 135.64166600002636,
+          "blocks-005": 77.91983399999936,
+          "blocks-007": 97.27087499999243,
+          "blocks-008": 332.6947499999733
+        },
+        "calls": 10,
+        "bytes_received": 420277,
+        "bytes_sent": 519650,
+        "rss_bytes": 2500558848,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 840649480,
+        "transport": {
+          "request_payload_bytes": 311337,
+          "response_payload_bytes": 2991066,
+          "calls": 6
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793425800.7120988,
+      "active": true,
+      "draining": false
+    },
+    {
+      "id": "node-3",
+      "url": "http://node-3:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 4294967296,
+      "speed": 1.0,
+      "failure_domain": "node-3",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:head",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-001"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "blocks-001": 187.13012500001014,
+          "head": 9913.141171999996
+        },
+        "calls": 3,
+        "bytes_received": 200601,
+        "bytes_sent": 1100046,
+        "rss_bytes": 2767863808,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 588381120,
+        "transport": {
+          "request_payload_bytes": 103024,
+          "response_payload_bytes": 997022,
+          "calls": 2
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793425801.134197,
+      "active": true,
+      "draining": false
+    },
+    {
+      "id": "node-2",
+      "url": "http://node-2:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "websocket",
+      "group": 0,
+      "memory_bytes": 4294967296,
+      "speed": 1.0,
+      "failure_domain": "node-2",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-006",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-002"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "blocks-002": 121.94149999999127,
+          "blocks-006": 242.08408399999826
+        },
+        "calls": 4,
+        "bytes_received": 207054,
+        "bytes_sent": 207558,
+        "rss_bytes": 1056804864,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 172451072,
+        "transport": {
+          "request_payload_bytes": 207558,
+          "response_payload_bytes": 1994044,
+          "calls": 4
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793425801.0845847,
+      "active": true,
+      "draining": false
+    }
+  ],
+  "deployment": {
+    "replicas": 1,
+    "groups": 1,
+    "placements": {
+      "head": [
+        "node-3"
+      ],
+      "embedding": [
+        "node-0"
+      ],
+      "blocks-006": [
+        "node-2"
+      ],
+      "blocks-008": [
+        "node-0"
+      ],
+      "blocks-010": [
+        "node-1"
+      ],
+      "blocks-000": [
+        "node-1"
+      ],
+      "blocks-002": [
+        "node-2"
+      ],
+      "blocks-004": [
+        "node-0"
+      ],
+      "blocks-005": [
+        "node-0"
+      ],
+      "blocks-007": [
+        "node-0"
+      ],
+      "blocks-009": [
+        "node-1"
+      ],
+      "blocks-011": [
+        "node-1"
+      ],
+      "blocks-001": [
+        "node-3"
+      ],
+      "blocks-003": [
+        "node-1"
+      ]
+    }
+  },
+  "server_metrics": {
+    "id": "chatcmpl-a2918c61af344bb0b1f9a6def2b9dbc7",
+    "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+    "status": "completed",
+    "started": 1793425772.4856312,
+    "prompt_tokens": 23,
+    "output_tokens": 2,
+    "recoveries": 0,
+    "token_ms": [
+      18681.865966000034,
+      10113.618754999949
+    ],
+    "boundary_bytes": 884736,
+    "ttft_ms": 18681.99946599998,
+    "elapsed_ms": 28797.281553999994,
+    "tokens_per_second": 0.06945099995809141
+  }
+}

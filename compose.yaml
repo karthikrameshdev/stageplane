@@ -1,0 +1,48 @@
+name: stageplane
+x-node: &node
+  image: stageplane:local
+  build: .
+  environment:
+    STAGEPLANE_TOKEN: ${STAGEPLANE_TOKEN:?Set STAGEPLANE_TOKEN before starting the pool}
+  depends_on:
+    executor:
+      condition: service_healthy
+  restart: unless-stopped
+  mem_limit: 5g
+services:
+  executor:
+    image: stageplane:local
+    build: .
+    command: [executor, --host, 0.0.0.0, --store, /models]
+    environment:
+      STAGEPLANE_TOKEN: ${STAGEPLANE_TOKEN:?Set STAGEPLANE_TOKEN}
+      STAGEPLANE_STATE_FILE: /data/executor.sqlite
+    ports: ["127.0.0.1:8080:8080"]
+    volumes: ["./data/models:/models:ro", "executor-state:/data"]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+  node-0:
+    <<: *node
+    command: [node, --id, node-0, --executor, "http://executor:8080", --host, 0.0.0.0, --advertise-url, "http://node-0:8101", --grpc-port, "9101", --grpc-url, "node-0:9101", --memory-gb, "4", --cache, /cache]
+    volumes: ["node-0-cache:/cache"]
+  node-1:
+    <<: *node
+    command: [node, --id, node-1, --executor, "http://executor:8080", --host, 0.0.0.0, --advertise-url, "http://node-1:8101", --grpc-port, "9101", --grpc-url, "node-1:9101", --transport, grpc, --memory-gb, "4", --cache, /cache]
+    volumes: ["node-1-cache:/cache"]
+  node-2:
+    <<: *node
+    command: [node, --id, node-2, --executor, "http://executor:8080", --host, 0.0.0.0, --advertise-url, "http://node-2:8101", --transport, websocket, --memory-gb, "4", --cache, /cache]
+    volumes: ["node-2-cache:/cache"]
+  node-3:
+    <<: *node
+    command: [node, --id, node-3, --executor, "http://executor:8080", --host, 0.0.0.0, --advertise-url, "http://node-3:8101", --memory-gb, "4", --cache, /cache]
+    volumes: ["node-3-cache:/cache"]
+volumes:
+  executor-state:
+  node-0-cache:
+  node-1-cache:
+  node-2-cache:
+  node-3-cache:

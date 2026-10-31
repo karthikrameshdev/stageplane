@@ -1,0 +1,3976 @@
+{
+  "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+  "prompt": "Explain why distributed transformer inference needs to transfer activations between successive layers.",
+  "replicas": 1,
+  "policy": "cold replacement and committed-prefix replay",
+  "victim": "node-2",
+  "output": "Distributed transformer inference requires transferring activations between successive layers because **transformer layers are",
+  "token_ids": [
+    35,
+    24348,
+    41163,
+    42903,
+    7225,
+    48270,
+    89303,
+    1881,
+    47286,
+    13224,
+    1521,
+    2972,
+    4549,
+    261,
+    13224,
+    513
+  ],
+  "parity": true,
+  "elapsed_ms": 22934.949540998787,
+  "largest_output_gap_ms": 3593.729458982125,
+  "server_metrics": {
+    "id": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+    "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+    "status": "completed",
+    "started": 1793426202.7106292,
+    "prompt_tokens": 26,
+    "output_tokens": 16,
+    "recoveries": 1,
+    "token_ms": [
+      1725.1791250891984,
+      3592.2952089458704,
+      1694.722583051771,
+      1628.3865829464048,
+      1776.6747497953475,
+      1269.5221670437604,
+      1072.0835418906063,
+      1115.9011670388281,
+      1127.3774169385433,
+      1050.606707809493,
+      1037.5428749248385,
+      1083.702958887443,
+      1058.499916922301,
+      1050.1559579279274,
+      1069.4678749423474,
+      1106.5525419544429
+    ],
+    "boundary_bytes": 2134016,
+    "ttft_ms": 1725.2682920079678,
+    "elapsed_ms": 22465.27541708201,
+    "tokens_per_second": 0.7122102757678197
+  },
+  "events": [
+    {
+      "id": "41e015b8-5348-410c-837c-2209b1003f7c",
+      "kind": "request_started",
+      "time": 1793426202.710785,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+      "route": [
+        {
+          "chunk": "embedding",
+          "node": "node-0",
+          "url": "http://127.0.0.1:64309",
+          "grpc_url": "127.0.0.1:64310",
+          "transport": "rest"
+        },
+        {
+          "chunk": "blocks-000",
+          "node": "node-1",
+          "url": "http://127.0.0.1:64311",
+          "grpc_url": "127.0.0.1:64312",
+          "transport": "grpc"
+        },
+        {
+          "chunk": "blocks-001",
+          "node": "node-3",
+          "url": "http://127.0.0.1:64315",
+          "grpc_url": "127.0.0.1:64316",
+          "transport": "rest"
+        },
+        {
+          "chunk": "blocks-002",
+          "node": "node-2",
+          "url": "http://127.0.0.1:64313",
+          "grpc_url": "127.0.0.1:64314",
+          "transport": "websocket"
+        },
+        {
+          "chunk": "blocks-003",
+          "node": "node-1",
+          "url": "http://127.0.0.1:64311",
+          "grpc_url": "127.0.0.1:64312",
+          "transport": "grpc"
+        },
+        {
+          "chunk": "blocks-004",
+          "node": "node-0",
+          "url": "http://127.0.0.1:64309",
+          "grpc_url": "127.0.0.1:64310",
+          "transport": "rest"
+        },
+        {
+          "chunk": "blocks-005",
+          "node": "node-0",
+          "url": "http://127.0.0.1:64309",
+          "grpc_url": "127.0.0.1:64310",
+          "transport": "rest"
+        },
+        {
+          "chunk": "blocks-006",
+          "node": "node-2",
+          "url": "http://127.0.0.1:64313",
+          "grpc_url": "127.0.0.1:64314",
+          "transport": "websocket"
+        },
+        {
+          "chunk": "blocks-007",
+          "node": "node-0",
+          "url": "http://127.0.0.1:64309",
+          "grpc_url": "127.0.0.1:64310",
+          "transport": "rest"
+        },
+        {
+          "chunk": "blocks-008",
+          "node": "node-0",
+          "url": "http://127.0.0.1:64309",
+          "grpc_url": "127.0.0.1:64310",
+          "transport": "rest"
+        },
+        {
+          "chunk": "blocks-009",
+          "node": "node-1",
+          "url": "http://127.0.0.1:64311",
+          "grpc_url": "127.0.0.1:64312",
+          "transport": "grpc"
+        },
+        {
+          "chunk": "blocks-010",
+          "node": "node-1",
+          "url": "http://127.0.0.1:64311",
+          "grpc_url": "127.0.0.1:64312",
+          "transport": "grpc"
+        },
+        {
+          "chunk": "blocks-011",
+          "node": "node-1",
+          "url": "http://127.0.0.1:64311",
+          "grpc_url": "127.0.0.1:64312",
+          "transport": "grpc"
+        },
+        {
+          "chunk": "head",
+          "node": "node-3",
+          "url": "http://127.0.0.1:64315",
+          "grpc_url": "127.0.0.1:64316",
+          "transport": "rest"
+        }
+      ],
+      "prompt_tokens": 26
+    },
+    {
+      "id": "80addf41-ab11-4986-af9b-00902fbbde9c",
+      "kind": "token_committed",
+      "time": 1793426204.436034,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 0,
+      "offset": 0,
+      "token_id": 35,
+      "ms": 1725.1791250891984,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.38979086093604565,
+          "input_shape": [
+            1,
+            26
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-000",
+          "ms": 145.56129183620214,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 73.66170804016292,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-2",
+          "chunk": "blocks-002",
+          "ms": 149.05937504954636,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 62.91383411735296,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 119.48220804333687,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 75.152917066589,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-2",
+          "chunk": "blocks-006",
+          "ms": 155.2554159425199,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 61.283916933462024,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 146.40341699123383,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 64.91274992004037,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 151.8149171024561,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 69.38083400018513,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            26,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 260.69895806722343,
+          "input_shape": [
+            1,
+            26,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "id": "170d8117-dc80-4878-8a93-14e8d8a8b8df",
+      "kind": "recovery",
+      "time": 1793426204.630767,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "committed": 1,
+      "reason": "HTTPStatusError"
+    },
+    {
+      "id": "ac1591ad-4488-48ff-bf1d-25fb2382ae3a",
+      "kind": "token_committed",
+      "time": 1793426208.029013,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 1,
+      "token_id": 24348,
+      "ms": 3592.2952089458704,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.8527499157935381,
+          "input_shape": [
+            1,
+            27
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 153.20325014181435,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 99.72779219970107,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 138.78666702657938,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 71.86954212374985,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 170.72608298622072,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 108.47525019198656,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 151.850291993469,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 92.82958414405584,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 162.1422921307385,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 112.37604194320738,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 154.2429579421878,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 96.121417125687,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            27,
+            1024
+          ],
+          "offset": 0
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 321.0889999754727,
+          "input_shape": [
+            1,
+            27,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "id": "1633c92b-c490-4f28-891b-e6c77ee37b7c",
+      "kind": "token_committed",
+      "time": 1793426209.724237,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 2,
+      "token_id": 41163,
+      "ms": 1694.722583051771,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.1888750120997429,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 118.13170788809657,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 88.93799991346896,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 122.27741605602205,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 103.11070899479091,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 183.14291699789464,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 92.53012505359948,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 140.22208307869732,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 79.24620900303125,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 145.8366250153631,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 91.60262485966086,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 146.98362490162253,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 94.90379085764289,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 27
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 257.234042044729,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 27
+        }
+      ]
+    },
+    {
+      "id": "45cf2c8b-0c74-45ec-ad0c-bf88f9b136c7",
+      "kind": "token_committed",
+      "time": 1793426211.353676,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 3,
+      "token_id": 42903,
+      "ms": 1628.3865829464048,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.20195799879729748,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 111.28020798787475,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 92.48929191380739,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 107.43800015188754,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 86.04170801118016,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 143.00870802253485,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 101.7493330873549,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 165.97291687503457,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 72.22812483087182,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 133.49812477827072,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 86.9618330616504,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 143.95387494005263,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 87.80058403499424,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 28
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 263.7016670778394,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 28
+        }
+      ]
+    },
+    {
+      "id": "7324df63-126c-4692-a771-14843ad7b972",
+      "kind": "token_committed",
+      "time": 1793426213.13127,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 4,
+      "token_id": 7225,
+      "ms": 1776.6747497953475,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.260709086433053,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 147.82737521454692,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 96.08816588297486,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 111.43654095940292,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 84.07429209910333,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 139.99524991959333,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 83.83566583506763,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 125.6583328358829,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 71.48345792666078,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 139.2371249385178,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 83.277250174433,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 366.16129195317626,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 101.08437482267618,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 29
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 197.3842498846352,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 29
+        }
+      ]
+    },
+    {
+      "id": "4f6d2a38-49c6-4387-845c-935c1235b40a",
+      "kind": "token_committed",
+      "time": 1793426214.401325,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 5,
+      "token_id": 48270,
+      "ms": 1269.5221670437604,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.22383290342986584,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 136.39291608706117,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 81.17304113693535,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 122.10725015029311,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 68.82300018332899,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 123.46458295360208,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 72.42266600951552,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 120.4557919409126,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 71.86091714538634,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 137.44675018824637,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 89.63416586630046,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 129.0427080821246,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 57.922542095184326,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 30
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 35.282749915495515,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 30
+        }
+      ]
+    },
+    {
+      "id": "39060968-e943-432b-bcb7-ef560048b73c",
+      "kind": "token_committed",
+      "time": 1793426215.4736488,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 6,
+      "token_id": 89303,
+      "ms": 1072.0835418906063,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.159708084538579,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 116.34325003251433,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 60.6149579398334,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 113.29004191793501,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 57.79862520284951,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 110.19054101780057,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 58.774542063474655,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 113.86458296328783,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 59.35300001874566,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 112.65141610056162,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 59.14924992248416,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 112.13233298622072,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 57.81329213641584,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 31
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 18.947625067085028,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 31
+        }
+      ]
+    },
+    {
+      "id": "3bdf1672-b245-479c-ac89-eb5b3e54a27d",
+      "kind": "token_committed",
+      "time": 1793426216.5898,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 7,
+      "token_id": 1881,
+      "ms": 1115.9011670388281,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.15066610649228096,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 110.40208302438259,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 58.45537502318621,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 112.51791613176465,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 57.39929201081395,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 108.65604202263057,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 57.037207996472716,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 113.18233399651945,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 57.67583288252354,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 107.83204203471541,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 55.558665888383985,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 141.25220803543925,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 66.25237502157688,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 32
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 40.977375116199255,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 32
+        }
+      ]
+    },
+    {
+      "id": "9ecff2c3-2cec-4048-a590-4f394c7629cd",
+      "kind": "token_committed",
+      "time": 1793426217.717539,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 8,
+      "token_id": 47286,
+      "ms": 1127.3774169385433,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.21320884115993977,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 121.19670817628503,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 66.51050015352666,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 127.34954082407057,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 62.710790894925594,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 115.09433388710022,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 60.501167085021734,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 115.75962509959936,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 61.48683303035796,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 119.5243748370558,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 63.8976669870317,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 105.21758301183581,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 49.57216698676348,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 33
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 34.882667008787394,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 33
+        }
+      ]
+    },
+    {
+      "id": "ffabc88a-0661-4c30-9126-51643c559902",
+      "kind": "token_committed",
+      "time": 1793426218.768385,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 9,
+      "token_id": 13224,
+      "ms": 1050.606707809493,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.18308288417756557,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 112.12866683490574,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 58.97408304736018,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 117.52324993722141,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 58.818374993279576,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 108.2132919691503,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 57.454624911770225,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 111.24766687862575,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 57.71104199811816,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 106.0316248331219,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 56.104875169694424,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 109.18620810844004,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 57.10049998015165,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 34
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 18.74949992634356,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 34
+        }
+      ]
+    },
+    {
+      "id": "d1678b19-87aa-4ef9-9e4d-e9206cfb74eb",
+      "kind": "token_committed",
+      "time": 1793426219.8061461,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 10,
+      "token_id": 1521,
+      "ms": 1037.5428749248385,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.18791691400110722,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 112.99100005999207,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 57.78141599148512,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 112.36187489703298,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 57.86687508225441,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 109.86849991604686,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 57.16966697946191,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 112.41629207506776,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 49.69391692429781,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 102.58116596378386,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 56.0005409643054,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 109.71995908766985,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 57.8166670165956,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 35
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 19.79429111815989,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 35
+        }
+      ]
+    },
+    {
+      "id": "f3dfa305-1ce9-4c81-a90b-57ceed13b396",
+      "kind": "token_committed",
+      "time": 1793426220.8900669,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 11,
+      "token_id": 2972,
+      "ms": 1083.702958887443,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.16487506218254566,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 107.70645784214139,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 50.89224991388619,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 116.9081658590585,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 58.03420883603394,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 110.87274993769825,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 57.572334073483944,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 112.58570780046284,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 57.42474994622171,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 119.36499993316829,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 56.3267080578953,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 110.68620788864791,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 59.265000047162175,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 36
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 42.68687521107495,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 36
+        }
+      ]
+    },
+    {
+      "id": "c6d579ab-da56-4a2b-b418-fcd9cd894fc1",
+      "kind": "token_committed",
+      "time": 1793426221.9487832,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 12,
+      "token_id": 4549,
+      "ms": 1058.499916922301,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.1722089946269989,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 113.87637490406632,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 57.64920893125236,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 110.73862481862307,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 56.676582898944616,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 108.11987495981157,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 58.10987506993115,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 114.14733296260238,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 57.90262506343424,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 109.31333294138312,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 56.33524991571903,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 110.37720809690654,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 63.5516659822315,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 37
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 19.1901249345392,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 37
+        }
+      ]
+    },
+    {
+      "id": "928725d3-8ccf-4742-b1bc-b76bac7388ad",
+      "kind": "token_committed",
+      "time": 1793426222.9992,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 13,
+      "token_id": 261,
+      "ms": 1050.1559579279274,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.21887500770390034,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 113.10262512415648,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 58.78149997442961,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 110.35904218442738,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 57.329250033944845,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 107.91487502865493,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 57.15012503787875,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 110.7090839650482,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 57.65908304601908,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 112.34058300033212,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 55.53133296780288,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 110.1418340113014,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 57.447124971076846,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 38
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 18.969708122313023,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 38
+        }
+      ]
+    },
+    {
+      "id": "2965b6cb-b1d6-449b-9710-d7e95795d9cf",
+      "kind": "token_committed",
+      "time": 1793426224.068979,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 14,
+      "token_id": 13224,
+      "ms": 1069.4678749423474,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.15145819634199142,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 112.45041619986296,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 58.87491605244577,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 111.13054095767438,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 57.72499996237457,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 107.63416695408523,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 58.24533407576382,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 112.20904113724828,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 57.07066599279642,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 111.36150010861456,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 52.02666693367064,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 125.62241707928479,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 58.62804199568927,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 39
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 21.111667156219482,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 39
+        }
+      ]
+    },
+    {
+      "id": "c1992592-3829-403a-bf22-c8860828d3c7",
+      "kind": "token_committed",
+      "time": 1793426225.175843,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "epoch": 1,
+      "offset": 15,
+      "token_id": 513,
+      "ms": 1106.5525419544429,
+      "trace": [
+        {
+          "node": "node-0",
+          "chunk": "embedding",
+          "ms": 0.31325011514127254,
+          "input_shape": [
+            1,
+            1
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-000",
+          "ms": 122.70587496459484,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-001",
+          "ms": 58.480249950662255,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-002",
+          "ms": 122.24679091013968,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-003",
+          "ms": 60.60895789414644,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-004",
+          "ms": 118.09733393602073,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-005",
+          "ms": 59.133749920874834,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-3",
+          "chunk": "blocks-006",
+          "ms": 119.39483298920095,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-007",
+          "ms": 60.41554198600352,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-0",
+          "chunk": "blocks-008",
+          "ms": 111.19870911352336,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-009",
+          "ms": 56.75324983894825,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-010",
+          "ms": 110.73954100720584,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-1",
+          "chunk": "blocks-011",
+          "ms": 60.37995801307261,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            1024
+          ],
+          "offset": 40
+        },
+        {
+          "node": "node-3",
+          "chunk": "head",
+          "ms": 22.77574990876019,
+          "input_shape": [
+            1,
+            1,
+            1024
+          ],
+          "output_shape": [
+            1,
+            1,
+            248320
+          ],
+          "offset": 40
+        }
+      ]
+    },
+    {
+      "id": "55c8db26-01e4-44ac-842c-df46d591c7d6",
+      "kind": "request_completed",
+      "time": 1793426225.1762402,
+      "request": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+      "metrics": {
+        "id": "chatcmpl-688b468a2dc141d18b4ffbd37aada149",
+        "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+        "status": "completed",
+        "started": 1793426202.7106292,
+        "prompt_tokens": 26,
+        "output_tokens": 16,
+        "recoveries": 1,
+        "token_ms": [
+          1725.1791250891984,
+          3592.2952089458704,
+          1694.722583051771,
+          1628.3865829464048,
+          1776.6747497953475,
+          1269.5221670437604,
+          1072.0835418906063,
+          1115.9011670388281,
+          1127.3774169385433,
+          1050.606707809493,
+          1037.5428749248385,
+          1083.702958887443,
+          1058.499916922301,
+          1050.1559579279274,
+          1069.4678749423474,
+          1106.5525419544429
+        ],
+        "boundary_bytes": 2134016,
+        "ttft_ms": 1725.2682920079678,
+        "elapsed_ms": 22465.27541708201,
+        "tokens_per_second": 0.7122102757678197
+      }
+    }
+  ]
+}

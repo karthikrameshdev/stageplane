@@ -1,0 +1,31 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/artifacts/:model/:name"
+  method: GET
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+    - key: Accept
+      value: application/octet-stream
+  pathVariables:
+    - key: model
+      value: string
+      disabled: false
+      description: "(Required) "
+    - key: name
+      value: string
+      disabled: false
+      description: "(Required) "
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/octet-stream
+  body:
+    type: text
+    content: string
+order: 1000

@@ -1,0 +1,4631 @@
+{
+  "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "requested_nodes": 50,
+  "memory_tiers_MB": [
+    750,
+    1000,
+    1250,
+    2000,
+    2500
+  ],
+  "cpu_cores_per_node": 0.05,
+  "swap_allowed": false,
+  "storage_fallback": false,
+  "artifact_location": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/executor-models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "image": "stageplane:qwen4-review",
+  "cpu_kernel": "bounded-f32",
+  "host_memory_bytes": 17179869184,
+  "docker_memory_bytes": 14636097536,
+  "route_ready_before_inference": false,
+  "loading_wait_ms": 90551.30358296447,
+  "actual_nodes": 50,
+  "deploy_status": 200,
+  "deploy_response": {
+    "replicas": 1,
+    "groups": 1,
+    "placements": {
+      "head": [
+        "node-38"
+      ],
+      "embedding": [
+        "node-04"
+      ],
+      "blocks-015": [
+        "node-31"
+      ],
+      "blocks-010": [
+        "node-34"
+      ],
+      "blocks-011": [
+        "node-27"
+      ],
+      "blocks-012": [
+        "node-12"
+      ],
+      "blocks-013": [
+        "node-48"
+      ],
+      "blocks-014": [
+        "node-16"
+      ],
+      "blocks-016": [
+        "node-48"
+      ],
+      "blocks-017": [
+        "node-22"
+      ],
+      "blocks-018": [
+        "node-12"
+      ],
+      "blocks-019": [
+        "node-12"
+      ],
+      "blocks-020": [
+        "node-19"
+      ],
+      "blocks-021": [
+        "node-07"
+      ],
+      "blocks-022": [
+        "node-26"
+      ],
+      "blocks-023": [
+        "node-17"
+      ],
+      "blocks-024": [
+        "node-31"
+      ],
+      "blocks-025": [
+        "node-32"
+      ],
+      "blocks-026": [
+        "node-32"
+      ],
+      "blocks-027": [
+        "node-26"
+      ],
+      "blocks-028": [
+        "node-29"
+      ],
+      "blocks-029": [
+        "node-26"
+      ],
+      "blocks-030": [
+        "node-24"
+      ],
+      "blocks-031": [
+        "node-47"
+      ],
+      "blocks-032": [
+        "node-28"
+      ],
+      "blocks-033": [
+        "node-48"
+      ],
+      "blocks-034": [
+        "node-16"
+      ],
+      "blocks-035": [
+        "node-48"
+      ],
+      "blocks-000": [
+        "node-01"
+      ],
+      "blocks-001": [
+        "node-30"
+      ],
+      "blocks-002": [
+        "node-07"
+      ],
+      "blocks-003": [
+        "node-07"
+      ],
+      "blocks-004": [
+        "node-21"
+      ],
+      "blocks-005": [
+        "node-17"
+      ],
+      "blocks-006": [
+        "node-01"
+      ],
+      "blocks-007": [
+        "node-36"
+      ],
+      "blocks-008": [
+        "node-40"
+      ],
+      "blocks-009": [
+        "node-46"
+      ]
+    },
+    "capacity": {
+      "status": "planned",
+      "message": "Model placement fits the available nodes.",
+      "reason": null,
+      "unassigned_stages": [],
+      "available_weight_budget_bytes": 59891609600,
+      "required_stage_storage_bytes": 8822894624
+    }
+  },
+  "inference_status": 503,
+  "inference_response": {
+    "detail": "Not enough memory available to run this model. Kindly add more nodes."
+  },
+  "response_ms": 439.51958301477134,
+  "cluster": {
+    "models": [
+      {
+        "key": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "source": "Qwen/Qwen3-4B-Instruct-2507",
+        "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+        "architecture": "qwen3",
+        "stages": [
+          {
+            "id": "embedding",
+            "kind": "embedding",
+            "start": 0,
+            "end": 0,
+            "artifacts": [
+              "embedding"
+            ],
+            "weight_bytes": 777912456
+          },
+          {
+            "id": "blocks-000",
+            "kind": "blocks",
+            "start": 0,
+            "end": 1,
+            "artifacts": [
+              "blocks-000"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-001",
+            "kind": "blocks",
+            "start": 1,
+            "end": 2,
+            "artifacts": [
+              "blocks-001"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-002",
+            "kind": "blocks",
+            "start": 2,
+            "end": 3,
+            "artifacts": [
+              "blocks-002"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-003",
+            "kind": "blocks",
+            "start": 3,
+            "end": 4,
+            "artifacts": [
+              "blocks-003"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-004",
+            "kind": "blocks",
+            "start": 4,
+            "end": 5,
+            "artifacts": [
+              "blocks-004"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-005",
+            "kind": "blocks",
+            "start": 5,
+            "end": 6,
+            "artifacts": [
+              "blocks-005"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-006",
+            "kind": "blocks",
+            "start": 6,
+            "end": 7,
+            "artifacts": [
+              "blocks-006"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-007",
+            "kind": "blocks",
+            "start": 7,
+            "end": 8,
+            "artifacts": [
+              "blocks-007"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-008",
+            "kind": "blocks",
+            "start": 8,
+            "end": 9,
+            "artifacts": [
+              "blocks-008"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-009",
+            "kind": "blocks",
+            "start": 9,
+            "end": 10,
+            "artifacts": [
+              "blocks-009"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-010",
+            "kind": "blocks",
+            "start": 10,
+            "end": 11,
+            "artifacts": [
+              "blocks-010"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-011",
+            "kind": "blocks",
+            "start": 11,
+            "end": 12,
+            "artifacts": [
+              "blocks-011"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-012",
+            "kind": "blocks",
+            "start": 12,
+            "end": 13,
+            "artifacts": [
+              "blocks-012"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-013",
+            "kind": "blocks",
+            "start": 13,
+            "end": 14,
+            "artifacts": [
+              "blocks-013"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-014",
+            "kind": "blocks",
+            "start": 14,
+            "end": 15,
+            "artifacts": [
+              "blocks-014"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-015",
+            "kind": "blocks",
+            "start": 15,
+            "end": 16,
+            "artifacts": [
+              "blocks-015"
+            ],
+            "weight_bytes": 201862912
+          },
+          {
+            "id": "blocks-016",
+            "kind": "blocks",
+            "start": 16,
+            "end": 17,
+            "artifacts": [
+              "blocks-016"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-017",
+            "kind": "blocks",
+            "start": 17,
+            "end": 18,
+            "artifacts": [
+              "blocks-017"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-018",
+            "kind": "blocks",
+            "start": 18,
+            "end": 19,
+            "artifacts": [
+              "blocks-018"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-019",
+            "kind": "blocks",
+            "start": 19,
+            "end": 20,
+            "artifacts": [
+              "blocks-019"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-020",
+            "kind": "blocks",
+            "start": 20,
+            "end": 21,
+            "artifacts": [
+              "blocks-020"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-021",
+            "kind": "blocks",
+            "start": 21,
+            "end": 22,
+            "artifacts": [
+              "blocks-021"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-022",
+            "kind": "blocks",
+            "start": 22,
+            "end": 23,
+            "artifacts": [
+              "blocks-022"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-023",
+            "kind": "blocks",
+            "start": 23,
+            "end": 24,
+            "artifacts": [
+              "blocks-023"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-024",
+            "kind": "blocks",
+            "start": 24,
+            "end": 25,
+            "artifacts": [
+              "blocks-024"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-025",
+            "kind": "blocks",
+            "start": 25,
+            "end": 26,
+            "artifacts": [
+              "blocks-025"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-026",
+            "kind": "blocks",
+            "start": 26,
+            "end": 27,
+            "artifacts": [
+              "blocks-026"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-027",
+            "kind": "blocks",
+            "start": 27,
+            "end": 28,
+            "artifacts": [
+              "blocks-027"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-028",
+            "kind": "blocks",
+            "start": 28,
+            "end": 29,
+            "artifacts": [
+              "blocks-028"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-029",
+            "kind": "blocks",
+            "start": 29,
+            "end": 30,
+            "artifacts": [
+              "blocks-029"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-030",
+            "kind": "blocks",
+            "start": 30,
+            "end": 31,
+            "artifacts": [
+              "blocks-030"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-031",
+            "kind": "blocks",
+            "start": 31,
+            "end": 32,
+            "artifacts": [
+              "blocks-031"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-032",
+            "kind": "blocks",
+            "start": 32,
+            "end": 33,
+            "artifacts": [
+              "blocks-032"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-033",
+            "kind": "blocks",
+            "start": 33,
+            "end": 34,
+            "artifacts": [
+              "blocks-033"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-034",
+            "kind": "blocks",
+            "start": 34,
+            "end": 35,
+            "artifacts": [
+              "blocks-034"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-035",
+            "kind": "blocks",
+            "start": 35,
+            "end": 36,
+            "artifacts": [
+              "blocks-035"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "head",
+            "kind": "head",
+            "start": 36,
+            "end": 36,
+            "artifacts": [
+              "head",
+              "embedding"
+            ],
+            "weight_bytes": 777917696
+          }
+        ],
+        "artifact_bytes": 8044982168
+      }
+    ],
+    "nodes": [
+      {
+        "id": "node-43",
+        "url": "http://stageplane-review-48203-node-43:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-43",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216559616,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 250224640,
+          "available_memory_bytes": 1749774336,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.6,
+          "available_cpu_cores": 0.0040000000000000036,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435516817408,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.5188715,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-11",
+        "url": "http://stageplane-review-48203-node-11:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-11",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 221073408,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 235929600,
+          "available_memory_bytes": 764067840,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435617509376,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.940882,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-29",
+        "url": "http://stageplane-review-48203-node-29:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-29",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 225558528,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 233922560,
+          "available_memory_bytes": 2266075136,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435769110528,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.0709994,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-42",
+        "url": "http://stageplane-review-48203-node-42:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-42",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 220999680,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 234295296,
+          "available_memory_bytes": 1015701504,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435599679488,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.083919,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-02",
+        "url": "http://stageplane-review-48203-node-02:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-02",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 219684864,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 315432960,
+          "available_memory_bytes": 934563840,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435717722112,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432292.1286812,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-13",
+        "url": "http://stageplane-review-48203-node-13:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-13",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 218193920,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 254255104,
+          "available_memory_bytes": 1745743872,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.3,
+          "available_cpu_cores": 0.007000000000000006,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435475918848,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.1498997,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-24",
+        "url": "http://stageplane-review-48203-node-24:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-24",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216604672,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 217665536,
+          "available_memory_bytes": 2282332160,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435816312832,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432296.8320675,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-12",
+        "url": "http://stageplane-review-48203-node-12:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-12",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 226209792,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 229384192,
+          "available_memory_bytes": 1020612608,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.2,
+          "available_cpu_cores": 0.008,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435510525952,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.8200195,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-04",
+        "url": "http://stageplane-review-48203-node-04:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-04",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 215965696,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 268533760,
+          "available_memory_bytes": 2231463936,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435475918848,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.1502635,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-36",
+        "url": "http://stageplane-review-48203-node-36:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-36",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 222208000,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 215785472,
+          "available_memory_bytes": 784211968,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435566116864,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.9245343,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-01",
+        "url": "http://stageplane-review-48203-node-01:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-01",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 220057600,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 222830592,
+          "available_memory_bytes": 777166848,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435817361408,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.4694107,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-35",
+        "url": "http://stageplane-review-48203-node-35:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-35",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 218435584,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 244895744,
+          "available_memory_bytes": 505102336,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 3.8,
+          "available_cpu_cores": 0.012000000000000004,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435516817408,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.6101367,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-15",
+        "url": "http://stageplane-review-48203-node-15:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-15",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 219463680,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 229896192,
+          "available_memory_bytes": 520101888,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.9,
+          "available_cpu_cores": 0.0010000000000000009,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435637436416,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.101287,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-00",
+        "url": "http://stageplane-review-48203-node-00:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-00",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 220069888,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 287023104,
+          "available_memory_bytes": 462974976,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435598630912,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.1957128,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-39",
+        "url": "http://stageplane-review-48203-node-39:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-39",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 217554944,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 245256192,
+          "available_memory_bytes": 2254741504,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.6,
+          "available_cpu_cores": 0.0040000000000000036,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435475918848,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.1505911,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-26",
+        "url": "http://stageplane-review-48203-node-26:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-26",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 229273600,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 382631936,
+          "available_memory_bytes": 617365504,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.8,
+          "available_cpu_cores": 0.0020000000000000018,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 437006753792,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432270.0845292,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-05",
+        "url": "http://stageplane-review-48203-node-05:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-05",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 217251840,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 243077120,
+          "available_memory_bytes": 506920960,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.3,
+          "available_cpu_cores": 0.007000000000000006,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435510525952,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.6445467,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-44",
+        "url": "http://stageplane-review-48203-node-44:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-44",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 217182208,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 237461504,
+          "available_memory_bytes": 2262536192,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.2,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435689877504,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.9639907,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-20",
+        "url": "http://stageplane-review-48203-node-20:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-20",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 220700672,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 231202816,
+          "available_memory_bytes": 518795264,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.2,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435695120384,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432294.7001543,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-28",
+        "url": "http://stageplane-review-48203-node-28:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-28",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 222994432,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 238067712,
+          "available_memory_bytes": 1761931264,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435567165440,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.907719,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-16",
+        "url": "http://stageplane-review-48203-node-16:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-16",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 221335552,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 225136640,
+          "available_memory_bytes": 774860800,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435683586048,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.643841,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-32",
+        "url": "http://stageplane-review-48203-node-32:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-32",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 226504704,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 221708288,
+          "available_memory_bytes": 1028288512,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435726114816,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.1054492,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-17",
+        "url": "http://stageplane-review-48203-node-17:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-17",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 226390016,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 228585472,
+          "available_memory_bytes": 1021411328,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.7,
+          "available_cpu_cores": 0.0030000000000000027,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435522060288,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.510793,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-21",
+        "url": "http://stageplane-review-48203-node-21:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-21",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216678400,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 217178112,
+          "available_memory_bytes": 782819328,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435750236160,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.0823038,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-30",
+        "url": "http://stageplane-review-48203-node-30:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-30",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 232161280,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 233041920,
+          "available_memory_bytes": 516956160,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 436686917632,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432272.7262907,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-25",
+        "url": "http://stageplane-review-48203-node-25:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-25",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 226795520,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 269262848,
+          "available_memory_bytes": 480735232,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.3,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435892871168,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432282.49373,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-14",
+        "url": "http://stageplane-review-48203-node-14:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-14",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216731648,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 228098048,
+          "available_memory_bytes": 2271899648,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.9,
+          "available_cpu_cores": 0.0010000000000000009,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435523112960,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.0557353,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-47",
+        "url": "http://stageplane-review-48203-node-47:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-47",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 226029568,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 220123136,
+          "available_memory_bytes": 1029873664,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 436062773248,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432286.6712606,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-31",
+        "url": "http://stageplane-review-48203-node-31:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-31",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 230326272,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 216563712,
+          "available_memory_bytes": 783433728,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435946352640,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862912,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432289.3662035,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-37",
+        "url": "http://stageplane-review-48203-node-37:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-37",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 218349568,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 267919360,
+          "available_memory_bytes": 982077440,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.2,
+          "available_cpu_cores": 0.008,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435478020096,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.1511624,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-07",
+        "url": "http://stageplane-review-48203-node-07:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-07",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 221650944,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 221294592,
+          "available_memory_bytes": 1028702208,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.9,
+          "available_cpu_cores": 0.0010000000000000009,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435826798592,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.0528984,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-23",
+        "url": "http://stageplane-review-48203-node-23:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-23",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216702976,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 236404736,
+          "available_memory_bytes": 1763594240,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435684634624,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.059974,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-08",
+        "url": "http://stageplane-review-48203-node-08:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-08",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 219787264,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 371130368,
+          "available_memory_bytes": 1628868608,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.3,
+          "available_cpu_cores": 0.007000000000000006,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435572416512,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.9613929,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-19",
+        "url": "http://stageplane-review-48203-node-19:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-19",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 225443840,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 225247232,
+          "available_memory_bytes": 2274750464,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.2,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435807920128,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.3975534,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-22",
+        "url": "http://stageplane-review-48203-node-22:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-22",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 228712448,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 225853440,
+          "available_memory_bytes": 1024143360,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 436068020224,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432286.8788116,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-33",
+        "url": "http://stageplane-review-48203-node-33:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-33",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 228581376,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 244940800,
+          "available_memory_bytes": 1755058176,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.2,
+          "available_cpu_cores": 0.008,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 436103680000,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432276.5815022,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-49",
+        "url": "http://stageplane-review-48203-node-49:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-49",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 217321472,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 259969024,
+          "available_memory_bytes": 2240028672,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435575562240,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 5240,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.6628478,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-34",
+        "url": "http://stageplane-review-48203-node-34:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-34",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 226287616,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 251293696,
+          "available_memory_bytes": 2248704000,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435484311552,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.0552268,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-45",
+        "url": "http://stageplane-review-48203-node-45:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-45",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216887296,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 228376576,
+          "available_memory_bytes": 521621504,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435654213632,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.6579914,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-09",
+        "url": "http://stageplane-review-48203-node-09:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-09",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216772608,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 247869440,
+          "available_memory_bytes": 2252128256,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435566116864,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.856377,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-38",
+        "url": "http://stageplane-review-48203-node-38:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-38",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 215236608,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 245329920,
+          "available_memory_bytes": 1754669056,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.6,
+          "available_cpu_cores": 0.0040000000000000036,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435570319360,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 5240,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.9891162,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-46",
+        "url": "http://stageplane-review-48203-node-46:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-46",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 225542144,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 232988672,
+          "available_memory_bytes": 767008768,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.1,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435724017664,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.8587046,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-41",
+        "url": "http://stageplane-review-48203-node-41:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-41",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 218816512,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 262660096,
+          "available_memory_bytes": 737337344,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.5,
+          "available_cpu_cores": 0.0050000000000000044,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435483262976,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.0905745,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-03",
+        "url": "http://stageplane-review-48203-node-03:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-03",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 215179264,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 227217408,
+          "available_memory_bytes": 1772781568,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.8,
+          "available_cpu_cores": 0.0020000000000000018,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435658407936,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432298.9889631,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-48",
+        "url": "http://stageplane-review-48203-node-48:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-48",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 222519296,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 224194560,
+          "available_memory_bytes": 1775804416,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435615412224,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432300.1601856,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-18",
+        "url": "http://stageplane-review-48203-node-18:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1999998976,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-18",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 219996160,
+          "memory_limit_bytes": 1999998976,
+          "memory_used_bytes": 231673856,
+          "available_memory_bytes": 1768325120,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435678343168,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432299.8911893,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-40",
+        "url": "http://stageplane-review-48203-node-40:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-40",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 220893184,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 224206848,
+          "available_memory_bytes": 525791232,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.0,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435645825024,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432301.0847244,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-27",
+        "url": "http://stageplane-review-48203-node-27:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 1249996800,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-27",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 230735872,
+          "memory_limit_bytes": 1249996800,
+          "memory_used_bytes": 222294016,
+          "available_memory_bytes": 1027702784,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.3,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435945304064,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862904,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432283.3842053,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-06",
+        "url": "http://stageplane-review-48203-node-06:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 999997440,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-06",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 228560896,
+          "memory_limit_bytes": 999997440,
+          "memory_used_bytes": 334970880,
+          "available_memory_bytes": 665026560,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 5.4,
+          "available_cpu_cores": 0,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 436061724672,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 0,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432276.8910022,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-10",
+        "url": "http://stageplane-review-48203-node-10:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 749998080,
+        "cpu_cores": 0.05,
+        "speed": 1.0,
+        "failure_domain": "node-10",
+        "ready": [],
+        "metrics": {
+          "stage_ms": {},
+          "calls": 0,
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "rss_bytes": 216014848,
+          "memory_limit_bytes": 749998080,
+          "memory_used_bytes": 352276480,
+          "available_memory_bytes": 397721600,
+          "cpu_limit_cores": 0.05,
+          "cpu_usage_percent": 4.7,
+          "available_cpu_cores": 0.0030000000000000027,
+          "loaded_weight_bytes": 0,
+          "available_storage_bytes": 435708772352,
+          "sessions": 0,
+          "errors": {},
+          "cache_bytes": 201862896,
+          "transport": {
+            "request_payload_bytes": 0,
+            "response_payload_bytes": 0,
+            "calls": 0
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793432292.987152,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      }
+    ],
+    "deployments": {
+      "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1": {
+        "replicas": 1,
+        "groups": 1,
+        "placements": {
+          "head": [],
+          "embedding": [],
+          "blocks-015": [
+            "node-35"
+          ],
+          "blocks-010": [
+            "node-35"
+          ],
+          "blocks-011": [],
+          "blocks-012": [],
+          "blocks-013": [],
+          "blocks-014": [],
+          "blocks-016": [],
+          "blocks-017": [],
+          "blocks-018": [],
+          "blocks-019": [],
+          "blocks-020": [],
+          "blocks-021": [],
+          "blocks-022": [],
+          "blocks-023": [],
+          "blocks-024": [],
+          "blocks-025": [],
+          "blocks-026": [],
+          "blocks-027": [],
+          "blocks-028": [],
+          "blocks-029": [],
+          "blocks-030": [],
+          "blocks-031": [],
+          "blocks-032": [],
+          "blocks-033": [],
+          "blocks-034": [],
+          "blocks-035": [],
+          "blocks-000": [],
+          "blocks-001": [],
+          "blocks-002": [],
+          "blocks-003": [],
+          "blocks-004": [],
+          "blocks-005": [],
+          "blocks-006": [],
+          "blocks-007": [],
+          "blocks-008": [],
+          "blocks-009": []
+        },
+        "capacity": {
+          "status": "insufficient_capacity",
+          "message": "Not enough memory available to run this model. Kindly add more nodes.",
+          "reason": "memory",
+          "unassigned_stages": [
+            "embedding",
+            "blocks-000",
+            "blocks-001",
+            "blocks-002",
+            "blocks-003",
+            "blocks-004",
+            "blocks-005",
+            "blocks-006",
+            "blocks-007",
+            "blocks-008",
+            "blocks-009",
+            "blocks-011",
+            "blocks-012",
+            "blocks-013",
+            "blocks-014",
+            "blocks-016",
+            "blocks-017",
+            "blocks-018",
+            "blocks-019",
+            "blocks-020",
+            "blocks-021",
+            "blocks-022",
+            "blocks-023",
+            "blocks-024",
+            "blocks-025",
+            "blocks-026",
+            "blocks-027",
+            "blocks-028",
+            "blocks-029",
+            "blocks-030",
+            "blocks-031",
+            "blocks-032",
+            "blocks-033",
+            "blocks-034",
+            "blocks-035",
+            "head"
+          ],
+          "available_weight_budget_bytes": 62558404608,
+          "required_stage_storage_bytes": 8822894624
+        }
+      }
+    },
+    "events": [
+      {
+        "id": "8010b096-c454-453f-b0fe-bc5004ccc2d6",
+        "kind": "node_joined",
+        "time": 1793432157.9323833,
+        "node": "node-43",
+        "group": 0
+      },
+      {
+        "id": "be89e12b-f7cf-4e2b-b8b3-1a2917c36804",
+        "kind": "node_joined",
+        "time": 1793432157.9534574,
+        "node": "node-11",
+        "group": 0
+      },
+      {
+        "id": "2c0241a8-dac8-4da6-9146-689dbdd518db",
+        "kind": "node_joined",
+        "time": 1793432158.0838745,
+        "node": "node-29",
+        "group": 0
+      },
+      {
+        "id": "b8329497-7267-4a6a-9828-e2ef6419468d",
+        "kind": "node_joined",
+        "time": 1793432158.087791,
+        "node": "node-42",
+        "group": 0
+      },
+      {
+        "id": "cc1fd3b4-7492-4260-8594-660b76599f55",
+        "kind": "node_joined",
+        "time": 1793432158.3378432,
+        "node": "node-02",
+        "group": 0
+      },
+      {
+        "id": "fa7b932d-b2fb-4920-886d-b21e9047b000",
+        "kind": "node_joined",
+        "time": 1793432159.1316001,
+        "node": "node-13",
+        "group": 0
+      },
+      {
+        "id": "9948e766-8a83-4c51-9441-01edd4ab25b1",
+        "kind": "node_joined",
+        "time": 1793432159.14125,
+        "node": "node-24",
+        "group": 0
+      },
+      {
+        "id": "88d3d25a-e41b-456d-8279-3e88a059dd9d",
+        "kind": "node_joined",
+        "time": 1793432159.527714,
+        "node": "node-12",
+        "group": 0
+      },
+      {
+        "id": "f4ad09f5-c48f-41be-98df-9213490dcb60",
+        "kind": "node_joined",
+        "time": 1793432159.5335639,
+        "node": "node-04",
+        "group": 0
+      },
+      {
+        "id": "224ad90a-05a2-4566-94ea-9dc39d149b50",
+        "kind": "node_joined",
+        "time": 1793432159.933255,
+        "node": "node-36",
+        "group": 0
+      },
+      {
+        "id": "099a2061-b795-4d67-96c8-b443b19acdb6",
+        "kind": "node_joined",
+        "time": 1793432167.379376,
+        "node": "node-01",
+        "group": 0
+      },
+      {
+        "id": "9125bff1-6126-4988-8046-0a925f2b087a",
+        "kind": "node_joined",
+        "time": 1793432170.4207659,
+        "node": "node-35",
+        "group": 0
+      },
+      {
+        "id": "c118204a-45c2-40a6-a09f-178241c35b31",
+        "kind": "node_joined",
+        "time": 1793432170.6115124,
+        "node": "node-15",
+        "group": 0
+      },
+      {
+        "id": "40db27d7-a756-4259-8a27-60b6c6020989",
+        "kind": "node_joined",
+        "time": 1793432171.5098,
+        "node": "node-00",
+        "group": 0
+      },
+      {
+        "id": "309c64e6-3494-4fe4-9c9e-2d80332f24f7",
+        "kind": "node_joined",
+        "time": 1793432171.6542037,
+        "node": "node-39",
+        "group": 0
+      },
+      {
+        "id": "5cb67408-8154-4505-8bbb-06c376483873",
+        "kind": "node_joined",
+        "time": 1793432171.9891238,
+        "node": "node-26",
+        "group": 0
+      },
+      {
+        "id": "ede4befd-5c58-4845-bd1f-bd167c2fef5e",
+        "kind": "node_joined",
+        "time": 1793432172.5516832,
+        "node": "node-05",
+        "group": 0
+      },
+      {
+        "id": "717bc249-2475-4615-8aca-7d9545c98402",
+        "kind": "node_joined",
+        "time": 1793432172.5561228,
+        "node": "node-44",
+        "group": 0
+      },
+      {
+        "id": "9f46c82e-0574-4d96-932a-835382044d48",
+        "kind": "node_joined",
+        "time": 1793432172.7143056,
+        "node": "node-20",
+        "group": 0
+      },
+      {
+        "id": "be2228bb-a470-406a-882e-94bee405c680",
+        "kind": "node_joined",
+        "time": 1793432172.7210221,
+        "node": "node-28",
+        "group": 0
+      },
+      {
+        "id": "f65acd5d-ee69-44cf-bbbe-f78a0032a32f",
+        "kind": "node_joined",
+        "time": 1793432173.5549982,
+        "node": "node-16",
+        "group": 0
+      },
+      {
+        "id": "4a23c43a-ab5d-4c8e-a183-669942f8c352",
+        "kind": "node_joined",
+        "time": 1793432175.3170671,
+        "node": "node-32",
+        "group": 0
+      },
+      {
+        "id": "7ce7e381-a3e5-49cc-86ca-8296d2d2f1a3",
+        "kind": "node_joined",
+        "time": 1793432177.1192966,
+        "node": "node-17",
+        "group": 0
+      },
+      {
+        "id": "9bbeef40-8c5a-4c85-b37a-4e2b4b9a5974",
+        "kind": "node_joined",
+        "time": 1793432178.1902666,
+        "node": "node-21",
+        "group": 0
+      },
+      {
+        "id": "06f21459-0dad-4536-8989-74039521d1fd",
+        "kind": "node_joined",
+        "time": 1793432178.4150546,
+        "node": "node-30",
+        "group": 0
+      },
+      {
+        "id": "cda5f4bf-5e6b-4a4f-965e-e49c9db180e6",
+        "kind": "node_joined",
+        "time": 1793432179.0169983,
+        "node": "node-25",
+        "group": 0
+      },
+      {
+        "id": "960f19c0-d82d-4c47-a68a-2355ad149fd8",
+        "kind": "node_joined",
+        "time": 1793432180.0637958,
+        "node": "node-14",
+        "group": 0
+      },
+      {
+        "id": "e8774dc4-431a-47f8-ac63-8f4ea434d9ab",
+        "kind": "node_joined",
+        "time": 1793432180.578407,
+        "node": "node-47",
+        "group": 0
+      },
+      {
+        "id": "53d66ef7-08e1-4da0-b61a-e571287f29ad",
+        "kind": "node_joined",
+        "time": 1793432180.6737769,
+        "node": "node-31",
+        "group": 0
+      },
+      {
+        "id": "e40e2f34-6be9-4f54-b9d7-56735f47836a",
+        "kind": "node_joined",
+        "time": 1793432182.1577592,
+        "node": "node-37",
+        "group": 0
+      },
+      {
+        "id": "a613a348-da4d-4896-8a4d-1b2d8a1589e3",
+        "kind": "node_joined",
+        "time": 1793432188.8742428,
+        "node": "node-07",
+        "group": 0
+      },
+      {
+        "id": "29b73c14-a598-47c5-b321-8571d151722f",
+        "kind": "node_joined",
+        "time": 1793432189.6846833,
+        "node": "node-23",
+        "group": 0
+      },
+      {
+        "id": "427a03ea-3720-40ef-a80b-94ae0582bea6",
+        "kind": "node_joined",
+        "time": 1793432189.6851063,
+        "node": "node-08",
+        "group": 0
+      },
+      {
+        "id": "34752dbc-b4ab-4c19-a02a-8d6a06b272a4",
+        "kind": "node_joined",
+        "time": 1793432191.114032,
+        "node": "node-19",
+        "group": 0
+      },
+      {
+        "id": "3aed6d67-11d3-442b-8616-ab09992c7cde",
+        "kind": "node_joined",
+        "time": 1793432191.4018226,
+        "node": "node-22",
+        "group": 0
+      },
+      {
+        "id": "02f3b7a9-25ee-49e2-8a98-03285a8d7bc3",
+        "kind": "node_joined",
+        "time": 1793432191.6030748,
+        "node": "node-33",
+        "group": 0
+      },
+      {
+        "id": "17c35e06-bc74-4778-9a34-72e198451f90",
+        "kind": "node_joined",
+        "time": 1793432192.1814914,
+        "node": "node-49",
+        "group": 0
+      },
+      {
+        "id": "b0f5c34b-de57-4879-829d-e3e38d38ba07",
+        "kind": "node_joined",
+        "time": 1793432193.7781794,
+        "node": "node-34",
+        "group": 0
+      },
+      {
+        "id": "0d298fdd-f849-49ea-8ec8-c463477fc9d8",
+        "kind": "node_joined",
+        "time": 1793432193.8811016,
+        "node": "node-45",
+        "group": 0
+      },
+      {
+        "id": "c36a6d2e-13ae-47f5-bc34-5999de8ec270",
+        "kind": "node_joined",
+        "time": 1793432194.2926283,
+        "node": "node-09",
+        "group": 0
+      },
+      {
+        "id": "36650818-1b08-4819-9eec-4374909ee51c",
+        "kind": "node_joined",
+        "time": 1793432195.713259,
+        "node": "node-38",
+        "group": 0
+      },
+      {
+        "id": "d70c6013-6890-4b18-9ac0-505df08d9330",
+        "kind": "node_joined",
+        "time": 1793432195.977296,
+        "node": "node-46",
+        "group": 0
+      },
+      {
+        "id": "be003dd5-a7a7-47c3-815a-c87cbc3b4edb",
+        "kind": "node_joined",
+        "time": 1793432198.1131952,
+        "node": "node-41",
+        "group": 0
+      },
+      {
+        "id": "c8fab0e4-b5c2-472f-8277-19d1e6444067",
+        "kind": "node_joined",
+        "time": 1793432198.4114404,
+        "node": "node-03",
+        "group": 0
+      },
+      {
+        "id": "635e9c2f-52d8-4f87-a099-1ef173e59f9d",
+        "kind": "node_joined",
+        "time": 1793432198.4776454,
+        "node": "node-48",
+        "group": 0
+      },
+      {
+        "id": "1d8027d5-42c4-49f7-a3de-f2270e372e77",
+        "kind": "node_joined",
+        "time": 1793432199.6087768,
+        "node": "node-18",
+        "group": 0
+      },
+      {
+        "id": "f8470223-9e43-494f-85fe-6e3180d1ea56",
+        "kind": "node_joined",
+        "time": 1793432199.9057822,
+        "node": "node-40",
+        "group": 0
+      },
+      {
+        "id": "615f3f42-53aa-4446-a373-b4ce4d0a1604",
+        "kind": "node_joined",
+        "time": 1793432200.3052342,
+        "node": "node-27",
+        "group": 0
+      },
+      {
+        "id": "ba1c6a30-31d2-4a83-9819-95e869c4cbb7",
+        "kind": "node_joined",
+        "time": 1793432200.30585,
+        "node": "node-06",
+        "group": 0
+      },
+      {
+        "id": "57d26f57-73ab-40bd-a703-6633330d1218",
+        "kind": "node_joined",
+        "time": 1793432210.3067367,
+        "node": "node-10",
+        "group": 0
+      },
+      {
+        "id": "00587671-af0a-4824-8abb-252545913446",
+        "kind": "placement",
+        "time": 1793432210.5749907,
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "chunks": [
+          "head",
+          "embedding",
+          "blocks-015",
+          "blocks-010",
+          "blocks-011",
+          "blocks-012",
+          "blocks-013",
+          "blocks-014",
+          "blocks-016",
+          "blocks-017",
+          "blocks-018",
+          "blocks-019",
+          "blocks-020",
+          "blocks-021",
+          "blocks-022",
+          "blocks-023",
+          "blocks-024",
+          "blocks-025",
+          "blocks-026",
+          "blocks-027",
+          "blocks-028",
+          "blocks-029",
+          "blocks-030",
+          "blocks-031",
+          "blocks-032",
+          "blocks-033",
+          "blocks-034",
+          "blocks-035",
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009"
+        ],
+        "placements": {
+          "head": [
+            "node-38"
+          ],
+          "embedding": [
+            "node-04"
+          ],
+          "blocks-015": [
+            "node-31"
+          ],
+          "blocks-010": [
+            "node-34"
+          ],
+          "blocks-011": [
+            "node-27"
+          ],
+          "blocks-012": [
+            "node-12"
+          ],
+          "blocks-013": [
+            "node-48"
+          ],
+          "blocks-014": [
+            "node-16"
+          ],
+          "blocks-016": [
+            "node-48"
+          ],
+          "blocks-017": [
+            "node-22"
+          ],
+          "blocks-018": [
+            "node-12"
+          ],
+          "blocks-019": [
+            "node-12"
+          ],
+          "blocks-020": [
+            "node-19"
+          ],
+          "blocks-021": [
+            "node-07"
+          ],
+          "blocks-022": [
+            "node-26"
+          ],
+          "blocks-023": [
+            "node-17"
+          ],
+          "blocks-024": [
+            "node-31"
+          ],
+          "blocks-025": [
+            "node-32"
+          ],
+          "blocks-026": [
+            "node-32"
+          ],
+          "blocks-027": [
+            "node-26"
+          ],
+          "blocks-028": [
+            "node-29"
+          ],
+          "blocks-029": [
+            "node-26"
+          ],
+          "blocks-030": [
+            "node-24"
+          ],
+          "blocks-031": [
+            "node-47"
+          ],
+          "blocks-032": [
+            "node-28"
+          ],
+          "blocks-033": [
+            "node-48"
+          ],
+          "blocks-034": [
+            "node-16"
+          ],
+          "blocks-035": [
+            "node-48"
+          ],
+          "blocks-000": [
+            "node-01"
+          ],
+          "blocks-001": [
+            "node-30"
+          ],
+          "blocks-002": [
+            "node-07"
+          ],
+          "blocks-003": [
+            "node-07"
+          ],
+          "blocks-004": [
+            "node-21"
+          ],
+          "blocks-005": [
+            "node-17"
+          ],
+          "blocks-006": [
+            "node-01"
+          ],
+          "blocks-007": [
+            "node-36"
+          ],
+          "blocks-008": [
+            "node-40"
+          ],
+          "blocks-009": [
+            "node-46"
+          ]
+        }
+      },
+      {
+        "id": "de03f23d-70ff-4156-94cf-4c78f3251244",
+        "kind": "placement",
+        "time": 1793432240.63516,
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "chunks": [
+          "head",
+          "embedding",
+          "blocks-015",
+          "blocks-010",
+          "blocks-011",
+          "blocks-012",
+          "blocks-013",
+          "blocks-014",
+          "blocks-016",
+          "blocks-017",
+          "blocks-018",
+          "blocks-019",
+          "blocks-020",
+          "blocks-021",
+          "blocks-022",
+          "blocks-023",
+          "blocks-024",
+          "blocks-025",
+          "blocks-026",
+          "blocks-027",
+          "blocks-028",
+          "blocks-029",
+          "blocks-030",
+          "blocks-031",
+          "blocks-032",
+          "blocks-033",
+          "blocks-034",
+          "blocks-035",
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009"
+        ],
+        "placements": {
+          "head": [
+            "node-49"
+          ],
+          "embedding": [
+            "node-13"
+          ],
+          "blocks-015": [
+            "node-43"
+          ],
+          "blocks-010": [
+            "node-02"
+          ],
+          "blocks-011": [
+            "node-33"
+          ],
+          "blocks-012": [
+            "node-11"
+          ],
+          "blocks-013": [
+            "node-13"
+          ],
+          "blocks-014": [
+            "node-18"
+          ],
+          "blocks-016": [
+            "node-42"
+          ],
+          "blocks-017": [
+            "node-44"
+          ],
+          "blocks-018": [
+            "node-03"
+          ],
+          "blocks-019": [
+            "node-45"
+          ],
+          "blocks-020": [
+            "node-13"
+          ],
+          "blocks-021": [
+            "node-20"
+          ],
+          "blocks-022": [
+            "node-42"
+          ],
+          "blocks-023": [
+            "node-02"
+          ],
+          "blocks-024": [
+            "node-13"
+          ],
+          "blocks-025": [
+            "node-02"
+          ],
+          "blocks-026": [
+            "node-03"
+          ],
+          "blocks-027": [
+            "node-14"
+          ],
+          "blocks-028": [
+            "node-25"
+          ],
+          "blocks-029": [
+            "node-13"
+          ],
+          "blocks-030": [
+            "node-43"
+          ],
+          "blocks-031": [
+            "node-44"
+          ],
+          "blocks-032": [
+            "node-18"
+          ],
+          "blocks-033": [
+            "node-00"
+          ],
+          "blocks-034": [
+            "node-15"
+          ],
+          "blocks-035": [
+            "node-08"
+          ],
+          "blocks-000": [
+            "node-11"
+          ],
+          "blocks-001": [
+            "node-44"
+          ],
+          "blocks-002": [
+            "node-10"
+          ],
+          "blocks-003": [
+            "node-03"
+          ],
+          "blocks-004": [
+            "node-18"
+          ],
+          "blocks-005": [
+            "node-23"
+          ],
+          "blocks-006": [
+            "node-11"
+          ],
+          "blocks-007": [
+            "node-02"
+          ],
+          "blocks-008": [
+            "node-44"
+          ],
+          "blocks-009": [
+            "node-06"
+          ]
+        }
+      },
+      {
+        "id": "d30a769d-2134-48e5-98aa-dd22ef3d30ca",
+        "kind": "placement",
+        "time": 1793432270.7281177,
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "chunks": [
+          "embedding",
+          "blocks-015",
+          "blocks-010",
+          "blocks-011",
+          "blocks-012",
+          "blocks-013",
+          "blocks-014",
+          "blocks-016",
+          "blocks-017",
+          "blocks-018",
+          "blocks-019",
+          "blocks-020",
+          "blocks-021",
+          "blocks-022",
+          "blocks-023",
+          "blocks-024",
+          "blocks-025",
+          "blocks-026",
+          "blocks-028",
+          "blocks-029",
+          "blocks-030",
+          "blocks-031",
+          "blocks-032",
+          "blocks-033",
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008"
+        ],
+        "placements": {
+          "head": [
+            "node-49"
+          ],
+          "embedding": [
+            "node-39"
+          ],
+          "blocks-015": [
+            "node-09"
+          ],
+          "blocks-010": [
+            "node-09"
+          ],
+          "blocks-011": [
+            "node-39"
+          ],
+          "blocks-012": [
+            "node-41"
+          ],
+          "blocks-013": [
+            "node-41"
+          ],
+          "blocks-014": [
+            "node-09"
+          ],
+          "blocks-016": [
+            "node-37"
+          ],
+          "blocks-017": [
+            "node-37"
+          ],
+          "blocks-018": [
+            "node-41"
+          ],
+          "blocks-019": [
+            "node-39"
+          ],
+          "blocks-020": [
+            "node-35"
+          ],
+          "blocks-021": [
+            "node-49"
+          ],
+          "blocks-022": [
+            "node-39"
+          ],
+          "blocks-023": [
+            "node-35"
+          ],
+          "blocks-024": [
+            "node-37"
+          ],
+          "blocks-025": [
+            "node-09"
+          ],
+          "blocks-026": [
+            "node-05"
+          ],
+          "blocks-027": [
+            "node-14"
+          ],
+          "blocks-028": [
+            "node-14"
+          ],
+          "blocks-029": [
+            "node-14"
+          ],
+          "blocks-030": [
+            "node-06"
+          ],
+          "blocks-031": [
+            "node-09"
+          ],
+          "blocks-032": [
+            "node-39"
+          ],
+          "blocks-033": [
+            "node-39"
+          ],
+          "blocks-034": [
+            "node-15"
+          ],
+          "blocks-035": [
+            "node-08"
+          ],
+          "blocks-000": [
+            "node-09"
+          ],
+          "blocks-001": [
+            "node-05"
+          ],
+          "blocks-002": [
+            "node-37"
+          ],
+          "blocks-003": [
+            "node-15"
+          ],
+          "blocks-004": [
+            "node-49"
+          ],
+          "blocks-005": [
+            "node-39"
+          ],
+          "blocks-006": [
+            "node-09"
+          ],
+          "blocks-007": [
+            "node-09"
+          ],
+          "blocks-008": [
+            "node-09"
+          ],
+          "blocks-009": [
+            "node-06"
+          ]
+        }
+      },
+      {
+        "id": "6f0b11d6-3808-4657-bb6c-ad9911c2054d",
+        "kind": "insufficient_capacity",
+        "time": 1793432300.94882,
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "status": "insufficient_capacity",
+        "message": "Not enough memory available to run this model. Kindly add more nodes.",
+        "reason": "memory",
+        "unassigned_stages": [
+          "embedding",
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009",
+          "blocks-011",
+          "blocks-012",
+          "blocks-013",
+          "blocks-014",
+          "blocks-016",
+          "blocks-017",
+          "blocks-018",
+          "blocks-019",
+          "blocks-020",
+          "blocks-021",
+          "blocks-022",
+          "blocks-023",
+          "blocks-024",
+          "blocks-025",
+          "blocks-026",
+          "blocks-027",
+          "blocks-028",
+          "blocks-029",
+          "blocks-030",
+          "blocks-031",
+          "blocks-032",
+          "blocks-033",
+          "blocks-034",
+          "blocks-035",
+          "head"
+        ],
+        "available_weight_budget_bytes": 62558404608,
+        "required_stage_storage_bytes": 8822894624
+      },
+      {
+        "id": "33af2fbd-81bf-417d-8f2e-7cd7b5351ed7",
+        "kind": "placement",
+        "time": 1793432300.9628425,
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "chunks": [
+          "head",
+          "embedding",
+          "blocks-015",
+          "blocks-010",
+          "blocks-011",
+          "blocks-012",
+          "blocks-013",
+          "blocks-014",
+          "blocks-016",
+          "blocks-017",
+          "blocks-018",
+          "blocks-019",
+          "blocks-020",
+          "blocks-021",
+          "blocks-022",
+          "blocks-023",
+          "blocks-024",
+          "blocks-025",
+          "blocks-026",
+          "blocks-027",
+          "blocks-028",
+          "blocks-029",
+          "blocks-030",
+          "blocks-031",
+          "blocks-032",
+          "blocks-033",
+          "blocks-034",
+          "blocks-035",
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009"
+        ],
+        "placements": {
+          "head": [],
+          "embedding": [],
+          "blocks-015": [
+            "node-35"
+          ],
+          "blocks-010": [
+            "node-35"
+          ],
+          "blocks-011": [],
+          "blocks-012": [],
+          "blocks-013": [],
+          "blocks-014": [],
+          "blocks-016": [],
+          "blocks-017": [],
+          "blocks-018": [],
+          "blocks-019": [],
+          "blocks-020": [],
+          "blocks-021": [],
+          "blocks-022": [],
+          "blocks-023": [],
+          "blocks-024": [],
+          "blocks-025": [],
+          "blocks-026": [],
+          "blocks-027": [],
+          "blocks-028": [],
+          "blocks-029": [],
+          "blocks-030": [],
+          "blocks-031": [],
+          "blocks-032": [],
+          "blocks-033": [],
+          "blocks-034": [],
+          "blocks-035": [],
+          "blocks-000": [],
+          "blocks-001": [],
+          "blocks-002": [],
+          "blocks-003": [],
+          "blocks-004": [],
+          "blocks-005": [],
+          "blocks-006": [],
+          "blocks-007": [],
+          "blocks-008": [],
+          "blocks-009": []
+        }
+      }
+    ],
+    "requests": [],
+    "time": 1793432301.1522312,
+    "transport": {
+      "request_payload_bytes": 0,
+      "response_payload_bytes": 0,
+      "calls": 0
+    }
+  },
+  "containers": [
+    {
+      "node": "node-00",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5776,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.022853714Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-01",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5701,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.016825547Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-02",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5804,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.030900297Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-03",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5738,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.021035922Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-04",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5784,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.027904756Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-05",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5923,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.437842297Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-06",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5949,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.470294172Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-07",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5987,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.541593131Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-08",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6025,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.599822173Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-09",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6245,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.901730214Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-10",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6231,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.911591631Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-11",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6225,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.904282756Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-12",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6264,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:07.910663381Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-13",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6331,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.052857131Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-14",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6403,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.197695631Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-15",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6453,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.24746434Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-16",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6562,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.381442673Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-17",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6578,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.42258884Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-18",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6646,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.52296084Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-19",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6647,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.532793506Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-20",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6701,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.616051465Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-21",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6802,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:08.929203632Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-22",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6860,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.05216309Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-23",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6891,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.071398132Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-24",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6936,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.116143173Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-25",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6987,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.380865507Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-26",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7113,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.818277424Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-27",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7179,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.877203007Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-28",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7180,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.891774424Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-29",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7217,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:09.952206424Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-30",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7268,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.079145674Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-31",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7348,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.362922799Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-32",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7470,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.548951174Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-33",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7419,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.534531174Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-34",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7511,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.715499174Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-35",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7551,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.762616382Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-36",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7606,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:10.852973757Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-37",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7688,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.056906674Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-38",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7756,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.244381674Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-39",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7830,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.313252633Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-40",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7845,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.318416383Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-41",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7894,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.422589966Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-42",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7958,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.639379841Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-43",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8017,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.763889258Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-44",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8080,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:11.892768633Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-45",
+      "memory_bytes": 750000000,
+      "memory_swap_bytes": 750000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8135,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:12.044579758Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-46",
+      "memory_bytes": 1000000000,
+      "memory_swap_bytes": 1000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8194,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:12.196295591Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-47",
+      "memory_bytes": 1250000000,
+      "memory_swap_bytes": 1250000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8242,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:12.267363591Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-48",
+      "memory_bytes": 2000000000,
+      "memory_swap_bytes": 2000000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8288,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:12.388366008Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-49",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 50000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8372,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T07:34:12.553254133Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    }
+  ],
+  "oom_count": 0,
+  "registered_nodes": 50,
+  "completed_inference": false
+}

@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/bundles/:model"
+method: GET
+headers:
+  Accept: application/zip
+pathVariables:
+  - key: model
+    value: string
+    disabled: false
+    description: "(Required) "
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Download a portable ZIP64 Stageplane bundle for publishing.resources/examples
+order: 8000

@@ -1,0 +1,16 @@
+name: tests
+on: [push, pull_request]
+jobs:
+  inference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --python 3.13 --extra test --locked
+      - run: uv run --extra test pytest -q
+      - run: docker compose config --quiet
+        env:
+          STAGEPLANE_TOKEN: ci-configuration-only

@@ -1,0 +1,43 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/nodes/:node_id/heartbeat"
+  method: POST
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+    - key: Accept
+      value: application/json
+  pathVariables:
+    - key: node_id
+      value: string
+      disabled: false
+      description: "(Required) "
+  body:
+    type: json
+    content: |-
+      {
+        "id": "M9StZmwGWZwmMW6q6eFSCki1P062LcS",
+        "url": "http://umEzl.tunpy2MJRfOA6EVGvGgkSR4gDPxoQYQDX5mhXlQUv1YJrNTBV4IihaS6jKqRd-x-w3y6mZ0",
+        "grpc_url": "string",
+        "transport": "websocket",
+        "group": 4822,
+        "memory_bytes": 5561,
+        "speed": 3197.190607402725,
+        "failure_domain": "string",
+        "ready": [
+          "string",
+          "string"
+        ],
+        "metrics": {},
+        "cpu_cores": 4175.547711409861
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: "{}"
+order: 1000

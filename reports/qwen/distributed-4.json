@@ -1,0 +1,563 @@
+{
+  "mode": "distributed-4",
+  "load_s": 11.302890582941473,
+  "warmup": {
+    "prompt": "What is 2 plus 2? Answer briefly.",
+    "prompt_tokens": 23,
+    "token_ids": [
+      19,
+      248046
+    ],
+    "output": "4",
+    "elapsed_ms": 4226.814083056524,
+    "ttft_ms": 2640.711500076577,
+    "token_ms": [
+      2640.711500076577,
+      1582.4082910548896
+    ],
+    "wire_payload_bytes": 20882460,
+    "tokens_per_second": 0.4731696168083517,
+    "server_metrics": {
+      "id": "chatcmpl-c6f98a0ed12c41689a9e9a39ca13a4f1",
+      "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+      "status": "completed",
+      "started": 1793426039.7241411,
+      "prompt_tokens": 23,
+      "output_tokens": 2,
+      "recoveries": 0,
+      "token_ms": [
+        2178.0079999007285,
+        1582.195458933711
+      ],
+      "boundary_bytes": 884736,
+      "ttft_ms": 2178.0714159831405,
+      "elapsed_ms": 3760.7464578468353,
+      "tokens_per_second": 0.5318093156285449
+    }
+  },
+  "trials": [
+    {
+      "prompt": "What is 2 plus 2? Answer briefly.",
+      "prompt_tokens": 23,
+      "token_ids": [
+        19,
+        248046
+      ],
+      "output": "4",
+      "elapsed_ms": 3242.1071669086814,
+      "ttft_ms": 1689.3557088915259,
+      "token_ms": [
+        1689.3557088915259,
+        1549.6084161568433
+      ],
+      "wire_payload_bytes": 20882482,
+      "tokens_per_second": 0.6168827546521175,
+      "server_metrics": {
+        "id": "chatcmpl-335f6d1b6cea4d3e87437ad5144c2652",
+        "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+        "status": "completed",
+        "started": 1793426043.5034199,
+        "prompt_tokens": 23,
+        "output_tokens": 2,
+        "recoveries": 0,
+        "token_ms": [
+          1687.9172080662102,
+          1549.4282499421388
+        ],
+        "boundary_bytes": 884736,
+        "ttft_ms": 1687.9543329123408,
+        "elapsed_ms": 3237.791375024244,
+        "tokens_per_second": 0.6177050243038047
+      }
+    },
+    {
+      "prompt": "Explain why distributed transformer inference needs to transfer activations between successive layers.",
+      "prompt_tokens": 26,
+      "token_ids": [
+        35,
+        24348,
+        41163,
+        42903,
+        7225,
+        48270,
+        89303,
+        1881,
+        47286,
+        13224,
+        1521,
+        2972,
+        4549,
+        261,
+        13224,
+        513
+      ],
+      "output": "Distributed transformer inference requires transferring activations between successive layers because **transformer layers are",
+      "elapsed_ms": 26739.71291584894,
+      "ttft_ms": 1730.4050829261541,
+      "token_ms": [
+        1730.4050829261541,
+        1582.407624926418,
+        1572.4426249507815,
+        1593.121042009443,
+        1552.1923331543803,
+        1553.4752500243485,
+        1514.6502498537302,
+        1552.8574581258,
+        1591.051666997373,
+        1582.347207935527,
+        1577.0312089007348,
+        1580.6771661154926,
+        1593.8509169500321,
+        1910.099749919027,
+        2198.4321251511574,
+        2046.8428749591112
+      ],
+      "wire_payload_bytes": 161491168,
+      "tokens_per_second": 0.5983609491378127,
+      "server_metrics": {
+        "id": "chatcmpl-2a6b1cefbdd9408099278d874492a41a",
+        "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+        "status": "completed",
+        "started": 1793426046.764502,
+        "prompt_tokens": 26,
+        "output_tokens": 16,
+        "recoveries": 0,
+        "token_ms": [
+          1728.5938339773566,
+          1582.262417068705,
+          1572.2250000108033,
+          1592.7935419604182,
+          1552.0755001343787,
+          1553.281500004232,
+          1514.437290839851,
+          1552.6613749098033,
+          1590.8011251594871,
+          1582.101000007242,
+          1576.7697917763144,
+          1580.471791094169,
+          1593.6467088758945,
+          1909.5378750935197,
+          2197.559665888548,
+          2045.5856248736382
+        ],
+        "boundary_bytes": 1511424,
+        "ttft_ms": 1728.6363749299198,
+        "elapsed_ms": 26729.72874995321,
+        "tokens_per_second": 0.5985844506569491
+      }
+    },
+    {
+      "prompt": "Write one sentence about a reliable distributed system, mentioning worker health and recovery.",
+      "prompt_tokens": 27,
+      "token_ids": [
+        32,
+        14294,
+        4098,
+        1785,
+        24546,
+        421,
+        11525,
+        2730,
+        369,
+        38791,
+        29865,
+        321,
+        421,
+        866,
+        12964,
+        494
+      ],
+      "output": "A reliable distributed system ensures that worker health is monitored continuously and that any recovery from",
+      "elapsed_ms": 19565.40379091166,
+      "ttft_ms": 2165.2880830224603,
+      "token_ms": [
+        2165.2880830224603,
+        2114.3355418462306,
+        1423.5494160093367,
+        1094.2920839879662,
+        1045.1205000281334,
+        1043.4325831010938,
+        1036.3324999343604,
+        1045.2073330525309,
+        1041.2029589060694,
+        1035.6781659647822,
+        1041.8796672020108,
+        1098.81033282727,
+        1177.8625000733882,
+        1047.750666970387,
+        1054.748292081058,
+        1091.2564159370959
+      ],
+      "wire_payload_bytes": 161527951,
+      "tokens_per_second": 0.8177699868086633,
+      "server_metrics": {
+        "id": "chatcmpl-aec9a2bb830b4a3fbbe6fbf1a9c18e4e",
+        "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+        "status": "completed",
+        "started": 1793426073.55096,
+        "prompt_tokens": 27,
+        "output_tokens": 16,
+        "recoveries": 0,
+        "token_ms": [
+          2161.476500099525,
+          2113.1976249162108,
+          1422.9209169279784,
+          1093.5700840782374,
+          1043.6427919194102,
+          1042.6337090320885,
+          1036.116790957749,
+          1044.6944579016417,
+          1040.1052499655634,
+          1035.4701660107821,
+          1041.163083165884,
+          1097.3537089303136,
+          1176.352667156607,
+          1048.7463749013841,
+          1053.9142079651356,
+          1091.200458118692
+        ],
+        "boundary_bytes": 1548288,
+        "ttft_ms": 2161.616667173803,
+        "elapsed_ms": 19553.683459060267,
+        "tokens_per_second": 0.8182601520321914
+      }
+    },
+    {
+      "prompt": "What is 2 plus 2? Answer briefly.",
+      "prompt_tokens": 23,
+      "token_ids": [
+        19,
+        248046
+      ],
+      "output": "4",
+      "elapsed_ms": 2266.6568749118596,
+      "ttft_ms": 1235.3511250112206,
+      "token_ms": [
+        1235.3511250112206,
+        1028.7328748963773
+      ],
+      "wire_payload_bytes": 20882496,
+      "tokens_per_second": 0.8823567528621955,
+      "server_metrics": {
+        "id": "chatcmpl-ab891eb3eaf044088d76ad817369a529",
+        "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+        "status": "completed",
+        "started": 1793426093.1706471,
+        "prompt_tokens": 23,
+        "output_tokens": 2,
+        "recoveries": 0,
+        "token_ms": [
+          1223.3715001493692,
+          1028.5544579382986
+        ],
+        "boundary_bytes": 884736,
+        "ttft_ms": 1223.4264588914812,
+        "elapsed_ms": 2253.70274996385,
+        "tokens_per_second": 0.8874284774387753
+      }
+    },
+    {
+      "prompt": "Explain why distributed transformer inference needs to transfer activations between successive layers.",
+      "prompt_tokens": 26,
+      "token_ids": [
+        35,
+        24348,
+        41163,
+        42903,
+        7225,
+        48270,
+        89303,
+        1881,
+        47286,
+        13224,
+        1521,
+        2972,
+        4549,
+        261,
+        13224,
+        513
+      ],
+      "output": "Distributed transformer inference requires transferring activations between successive layers because **transformer layers are",
+      "elapsed_ms": 28333.656166912988,
+      "ttft_ms": 1132.362499833107,
+      "token_ms": [
+        1132.362499833107,
+        1048.4182501677424,
+        1422.3901249933988,
+        2590.1207919232547,
+        2345.1422080397606,
+        2170.519874896854,
+        1974.44008407183,
+        2020.394500112161,
+        1873.591125011444,
+        1899.0802909247577,
+        1879.467333899811,
+        1970.47745808959,
+        1741.5912919677794,
+        1822.0533330459148,
+        1315.3281670529395,
+        1107.9255829099566
+      ],
+      "wire_payload_bytes": 161490859,
+      "tokens_per_second": 0.564699448096085,
+      "server_metrics": {
+        "id": "chatcmpl-1563a0278c4840dc93988c8db96dd987",
+        "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+        "status": "completed",
+        "started": 1793426095.465621,
+        "prompt_tokens": 26,
+        "output_tokens": 16,
+        "recoveries": 0,
+        "token_ms": [
+          1127.9249580111355,
+          1048.07583312504,
+          1422.0721661113203,
+          2588.177249999717,
+          2344.7827079799026,
+          2169.4683330133557,
+          1973.4368748031557,
+          2018.0442079436034,
+          1872.4005830008537,
+          1898.5178340226412,
+          1876.7277081497014,
+          1969.6909580379725,
+          1740.412666928023,
+          1821.2780421599746,
+          1315.4923340771347,
+          1107.6549170538783
+        ],
+        "boundary_bytes": 1511424,
+        "ttft_ms": 1127.9658749699593,
+        "elapsed_ms": 28309.049459174275,
+        "tokens_per_second": 0.5651902944701235
+      }
+    }
+  ],
+  "peak_rss_bytes": 5163040768,
+  "per_process_peak_rss_bytes": {
+    "31596": 371113984,
+    "31597": 1094811648,
+    "31598": 1671757824,
+    "31599": 639877120,
+    "31600": 1385480192
+  },
+  "max_worker_rss_bytes": 1671757824,
+  "logical_worker_storage_bytes": 2013391064,
+  "local_cache_hardlinks": true,
+  "placements": {
+    "replicas": 1,
+    "groups": 1,
+    "placements": {
+      "head": [
+        "node-3"
+      ],
+      "embedding": [
+        "node-0"
+      ],
+      "blocks-006": [
+        "node-2"
+      ],
+      "blocks-008": [
+        "node-0"
+      ],
+      "blocks-010": [
+        "node-1"
+      ],
+      "blocks-000": [
+        "node-1"
+      ],
+      "blocks-002": [
+        "node-2"
+      ],
+      "blocks-004": [
+        "node-0"
+      ],
+      "blocks-005": [
+        "node-0"
+      ],
+      "blocks-007": [
+        "node-0"
+      ],
+      "blocks-009": [
+        "node-1"
+      ],
+      "blocks-011": [
+        "node-1"
+      ],
+      "blocks-001": [
+        "node-3"
+      ],
+      "blocks-003": [
+        "node-1"
+      ]
+    }
+  },
+  "nodes": {
+    "node-1": {
+      "id": "node-1",
+      "url": "http://127.0.0.1:64090",
+      "grpc_url": "127.0.0.1:64091",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 6442450944,
+      "speed": 1.0,
+      "failure_domain": "node-1",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-010",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-000",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-009",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-011",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-003"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "blocks-000": 123.4532909002155,
+          "blocks-003": 62.98200017772615,
+          "blocks-009": 60.56625000201166,
+          "blocks-010": 122.63566604815423,
+          "blocks-011": 64.37112507410347
+        },
+        "calls": 267,
+        "bytes_received": 4812267,
+        "bytes_sent": 4845798,
+        "rss_bytes": 922992640,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 1504831552,
+        "transport": {
+          "request_payload_bytes": 2874123,
+          "response_payload_bytes": 158542173,
+          "calls": 161
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793426123.347489,
+      "active": true,
+      "draining": false
+    },
+    "node-3": {
+      "id": "node-3",
+      "url": "http://127.0.0.1:64094",
+      "grpc_url": "127.0.0.1:64095",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 6442450944,
+      "speed": 1.0,
+      "failure_domain": "node-3",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:head",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-001"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "blocks-001": 70.0308340601623,
+          "head": 35.95383302308619
+        },
+        "calls": 107,
+        "bytes_received": 1924809,
+        "bytes_sent": 53783135,
+        "rss_bytes": 1251786752,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 920471088,
+        "transport": {
+          "request_payload_bytes": 935744,
+          "response_payload_bytes": 52847391,
+          "calls": 54
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793426123.345637,
+      "active": true,
+      "draining": false
+    },
+    "node-0": {
+      "id": "node-0",
+      "url": "http://127.0.0.1:64088",
+      "grpc_url": "127.0.0.1:64089",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 6442450944,
+      "speed": 1.0,
+      "failure_domain": "node-0",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:embedding",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-008",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-004",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-005",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-007"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "embedding": 0.16762479208409786,
+          "blocks-004": 104.86045782454312,
+          "blocks-005": 57.33675020746887,
+          "blocks-007": 61.982333194464445,
+          "blocks-008": 115.11395801790059
+        },
+        "calls": 268,
+        "bytes_received": 3951119,
+        "bytes_sent": 4786185,
+        "rss_bytes": 760496128,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 840649480,
+        "transport": {
+          "request_payload_bytes": 2860934,
+          "response_payload_bytes": 158542173,
+          "calls": 161
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793426123.352542,
+      "active": true,
+      "draining": false
+    },
+    "node-2": {
+      "id": "node-2",
+      "url": "http://127.0.0.1:64092",
+      "grpc_url": "127.0.0.1:64093",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 6442450944,
+      "speed": 1.0,
+      "failure_domain": "node-2",
+      "ready": [
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-006",
+        "Qwen--Qwen3--5-0--8B-2fc06364715b:blocks-002"
+      ],
+      "metrics": {
+        "stage_ms": {
+          "blocks-002": 119.59083308465779,
+          "blocks-006": 110.07112520746887
+        },
+        "calls": 108,
+        "bytes_received": 1898625,
+        "bytes_sent": 1912220,
+        "rss_bytes": 442138624,
+        "sessions": 1,
+        "errors": {},
+        "cache_bytes": 172451072,
+        "transport": {
+          "request_payload_bytes": 1912220,
+          "response_payload_bytes": 105694782,
+          "calls": 108
+        },
+        "device": "cpu",
+        "dtype": "float32"
+      },
+      "last_seen": 1793426123.364095,
+      "active": true,
+      "draining": false
+    }
+  },
+  "transports": [
+    "rest"
+  ],
+  "threads_per_worker": 2,
+  "dtype": "float32",
+  "cached_worker_storage_bytes": 3438403192
+}

@@ -1,0 +1,9 @@
+{
+  "project": "stageplane",
+  "obsolete_identity_matches": 0,
+  "files_scanned": 546,
+  "model_binary_and_image_files_excluded": 282,
+  "archive_text_and_filenames_checked": true,
+  "generated_environment_and_git_metadata_excluded": true,
+  "findings": []
+}

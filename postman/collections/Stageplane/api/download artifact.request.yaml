@@ -1,0 +1,22 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/artifacts/:model/:name"
+method: GET
+headers:
+  Accept: application/octet-stream
+pathVariables:
+  - key: model
+    value: string
+    disabled: false
+    description: "(Required) "
+  - key: name
+    value: string
+    disabled: false
+    description: "(Required) "
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/download artifact.resources/examples
+order: 5000

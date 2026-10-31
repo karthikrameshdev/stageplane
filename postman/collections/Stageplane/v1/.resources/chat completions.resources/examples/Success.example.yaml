@@ -1,0 +1,44 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/v1/chat/completions"
+  method: POST
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+    - key: Accept
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "model": "string",
+        "messages": [
+          {
+            "role": "assistant",
+            "content": "string"
+          }
+        ],
+        "max_tokens": 64,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": false,
+        "seed": 4079
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": "string",
+        "object": "chat.completion",
+        "choices": [],
+        "usage": {},
+        "model": "string",
+        "created": 9108
+      }
+order: 1000

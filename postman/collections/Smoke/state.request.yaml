@@ -1,0 +1,13 @@
+$kind: http-request
+name: state
+order: 3000
+method: GET
+url: "{{baseUrl}}/api/state"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Response contract", () => { pm.expect(pm.response.json().nodes).to.be.an("array"); });

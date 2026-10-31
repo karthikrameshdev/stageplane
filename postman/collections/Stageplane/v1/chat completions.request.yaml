@@ -1,0 +1,31 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/v1/chat/completions"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "model": "string",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "string"
+        }
+      ],
+      "max_tokens": 64,
+      "temperature": 0,
+      "top_p": 1,
+      "stream": false,
+      "seed": 4079
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/chat completions.resources/examples
+order: 2000

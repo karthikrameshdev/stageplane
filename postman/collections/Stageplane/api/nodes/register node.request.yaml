@@ -1,0 +1,33 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/nodes/register"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "id": "Bb8dy1in_IkMit_oqdwyTcWycM54vuLtOvzRMqnhiZUJ9",
+      "url": "https://aticjIMrZhlofe.kzvQtpiiP",
+      "grpc_url": "string",
+      "transport": "rest",
+      "group": 4892,
+      "memory_bytes": 2666,
+      "speed": 9805.821612009466,
+      "failure_domain": "string",
+      "ready": [
+        "string",
+        "string"
+      ],
+      "metrics": {},
+      "cpu_cores": 8022.29260648787
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/register node.resources/examples
+order: 1000

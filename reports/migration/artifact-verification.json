@@ -1,0 +1,38 @@
+{
+  "models": [
+    {
+      "directory": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/fixture-models/data--fixture-d70d5c9a2945",
+      "model": "data--fixture-d70d5c9a2945",
+      "manifest_sha256": "7bf29385074150947680713c6663dfdc82e7756c01153892558fb2a6f65ad5d6",
+      "files_verified": 11
+    },
+    {
+      "directory": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/models/Qwen--Qwen3--5-0--8B-2fc06364715b",
+      "model": "Qwen--Qwen3--5-0--8B-2fc06364715b",
+      "manifest_sha256": "b997e6d69bb4a8bd789c813f7c8b18691deec5f093eb916c651df5ccbaef9037",
+      "files_verified": 23
+    },
+    {
+      "directory": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/executor-models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "manifest_sha256": "5eab0bbfa7ed6cf7b4dc33c1aa9ce11e7592469d84d7a30ec4ffd1690572dddd",
+      "files_verified": 46
+    },
+    {
+      "directory": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/layer-models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "manifest_sha256": "5eab0bbfa7ed6cf7b4dc33c1aa9ce11e7592469d84d7a30ec4ffd1690572dddd",
+      "files_verified": 46
+    },
+    {
+      "directory": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0",
+      "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0",
+      "manifest_sha256": "ba0f1ad2420d38ce758a8dee60277a70e26b9cd5a41b68be4b68b6f8a47a35a7",
+      "files_verified": 28
+    }
+  ],
+  "archive": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/public/qwen3-4b.stageplane",
+  "archive_crc_valid": true,
+  "qwen4_manifest_identity_preserved": true,
+  "elapsed_s": 16.336369624827057
+}

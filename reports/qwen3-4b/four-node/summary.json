@@ -1,0 +1,42 @@
+{
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "cpu_count": 10,
+    "memory_bytes": 17179869184
+  },
+  "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "source": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_bytes": 8044982168,
+  "parity": true,
+  "dtype": "bfloat16",
+  "cpu_kernel": "bounded-f32",
+  "results": [
+    {
+      "mode": "direct-native",
+      "ttft_p50_ms": 2916.4325408637524,
+      "ttft_p95_ms": 7826.533308951183,
+      "decode_p50_ms": 2367.5275000277907,
+      "decode_p95_ms": 34440.879500005394,
+      "request_p50_ms": 37527.49995794147,
+      "tokens_per_second_median": 0.42635400753931973,
+      "peak_rss_bytes": 8149336064,
+      "max_worker_rss_bytes": 8149336064,
+      "logical_storage_bytes": 8044982168,
+      "load_s": 41.98467629100196
+    },
+    {
+      "mode": "distributed-4",
+      "ttft_p50_ms": 10381.709459004924,
+      "ttft_p95_ms": 11385.463300114498,
+      "decode_p50_ms": 2626.5534590929747,
+      "decode_p95_ms": 14004.323040833697,
+      "request_p50_ms": 81836.40770800412,
+      "tokens_per_second_median": 0.1666166520203787,
+      "peak_rss_bytes": 8629927936,
+      "max_worker_rss_bytes": 2519334912,
+      "logical_storage_bytes": 8822894624,
+      "load_s": 14.06191729195416
+    }
+  ]
+}

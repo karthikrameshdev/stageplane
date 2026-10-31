@@ -1,0 +1,13 @@
+$kind: http-request
+name: health
+order: 1000
+method: GET
+url: "{{baseUrl}}/health"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Response contract", () => { pm.expect(pm.response.json().status).to.eql("ok"); });

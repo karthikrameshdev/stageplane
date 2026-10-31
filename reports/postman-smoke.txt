@@ -1,0 +1,48 @@
+No authorization data found. Please use the `postman login` command.
+Refer:https://learning.postman.com/docs/postman-cli/postman-cli-options/#postman-login
+
+Running your collection...
+postman
+
+Stageplane smoke
+
+Root health
+
+  GET http://127.0.0.1:8080/health [200 OK, 140 B, 7 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Response contract
+
+Root models
+
+  GET http://127.0.0.1:8080/v1/models [200 OK, 282 B, 2 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Response contract
+
+Root state
+
+  GET http://127.0.0.1:8080/api/state [200 OK, 13.07 KB, 5 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Response contract
+
+------------------------------------------------------------------
+|                         |          executed |           failed |
+--------------------------+-------------------+-------------------
+|              iterations |                 1 |                0 |
+--------------------------+-------------------+-------------------
+|                requests |                 3 |                0 |
+--------------------------+-------------------+-------------------
+|            test-scripts |                 3 |                0 |
+--------------------------+-------------------+-------------------
+|      prerequest-scripts |                 0 |                0 |
+--------------------------+-------------------+-------------------
+|              assertions |                 9 |                0 |
+------------------------------------------------------------------
+| total run duration: 228 ms                                     |
+------------------------------------------------------------------
+| total data received: 13.11 KB (approx)                         |
+------------------------------------------------------------------
+| average response time: 5 ms [min: 2 ms, max: 7 ms, s.d.: 2 ms] |
+------------------------------------------------------------------
