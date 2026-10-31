@@ -367,7 +367,34 @@ complete ready route before attempting inference; default 300 seconds.
 The script removes owned containers/network afterward and preserves the model,
 raw report, and service logs. It leaves other projects' containers untouched.
 
-## 10. Bounded execution recovery
+## 10. Ten-worker test
+
+For a smaller pool with larger per-worker RAM limits, reproduce the ten-worker
+test while keeping the original 50-millicore CPU quota:
+
+```sh
+python -m scripts.resource_profile \
+  --store data/review/qwen3-4b/executor-models \
+  --model Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1 \
+  --nodes 10 --memory-tiers-mb 2500,3000,3500 \
+  --startup-timeout 300 --load-timeout 1800 --request-timeout 1800 \
+  --output reports/ten-node
+```
+
+The RAM ceilings total 29.5 GB across containers, but do not reserve that amount
+of physical memory. Actual usage must fit the Docker VM. Loading can take many
+minutes at 50 millicores. `--request-timeout` changes the benchmark client's HTTP
+deadline; the execution service's per-chunk deadlines and bounded retries remain
+separate. See [the actual ten-worker report](../reports/ten-node/REPORT.md).
+
+The measured 50m run loaded all stages but timed out during execution. Its
+separate successful CPU comparison uses `--cpu-cores 1` with the same RAM tiers
+and `--output reports/ten-node/cpu-1000m`. The default harness CPU cap remains
+0.05 cores; standalone `stageplane node` still defaults to 100% of detected
+capacity when resource options are omitted. The comparison does not claim that
+50 millicores can meet the default chunk execution deadline.
+
+## 11. Bounded execution recovery
 
 `STAGEPLANE_CHUNK_TIMEOUT` bounds a chunk's compute/queue wait (default 30 seconds).
 All transports have a bounded route RPC timeout (default 180 seconds).
@@ -390,7 +417,7 @@ permit remains held until that kernel finishes. This prevents timed-out requests
 from creating unbounded background compute. Use `max_retries=0` in an OpenAI
 client if you want to observe only the execution service's retry policy.
 
-## 11. Automated checks
+## 12. Automated checks
 
 ```sh
 uv run --extra test pytest -q

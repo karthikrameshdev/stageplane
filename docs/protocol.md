@@ -30,6 +30,9 @@ limits from current usage, available memory/CPU/storage and loaded weight bytes.
 Workers also publish `loading` while initializing a stage and for a two-second
 settling interval afterward. Existing loading/session reservations survive a
 transient CPU-headroom dip; new assignments still require available compute.
+Resource-driven replans wait while a worker in the same placement group is
+loading, so a spare's falling headroom does not restart an otherwise healthy
+bootstrap. Other groups, membership changes and explicit drains remain eligible.
 Responses contain
 `{model, chunk, manifest_sha256}` assignments. Loading runs separately from
 heartbeats. A shape/finite-output fixture precedes readiness. Whole-route numerical

@@ -42,13 +42,19 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--output", type=Path, default=Path("reports/qwen3-4b/heterogeneous-50"))
     parser.add_argument("--nodes", type=int, default=50)
+    parser.add_argument("--cpu-cores", type=float, default=.05,
+                        help="Hard per-worker CPU quota, also published to the executor")
     parser.add_argument("--startup-timeout", type=int, default=180)
     parser.add_argument("--load-timeout", type=int, default=300)
+    parser.add_argument("--request-timeout", type=int, default=600,
+                        help="HTTP inference deadline; execution-layer deadlines remain separate")
     parser.add_argument("--memory-tiers-mb", default="150,250,350,400,500",
                         help="Comma-separated decimal MB limits, repeated across workers")
     parser.add_argument("--image", default="stageplane:qwen4-review")
     parser.add_argument("--cpu-kernel", choices=["native", "bounded-f32"], default="bounded-f32")
     args = parser.parse_args()
+    if args.cpu_cores <= 0:
+        parser.error("CPU cores must be positive")
     args.output.mkdir(parents=True, exist_ok=True)
     store = args.store.resolve()
     run = f"stageplane-review-{os.getpid()}"
@@ -59,9 +65,11 @@ def main():
     if not tiers or min(tiers) <= 0:
         parser.error("Memory tiers must be positive integer MB values")
     result = {"model": args.model, "requested_nodes": args.nodes, "memory_tiers_MB": tiers,
-              "cpu_cores_per_node": .05, "swap_allowed": False, "storage_fallback": False,
+              "cpu_cores_per_node": args.cpu_cores, "swap_allowed": False, "storage_fallback": False,
               "artifact_location": str(store / args.model), "image": args.image, "cpu_kernel": args.cpu_kernel}
     result["host_memory_bytes"] = psutil.virtual_memory().total
+    result.update(startup_timeout_s=args.startup_timeout, load_timeout_s=args.load_timeout,
+                  request_timeout_s=args.request_timeout)
 
     def docker(*cmd, check=True):
         proc = subprocess.run(["docker", *cmd], capture_output=True, text=True, timeout=90)
@@ -91,7 +99,7 @@ def main():
                        "-e", f"STAGEPLANE_TOKEN={token}", "-e", "STAGEPLANE_STATE_FILE=/state/executor.sqlite",
                        "-e", "STAGEPLANE_HEARTBEAT_TIMEOUT=60", "-v", f"{store}:/models:ro",
                        "-v", f"{state}:/state", args.image, "executor", "--host", "0.0.0.0", "--store", "/models")
-                client = httpx.Client(base_url=f"http://127.0.0.1:{port}", headers={"Authorization": f"Bearer {token}"}, timeout=600, trust_env=False)
+                client = httpx.Client(base_url=f"http://127.0.0.1:{port}", headers={"Authorization": f"Bearer {token}"}, timeout=30, trust_env=False)
                 deadline = time.monotonic() + 60
                 while time.monotonic() < deadline:
                     try:
@@ -108,11 +116,11 @@ def main():
                     name = worker_names[i]
                     memory = tiers[i % len(tiers)] * 1_000_000
                     docker("run", "-d", "--name", name, "--network", network,
-                           "--memory", str(memory), "--memory-swap", str(memory), "--cpus", ".05",
+                           "--memory", str(memory), "--memory-swap", str(memory), "--cpus", str(args.cpu_cores),
                            "-e", f"STAGEPLANE_TOKEN={token}", args.image, "node", "--id", f"node-{i:02d}",
                            "--executor", f"http://{executor}:8080", "--host", "0.0.0.0",
                            "--advertise-url", f"http://{name}:8101", "--max-memory", f"{tiers[i % len(tiers)]}MB",
-                           "--max-cpu", "50m", "--threads", "1", "--dtype", "bfloat16", "--cpu-kernel", args.cpu_kernel)
+                           "--max-cpu", str(args.cpu_cores), "--threads", "1", "--dtype", "bfloat16", "--cpu-kernel", args.cpu_kernel)
                 with ThreadPoolExecutor(max_workers=5) as pool:
                     list(pool.map(start, range(count)))
                 print(f"Started {count} containers with strict memory/CPU limits.", flush=True)
@@ -146,7 +154,7 @@ def main():
                               loading_wait_ms=(time.perf_counter()-loading_started)*1000)
                 tick = time.perf_counter()
                 response = client.post("/v1/chat/completions", json={"model": args.model,
-                    "messages": [{"role": "user", "content": "What is 2 plus 2? Answer briefly."}], "max_tokens": 16, "temperature": 0})
+                    "messages": [{"role": "user", "content": "What is 2 plus 2? Answer briefly."}], "max_tokens": 16, "temperature": 0}, timeout=args.request_timeout)
                 snapshot = client.get("/api/state").json()
                 inspected = json.loads(docker("inspect", *worker_names))
                 states = [{"node": f"node-{i:02d}", "memory_bytes": row["HostConfig"]["Memory"],

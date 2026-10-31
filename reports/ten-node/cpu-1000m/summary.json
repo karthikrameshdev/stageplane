@@ -1,0 +1,45 @@
+{
+  "workers": 10,
+  "registered": 10,
+  "cpu_cores_per_worker": 1.0,
+  "oom_killed": 0,
+  "inference_completed": true,
+  "token_parity": true,
+  "token_ids": [
+    17,
+    5519,
+    220,
+    17,
+    374,
+    220,
+    19,
+    13,
+    151645
+  ],
+  "server_metrics": {
+    "id": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+    "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+    "status": "completed",
+    "started": 1793454682.6164186,
+    "prompt_tokens": 19,
+    "output_tokens": 9,
+    "recoveries": 0,
+    "token_ms": [
+      92907.87762600002,
+      82301.938412,
+      68778.43640700002,
+      62783.28848699999,
+      55100.315233999994,
+      64895.234363999916,
+      64571.96165499999,
+      63215.40519600001,
+      84293.663456
+    ],
+    "boundary_bytes": 9400320,
+    "ttft_ms": 92908.08271,
+    "elapsed_ms": 639132.935252,
+    "tokens_per_second": 0.01408157756171874
+  },
+  "sampled_peak_worker_cgroup_bytes": 13443534848,
+  "sampled_peak_worker_rss_bytes": 13131460608
+}

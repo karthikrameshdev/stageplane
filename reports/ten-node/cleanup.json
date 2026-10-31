@@ -1,0 +1,10 @@
+{
+  "test_services_stopped": true,
+  "docker_desktop_stopped": true,
+  "available_memory_bytes": 2776088576,
+  "artifacts_preserved": true,
+  "preserved_apps": [
+    "Firefox",
+    "Codex"
+  ]
+}

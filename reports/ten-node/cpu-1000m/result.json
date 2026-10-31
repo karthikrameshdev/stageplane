@@ -1,0 +1,7556 @@
+{
+  "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "requested_nodes": 10,
+  "memory_tiers_MB": [
+    2500,
+    3000,
+    3500
+  ],
+  "cpu_cores_per_node": 1.0,
+  "swap_allowed": false,
+  "storage_fallback": false,
+  "artifact_location": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/executor-models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "image": "stageplane:qwen4-review",
+  "cpu_kernel": "bounded-f32",
+  "host_memory_bytes": 17179869184,
+  "startup_timeout_s": 300,
+  "load_timeout_s": 1800,
+  "request_timeout_s": 1800,
+  "docker_memory_bytes": 14636097536,
+  "route_ready_before_inference": true,
+  "loading_wait_ms": 121407.76387508959,
+  "actual_nodes": 10,
+  "deploy_status": 200,
+  "deploy_response": {
+    "replicas": 1,
+    "groups": 1,
+    "placements": {
+      "head": [
+        "node-07"
+      ],
+      "embedding": [
+        "node-04"
+      ],
+      "blocks-015": [
+        "node-01"
+      ],
+      "blocks-010": [
+        "node-02"
+      ],
+      "blocks-011": [
+        "node-03"
+      ],
+      "blocks-012": [
+        "node-03"
+      ],
+      "blocks-013": [
+        "node-00"
+      ],
+      "blocks-014": [
+        "node-03"
+      ],
+      "blocks-016": [
+        "node-08"
+      ],
+      "blocks-017": [
+        "node-01"
+      ],
+      "blocks-018": [
+        "node-03"
+      ],
+      "blocks-019": [
+        "node-08"
+      ],
+      "blocks-020": [
+        "node-04"
+      ],
+      "blocks-021": [
+        "node-07"
+      ],
+      "blocks-022": [
+        "node-01"
+      ],
+      "blocks-023": [
+        "node-02"
+      ],
+      "blocks-024": [
+        "node-00"
+      ],
+      "blocks-025": [
+        "node-02"
+      ],
+      "blocks-026": [
+        "node-03"
+      ],
+      "blocks-027": [
+        "node-07"
+      ],
+      "blocks-028": [
+        "node-07"
+      ],
+      "blocks-029": [
+        "node-00"
+      ],
+      "blocks-030": [
+        "node-06"
+      ],
+      "blocks-031": [
+        "node-09"
+      ],
+      "blocks-032": [
+        "node-07"
+      ],
+      "blocks-033": [
+        "node-00"
+      ],
+      "blocks-034": [
+        "node-09"
+      ],
+      "blocks-035": [
+        "node-08"
+      ],
+      "blocks-000": [
+        "node-01"
+      ],
+      "blocks-001": [
+        "node-05"
+      ],
+      "blocks-002": [
+        "node-07"
+      ],
+      "blocks-003": [
+        "node-07"
+      ],
+      "blocks-004": [
+        "node-02"
+      ],
+      "blocks-005": [
+        "node-05"
+      ],
+      "blocks-006": [
+        "node-01"
+      ],
+      "blocks-007": [
+        "node-02"
+      ],
+      "blocks-008": [
+        "node-04"
+      ],
+      "blocks-009": [
+        "node-06"
+      ]
+    },
+    "capacity": {
+      "status": "planned",
+      "message": "Model placement fits the available nodes.",
+      "reason": null,
+      "unassigned_stages": [],
+      "available_weight_budget_bytes": 26467545088,
+      "required_stage_storage_bytes": 8822894624
+    }
+  },
+  "inference_status": 200,
+  "inference_response": {
+    "id": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+    "object": "chat.completion",
+    "created": 1793455321,
+    "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "2 plus 2 is 4."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 9,
+      "total_tokens": 28
+    }
+  },
+  "response_ms": 641392.38995919,
+  "cluster": {
+    "models": [
+      {
+        "key": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "source": "Qwen/Qwen3-4B-Instruct-2507",
+        "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+        "architecture": "qwen3",
+        "stages": [
+          {
+            "id": "embedding",
+            "kind": "embedding",
+            "start": 0,
+            "end": 0,
+            "artifacts": [
+              "embedding"
+            ],
+            "weight_bytes": 777912456
+          },
+          {
+            "id": "blocks-000",
+            "kind": "blocks",
+            "start": 0,
+            "end": 1,
+            "artifacts": [
+              "blocks-000"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-001",
+            "kind": "blocks",
+            "start": 1,
+            "end": 2,
+            "artifacts": [
+              "blocks-001"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-002",
+            "kind": "blocks",
+            "start": 2,
+            "end": 3,
+            "artifacts": [
+              "blocks-002"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-003",
+            "kind": "blocks",
+            "start": 3,
+            "end": 4,
+            "artifacts": [
+              "blocks-003"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-004",
+            "kind": "blocks",
+            "start": 4,
+            "end": 5,
+            "artifacts": [
+              "blocks-004"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-005",
+            "kind": "blocks",
+            "start": 5,
+            "end": 6,
+            "artifacts": [
+              "blocks-005"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-006",
+            "kind": "blocks",
+            "start": 6,
+            "end": 7,
+            "artifacts": [
+              "blocks-006"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-007",
+            "kind": "blocks",
+            "start": 7,
+            "end": 8,
+            "artifacts": [
+              "blocks-007"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-008",
+            "kind": "blocks",
+            "start": 8,
+            "end": 9,
+            "artifacts": [
+              "blocks-008"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-009",
+            "kind": "blocks",
+            "start": 9,
+            "end": 10,
+            "artifacts": [
+              "blocks-009"
+            ],
+            "weight_bytes": 201862896
+          },
+          {
+            "id": "blocks-010",
+            "kind": "blocks",
+            "start": 10,
+            "end": 11,
+            "artifacts": [
+              "blocks-010"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-011",
+            "kind": "blocks",
+            "start": 11,
+            "end": 12,
+            "artifacts": [
+              "blocks-011"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-012",
+            "kind": "blocks",
+            "start": 12,
+            "end": 13,
+            "artifacts": [
+              "blocks-012"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-013",
+            "kind": "blocks",
+            "start": 13,
+            "end": 14,
+            "artifacts": [
+              "blocks-013"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-014",
+            "kind": "blocks",
+            "start": 14,
+            "end": 15,
+            "artifacts": [
+              "blocks-014"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-015",
+            "kind": "blocks",
+            "start": 15,
+            "end": 16,
+            "artifacts": [
+              "blocks-015"
+            ],
+            "weight_bytes": 201862912
+          },
+          {
+            "id": "blocks-016",
+            "kind": "blocks",
+            "start": 16,
+            "end": 17,
+            "artifacts": [
+              "blocks-016"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-017",
+            "kind": "blocks",
+            "start": 17,
+            "end": 18,
+            "artifacts": [
+              "blocks-017"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-018",
+            "kind": "blocks",
+            "start": 18,
+            "end": 19,
+            "artifacts": [
+              "blocks-018"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-019",
+            "kind": "blocks",
+            "start": 19,
+            "end": 20,
+            "artifacts": [
+              "blocks-019"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-020",
+            "kind": "blocks",
+            "start": 20,
+            "end": 21,
+            "artifacts": [
+              "blocks-020"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-021",
+            "kind": "blocks",
+            "start": 21,
+            "end": 22,
+            "artifacts": [
+              "blocks-021"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-022",
+            "kind": "blocks",
+            "start": 22,
+            "end": 23,
+            "artifacts": [
+              "blocks-022"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-023",
+            "kind": "blocks",
+            "start": 23,
+            "end": 24,
+            "artifacts": [
+              "blocks-023"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-024",
+            "kind": "blocks",
+            "start": 24,
+            "end": 25,
+            "artifacts": [
+              "blocks-024"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-025",
+            "kind": "blocks",
+            "start": 25,
+            "end": 26,
+            "artifacts": [
+              "blocks-025"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-026",
+            "kind": "blocks",
+            "start": 26,
+            "end": 27,
+            "artifacts": [
+              "blocks-026"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-027",
+            "kind": "blocks",
+            "start": 27,
+            "end": 28,
+            "artifacts": [
+              "blocks-027"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-028",
+            "kind": "blocks",
+            "start": 28,
+            "end": 29,
+            "artifacts": [
+              "blocks-028"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-029",
+            "kind": "blocks",
+            "start": 29,
+            "end": 30,
+            "artifacts": [
+              "blocks-029"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-030",
+            "kind": "blocks",
+            "start": 30,
+            "end": 31,
+            "artifacts": [
+              "blocks-030"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-031",
+            "kind": "blocks",
+            "start": 31,
+            "end": 32,
+            "artifacts": [
+              "blocks-031"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-032",
+            "kind": "blocks",
+            "start": 32,
+            "end": 33,
+            "artifacts": [
+              "blocks-032"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-033",
+            "kind": "blocks",
+            "start": 33,
+            "end": 34,
+            "artifacts": [
+              "blocks-033"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-034",
+            "kind": "blocks",
+            "start": 34,
+            "end": 35,
+            "artifacts": [
+              "blocks-034"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "blocks-035",
+            "kind": "blocks",
+            "start": 35,
+            "end": 36,
+            "artifacts": [
+              "blocks-035"
+            ],
+            "weight_bytes": 201862904
+          },
+          {
+            "id": "head",
+            "kind": "head",
+            "start": 36,
+            "end": 36,
+            "artifacts": [
+              "head",
+              "embedding"
+            ],
+            "weight_bytes": 777917696
+          }
+        ],
+        "artifact_bytes": 8044982168
+      }
+    ],
+    "nodes": [
+      {
+        "id": "node-04",
+        "url": "http://stageplane-review-63856-node-04:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2999996416,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-04",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:embedding",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-020",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-008"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "embedding": 6.806791999906636,
+            "blocks-008": 1722.2749170000498,
+            "blocks-020": 1703.9793749999035
+          },
+          "calls": 27,
+          "bytes_received": 462383,
+          "bytes_sent": 603843,
+          "rss_bytes": 1582108672,
+          "memory_limit_bytes": 2999996416,
+          "memory_used_bytes": 1608568832,
+          "available_memory_bytes": 889634816,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 2.0,
+          "available_cpu_cores": 0.98,
+          "loaded_weight_bytes": 1181635584,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 1181638256,
+          "transport": {
+            "request_payload_bytes": 603843,
+            "response_payload_bytes": 14835945,
+            "calls": 27
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.1646042,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-03",
+        "url": "http://stageplane-review-63856-node-03:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-03",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-011",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-012",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-014",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-018",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-026"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-011": 2654.884043000038,
+            "blocks-012": 1565.5935009999666,
+            "blocks-014": 1623.9190420000114,
+            "blocks-018": 1679.1947919999757,
+            "blocks-026": 4355.031168999972
+          },
+          "calls": 45,
+          "bytes_received": 1041742,
+          "bytes_sent": 1047432,
+          "rss_bytes": 1431977984,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 1468792832,
+          "available_memory_bytes": 887963648,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 0.0,
+          "available_cpu_cores": 1.0,
+          "loaded_weight_bytes": 1009308160,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 1009314520,
+          "transport": {
+            "request_payload_bytes": 843870,
+            "response_payload_bytes": 19781260,
+            "calls": 36
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.3935983,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-01",
+        "url": "http://stageplane-review-63856-node-01:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2999996416,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-01",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-015",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-017",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-022",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-000",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-006"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-000": 1512.2977510000055,
+            "blocks-006": 3170.3754180000487,
+            "blocks-015": 2045.7499590000907,
+            "blocks-017": 1664.5330000000058,
+            "blocks-022": 1181.872083999906
+          },
+          "calls": 45,
+          "bytes_received": 1017805,
+          "bytes_sent": 1023497,
+          "rss_bytes": 1467826176,
+          "memory_limit_bytes": 2999996416,
+          "memory_used_bytes": 1484267520,
+          "available_memory_bytes": 889634816,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 0.0,
+          "available_cpu_cores": 1.0,
+          "loaded_weight_bytes": 1009308160,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 1009314512,
+          "transport": {
+            "request_payload_bytes": 1023497,
+            "response_payload_bytes": 24726575,
+            "calls": 45
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.1641562,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-02",
+        "url": "http://stageplane-review-63856-node-02:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 3499999232,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-02",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-010",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-023",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-025",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-004",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-007"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-004": 1607.0257510000374,
+            "blocks-007": 1417.3216670000102,
+            "blocks-010": 4971.132878000049,
+            "blocks-023": 1734.6475849999479,
+            "blocks-025": 1868.8213340000175
+          },
+          "calls": 45,
+          "bytes_received": 1028051,
+          "bytes_sent": 1033748,
+          "rss_bytes": 1435680768,
+          "memory_limit_bytes": 3499999232,
+          "memory_used_bytes": 1415122944,
+          "available_memory_bytes": 889634816,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 0.0,
+          "available_cpu_cores": 1.0,
+          "loaded_weight_bytes": 1009308160,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 1009314504,
+          "transport": {
+            "request_payload_bytes": 1033748,
+            "response_payload_bytes": 24726575,
+            "calls": 45
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.1489248,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-00",
+        "url": "http://stageplane-review-63856-node-00:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-00",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-013",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-024",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-029",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-033"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-013": 1273.7695840000924,
+            "blocks-024": 1650.60225000002,
+            "blocks-029": 3200.894293000033,
+            "blocks-033": 4281.370876999972
+          },
+          "calls": 36,
+          "bytes_received": 872375,
+          "bytes_sent": 876935,
+          "rss_bytes": 1263554560,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 1263529984,
+          "available_memory_bytes": 888946688,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 8.9,
+          "available_cpu_cores": 0.911,
+          "loaded_weight_bytes": 807446528,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 807451616,
+          "transport": {
+            "request_payload_bytes": 876935,
+            "response_payload_bytes": 20399420,
+            "calls": 36
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.263453,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-08",
+        "url": "http://stageplane-review-63856-node-08:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 3499999232,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-08",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-016",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-019",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-035"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-016": 1707.8218760000254,
+            "blocks-019": 2345.3664589999335,
+            "blocks-035": 1621.419668000044
+          },
+          "calls": 27,
+          "bytes_received": 649439,
+          "bytes_sent": 652856,
+          "rss_bytes": 999010304,
+          "memory_limit_bytes": 3499999232,
+          "memory_used_bytes": 991145984,
+          "available_memory_bytes": 888946688,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 14.9,
+          "available_cpu_cores": 0.851,
+          "loaded_weight_bytes": 605584896,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 605588712,
+          "transport": {
+            "request_payload_bytes": 652856,
+            "response_payload_bytes": 15454105,
+            "calls": 27
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.260739,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-09",
+        "url": "http://stageplane-review-63856-node-09:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-09",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-031",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-034"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-031": 2131.026249999991,
+            "blocks-034": 1630.5629590000308
+          },
+          "calls": 18,
+          "bytes_received": 453862,
+          "bytes_sent": 456145,
+          "rss_bytes": 809115648,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 781746176,
+          "available_memory_bytes": 888946688,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 11.0,
+          "available_cpu_cores": 0.89,
+          "loaded_weight_bytes": 403723264,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 403725808,
+          "transport": {
+            "request_payload_bytes": 456145,
+            "response_payload_bytes": 10508790,
+            "calls": 18
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.210376,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-07",
+        "url": "http://stageplane-review-63856-node-07:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2999996416,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-07",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:head",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-021",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-027",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-028",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-032",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-002",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-003"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-002": 1103.292834000058,
+            "blocks-003": 1346.5124169999854,
+            "blocks-021": 2869.59237699989,
+            "blocks-027": 1418.0283339999278,
+            "blocks-028": 1524.8632089999319,
+            "blocks-032": 3210.575543999994,
+            "head": 8355.55496199993
+          },
+          "calls": 63,
+          "bytes_received": 1499004,
+          "bytes_sent": 6838408,
+          "rss_bytes": 2403049472,
+          "memory_limit_bytes": 2999996416,
+          "memory_used_bytes": 2577772544,
+          "available_memory_bytes": 422223872,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 72.5,
+          "available_cpu_cores": 0.275,
+          "loaded_weight_bytes": 1989087232,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 1989095104,
+          "transport": {
+            "request_payload_bytes": 859840,
+            "response_payload_bytes": 19781260,
+            "calls": 36
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.2753272,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-06",
+        "url": "http://stageplane-review-63856-node-06:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 2499997696,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-06",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-030",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-009"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-009": 1747.6262509999287,
+            "blocks-030": 1628.7575840000272
+          },
+          "calls": 18,
+          "bytes_received": 424222,
+          "bytes_sent": 426503,
+          "rss_bytes": 814682112,
+          "memory_limit_bytes": 2499997696,
+          "memory_used_bytes": 802095104,
+          "available_memory_bytes": 889634816,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 1.0,
+          "available_cpu_cores": 0.99,
+          "loaded_weight_bytes": 403723264,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 403725800,
+          "transport": {
+            "request_payload_bytes": 426503,
+            "response_payload_bytes": 9890630,
+            "calls": 18
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.1537747,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      },
+      {
+        "id": "node-05",
+        "url": "http://stageplane-review-63856-node-05:8101",
+        "grpc_url": "127.0.0.1:0",
+        "transport": "rest",
+        "group": 0,
+        "memory_bytes": 3499999232,
+        "cpu_cores": 1.0,
+        "speed": 1.0,
+        "failure_domain": "node-05",
+        "ready": [
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-001",
+          "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-005"
+        ],
+        "metrics": {
+          "stage_ms": {
+            "blocks-001": 1762.338667999984,
+            "blocks-005": 1398.2948750000332
+          },
+          "calls": 18,
+          "bytes_received": 386599,
+          "bytes_sent": 388880,
+          "rss_bytes": 814043136,
+          "memory_limit_bytes": 3499999232,
+          "memory_used_bytes": 803803136,
+          "available_memory_bytes": 888946688,
+          "cpu_limit_cores": 1.0,
+          "cpu_usage_percent": 0.0,
+          "available_cpu_cores": 1.0,
+          "loaded_weight_bytes": 403723264,
+          "available_storage_bytes": 438582792192,
+          "sessions": 1,
+          "errors": {},
+          "loading": false,
+          "cache_bytes": 403725792,
+          "transport": {
+            "request_payload_bytes": 388880,
+            "response_payload_bytes": 9890630,
+            "calls": 18
+          },
+          "device": "cpu",
+          "dtype": "bfloat16"
+        },
+        "last_seen": 1793455321.2612622,
+        "active": true,
+        "quarantined_until": 0,
+        "draining": false
+      }
+    ],
+    "deployments": {
+      "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1": {
+        "replicas": 1,
+        "groups": 1,
+        "placements": {
+          "head": [
+            "node-07"
+          ],
+          "embedding": [
+            "node-04"
+          ],
+          "blocks-015": [
+            "node-01"
+          ],
+          "blocks-010": [
+            "node-02"
+          ],
+          "blocks-011": [
+            "node-03"
+          ],
+          "blocks-012": [
+            "node-03"
+          ],
+          "blocks-013": [
+            "node-00"
+          ],
+          "blocks-014": [
+            "node-03"
+          ],
+          "blocks-016": [
+            "node-08"
+          ],
+          "blocks-017": [
+            "node-01"
+          ],
+          "blocks-018": [
+            "node-03"
+          ],
+          "blocks-019": [
+            "node-08"
+          ],
+          "blocks-020": [
+            "node-04"
+          ],
+          "blocks-021": [
+            "node-07"
+          ],
+          "blocks-022": [
+            "node-01"
+          ],
+          "blocks-023": [
+            "node-02"
+          ],
+          "blocks-024": [
+            "node-00"
+          ],
+          "blocks-025": [
+            "node-02"
+          ],
+          "blocks-026": [
+            "node-03"
+          ],
+          "blocks-027": [
+            "node-07"
+          ],
+          "blocks-028": [
+            "node-07"
+          ],
+          "blocks-029": [
+            "node-00"
+          ],
+          "blocks-030": [
+            "node-06"
+          ],
+          "blocks-031": [
+            "node-09"
+          ],
+          "blocks-032": [
+            "node-07"
+          ],
+          "blocks-033": [
+            "node-00"
+          ],
+          "blocks-034": [
+            "node-09"
+          ],
+          "blocks-035": [
+            "node-08"
+          ],
+          "blocks-000": [
+            "node-01"
+          ],
+          "blocks-001": [
+            "node-05"
+          ],
+          "blocks-002": [
+            "node-07"
+          ],
+          "blocks-003": [
+            "node-07"
+          ],
+          "blocks-004": [
+            "node-02"
+          ],
+          "blocks-005": [
+            "node-05"
+          ],
+          "blocks-006": [
+            "node-01"
+          ],
+          "blocks-007": [
+            "node-02"
+          ],
+          "blocks-008": [
+            "node-04"
+          ],
+          "blocks-009": [
+            "node-06"
+          ]
+        },
+        "capacity": {
+          "status": "planned",
+          "message": "Model placement fits the available nodes.",
+          "reason": null,
+          "unassigned_stages": [],
+          "available_weight_budget_bytes": 26467545088,
+          "required_stage_storage_bytes": 8822894624
+        }
+      }
+    },
+    "events": [
+      {
+        "id": "1d06d7f9-2456-4832-9efc-bdf7e77cfe04",
+        "kind": "node_joined",
+        "time": 1793454557.1266603,
+        "node": "node-04",
+        "group": 0
+      },
+      {
+        "id": "28ecaf48-8767-48c9-b0cd-024fe7eeb4b2",
+        "kind": "node_joined",
+        "time": 1793454557.128206,
+        "node": "node-03",
+        "group": 0
+      },
+      {
+        "id": "900dca09-7b33-46c8-b6d4-db550fcfb2d0",
+        "kind": "node_joined",
+        "time": 1793454557.1286848,
+        "node": "node-01",
+        "group": 0
+      },
+      {
+        "id": "da5bbdfe-42ef-462c-83e5-4bdc3a80584f",
+        "kind": "node_joined",
+        "time": 1793454557.1419444,
+        "node": "node-02",
+        "group": 0
+      },
+      {
+        "id": "84967d60-a303-4fd8-9db5-c22343ce5e57",
+        "kind": "node_joined",
+        "time": 1793454557.2096012,
+        "node": "node-00",
+        "group": 0
+      },
+      {
+        "id": "cdf6dd57-e72c-4402-b561-516ed10cae01",
+        "kind": "node_joined",
+        "time": 1793454557.4692616,
+        "node": "node-08",
+        "group": 0
+      },
+      {
+        "id": "5110abae-4269-4678-8602-a58c0d83b072",
+        "kind": "node_joined",
+        "time": 1793454557.6320164,
+        "node": "node-09",
+        "group": 0
+      },
+      {
+        "id": "10f57206-4e09-4c8e-a200-67ab6278e391",
+        "kind": "node_joined",
+        "time": 1793454557.6341743,
+        "node": "node-07",
+        "group": 0
+      },
+      {
+        "id": "d457ca11-1203-461a-b633-1969f4b71f58",
+        "kind": "node_joined",
+        "time": 1793454557.703956,
+        "node": "node-06",
+        "group": 0
+      },
+      {
+        "id": "94754b7a-a9e4-44ca-94d2-401dda0a6205",
+        "kind": "node_joined",
+        "time": 1793454557.7043984,
+        "node": "node-05",
+        "group": 0
+      },
+      {
+        "id": "7ef02c5a-d2f9-4639-b4bf-94a9d40923c6",
+        "kind": "placement",
+        "time": 1793454559.5499997,
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "chunks": [
+          "head",
+          "embedding",
+          "blocks-015",
+          "blocks-010",
+          "blocks-011",
+          "blocks-012",
+          "blocks-013",
+          "blocks-014",
+          "blocks-016",
+          "blocks-017",
+          "blocks-018",
+          "blocks-019",
+          "blocks-020",
+          "blocks-021",
+          "blocks-022",
+          "blocks-023",
+          "blocks-024",
+          "blocks-025",
+          "blocks-026",
+          "blocks-027",
+          "blocks-028",
+          "blocks-029",
+          "blocks-030",
+          "blocks-031",
+          "blocks-032",
+          "blocks-033",
+          "blocks-034",
+          "blocks-035",
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009"
+        ],
+        "placements": {
+          "head": [
+            "node-07"
+          ],
+          "embedding": [
+            "node-04"
+          ],
+          "blocks-015": [
+            "node-01"
+          ],
+          "blocks-010": [
+            "node-02"
+          ],
+          "blocks-011": [
+            "node-03"
+          ],
+          "blocks-012": [
+            "node-03"
+          ],
+          "blocks-013": [
+            "node-00"
+          ],
+          "blocks-014": [
+            "node-03"
+          ],
+          "blocks-016": [
+            "node-08"
+          ],
+          "blocks-017": [
+            "node-01"
+          ],
+          "blocks-018": [
+            "node-03"
+          ],
+          "blocks-019": [
+            "node-08"
+          ],
+          "blocks-020": [
+            "node-04"
+          ],
+          "blocks-021": [
+            "node-07"
+          ],
+          "blocks-022": [
+            "node-01"
+          ],
+          "blocks-023": [
+            "node-02"
+          ],
+          "blocks-024": [
+            "node-00"
+          ],
+          "blocks-025": [
+            "node-02"
+          ],
+          "blocks-026": [
+            "node-03"
+          ],
+          "blocks-027": [
+            "node-07"
+          ],
+          "blocks-028": [
+            "node-07"
+          ],
+          "blocks-029": [
+            "node-00"
+          ],
+          "blocks-030": [
+            "node-06"
+          ],
+          "blocks-031": [
+            "node-09"
+          ],
+          "blocks-032": [
+            "node-07"
+          ],
+          "blocks-033": [
+            "node-00"
+          ],
+          "blocks-034": [
+            "node-09"
+          ],
+          "blocks-035": [
+            "node-08"
+          ],
+          "blocks-000": [
+            "node-01"
+          ],
+          "blocks-001": [
+            "node-05"
+          ],
+          "blocks-002": [
+            "node-07"
+          ],
+          "blocks-003": [
+            "node-07"
+          ],
+          "blocks-004": [
+            "node-02"
+          ],
+          "blocks-005": [
+            "node-05"
+          ],
+          "blocks-006": [
+            "node-01"
+          ],
+          "blocks-007": [
+            "node-02"
+          ],
+          "blocks-008": [
+            "node-04"
+          ],
+          "blocks-009": [
+            "node-06"
+          ]
+        }
+      },
+      {
+        "id": "fd68cb35-e4b8-4270-a5bc-e0a7c9e817de",
+        "kind": "request_started",
+        "time": 1793454682.6199956,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "route": [
+          {
+            "chunk": "embedding",
+            "node": "node-04",
+            "url": "http://stageplane-review-63856-node-04:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-000",
+            "node": "node-01",
+            "url": "http://stageplane-review-63856-node-01:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-001",
+            "node": "node-05",
+            "url": "http://stageplane-review-63856-node-05:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-002",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-003",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-004",
+            "node": "node-02",
+            "url": "http://stageplane-review-63856-node-02:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-005",
+            "node": "node-05",
+            "url": "http://stageplane-review-63856-node-05:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-006",
+            "node": "node-01",
+            "url": "http://stageplane-review-63856-node-01:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-007",
+            "node": "node-02",
+            "url": "http://stageplane-review-63856-node-02:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-008",
+            "node": "node-04",
+            "url": "http://stageplane-review-63856-node-04:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-009",
+            "node": "node-06",
+            "url": "http://stageplane-review-63856-node-06:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-010",
+            "node": "node-02",
+            "url": "http://stageplane-review-63856-node-02:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-011",
+            "node": "node-03",
+            "url": "http://stageplane-review-63856-node-03:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-012",
+            "node": "node-03",
+            "url": "http://stageplane-review-63856-node-03:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-013",
+            "node": "node-00",
+            "url": "http://stageplane-review-63856-node-00:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-014",
+            "node": "node-03",
+            "url": "http://stageplane-review-63856-node-03:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-015",
+            "node": "node-01",
+            "url": "http://stageplane-review-63856-node-01:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-016",
+            "node": "node-08",
+            "url": "http://stageplane-review-63856-node-08:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-017",
+            "node": "node-01",
+            "url": "http://stageplane-review-63856-node-01:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-018",
+            "node": "node-03",
+            "url": "http://stageplane-review-63856-node-03:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-019",
+            "node": "node-08",
+            "url": "http://stageplane-review-63856-node-08:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-020",
+            "node": "node-04",
+            "url": "http://stageplane-review-63856-node-04:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-021",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-022",
+            "node": "node-01",
+            "url": "http://stageplane-review-63856-node-01:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-023",
+            "node": "node-02",
+            "url": "http://stageplane-review-63856-node-02:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-024",
+            "node": "node-00",
+            "url": "http://stageplane-review-63856-node-00:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-025",
+            "node": "node-02",
+            "url": "http://stageplane-review-63856-node-02:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-026",
+            "node": "node-03",
+            "url": "http://stageplane-review-63856-node-03:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-027",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-028",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-029",
+            "node": "node-00",
+            "url": "http://stageplane-review-63856-node-00:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-030",
+            "node": "node-06",
+            "url": "http://stageplane-review-63856-node-06:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-031",
+            "node": "node-09",
+            "url": "http://stageplane-review-63856-node-09:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-032",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-033",
+            "node": "node-00",
+            "url": "http://stageplane-review-63856-node-00:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-034",
+            "node": "node-09",
+            "url": "http://stageplane-review-63856-node-09:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-035",
+            "node": "node-08",
+            "url": "http://stageplane-review-63856-node-08:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          },
+          {
+            "chunk": "head",
+            "node": "node-07",
+            "url": "http://stageplane-review-63856-node-07:8101",
+            "grpc_url": "127.0.0.1:0",
+            "transport": "rest"
+          }
+        ],
+        "prompt_tokens": 19
+      },
+      {
+        "id": "cac46c7b-55ed-49ba-9f8b-342ee49bdecf",
+        "kind": "token_committed",
+        "time": 1793454775.5713305,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 0,
+        "token_id": 17,
+        "ms": 92907.87762600002,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 11.16812499998332,
+            "input_shape": [
+              1,
+              19
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 616.5515419999963,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 2077.4856680000084,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 309.29687500000114,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 418.4691659999942,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 746.8299589999958,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 1806.6096680000214,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 486.41716700001325,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 618.7287090000098,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 463.1677919999788,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 2139.2080010000145,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 1857.952876000013,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1905.7392920000211,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 2449.048501000021,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1633.5406259999843,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 1836.8920009999954,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 1615.588625999976,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 2355.1697929999873,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1737.755166999989,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1653.4803760000045,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1736.0841670000013,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1644.434251000007,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1049.608959000011,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 4342.95050199998,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 9470.98583799999,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 4011.3252510000166,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 2172.5307929999926,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 2034.007000999992,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1298.432292000001,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1517.0442920000085,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1999.081418000003,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1771.8535420000023,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 2205.129209000006,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1418.9598339999918,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 2049.335291999995,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1998.5262090000049,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 2236.072127,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              19,
+              2560
+            ],
+            "offset": 0
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 16862.599756999996,
+            "input_shape": [
+              1,
+              19,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "7ad67cd3-cdef-4aac-b89e-e8be7829f079",
+        "kind": "token_committed",
+        "time": 1793454858.066808,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 1,
+        "token_id": 5519,
+        "ms": 82301.938412,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 31.3626260000035,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 2491.2032919999947,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 1932.2671259999993,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 2065.5714179999904,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1701.068668000005,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1641.3392930000157,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 1587.3384589999944,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 1560.2015839999979,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1284.7406669999941,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 1647.0546660000025,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 1586.052250999984,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 1460.8495009999842,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1621.3400839999963,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 1644.9864170000126,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1568.9476670000033,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 1576.8116259999942,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 1582.1266680000008,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1702.4239170000044,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1275.118333999984,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1611.938834,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1667.1267930000226,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1503.4267510000063,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1510.5159999999955,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 3875.3665849999948,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 7915.144045000034,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 7595.857211999999,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 4163.393627000005,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1461.6676679999614,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1349.516833999985,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1314.5155840000484,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1287.004000999957,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1373.8522500000272,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1637.4235840000324,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1427.7146679999646,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 1802.2547099999997,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1167.7904590000026,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1509.9954170000274,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 19
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 6382.0556280000455,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 19
+          }
+        ]
+      },
+      {
+        "id": "7e4c02de-a7e5-447d-a583-132df402b1ca",
+        "kind": "token_committed",
+        "time": 1793454926.858359,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 2,
+        "token_id": 220,
+        "ms": 68778.43640700002,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 3.829207999956452,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 1505.639125000016,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 1850.0522100000012,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1972.8501680000363,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1524.9539170000048,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 2152.44158400003,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 1822.0567099999698,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 1406.016459,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1279.597583999987,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 1836.178125999993,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 2147.071000999972,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 6164.514169000029,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1516.7290840000192,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 1587.8552509999508,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1439.038709999977,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 1736.0219589999701,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 1782.5880429999756,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1258.541374999993,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1697.5030840000045,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1533.0816670000331,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1395.0527499999907,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1694.0139590000172,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1429.3426680000039,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 1643.150917000014,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 1361.6309590000242,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1387.4273339999945,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 1369.98108399996,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1140.8370839999975,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1462.2800839999854,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1454.7198760000128,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1333.0917920000047,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1289.1647920000082,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1916.9640009999966,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1348.3222510000132,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 1257.4397509999926,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1381.842584000026,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1816.3127920000193,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 20
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 6878.1452949999675,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 20
+          }
+        ]
+      },
+      {
+        "id": "ea26958a-ee91-48d0-8a25-43774893d10b",
+        "kind": "token_committed",
+        "time": 1793454989.647591,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 3,
+        "token_id": 17,
+        "ms": 62783.28848699999,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 3.559041999949386,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 1458.6100419999752,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 1677.8114179999761,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1518.0529169999772,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1615.1705839999977,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1801.1400420000427,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 1527.4792089999778,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 1978.9435419999677,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1551.979125999992,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 2461.9115419999957,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 1660.7134180000003,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 1753.8197509999804,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1802.1109590000037,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 2280.947918000038,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1562.4537919999852,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 4564.788335000003,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 1417.4731260000044,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1371.742667000035,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1200.6333330000416,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1414.214291999997,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1378.7667510000006,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1320.6271669999978,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1482.1548339999708,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 1756.6894590000288,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 1711.213292000025,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1025.5173749999926,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 1748.7365420000174,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1772.3344589999783,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1392.5109170000383,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1564.1255000000456,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1623.3989599999745,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1644.4847509999931,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1412.5467509999794,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 694.6762510000326,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 965.155583000012,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 689.9460000000204,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 769.9169179999785,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 21
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 4234.3086270000185,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 21
+          }
+        ]
+      },
+      {
+        "id": "550e57d7-478f-412f-a51f-ebc323cd8d12",
+        "kind": "token_committed",
+        "time": 1793455044.7580836,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 4,
+        "token_id": 374,
+        "ms": 55100.315233999994,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 18.907874999968044,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 840.0267920000033,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 858.3325829999922,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1170.4288340000062,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1550.803124999959,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1524.7635420000165,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 967.6948750000065,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 868.7865429999988,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1525.5391249999661,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 1299.2257509999945,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 805.969833000006,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 743.5285839999892,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 629.332541999986,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 865.6000420000396,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 485.22037499998305,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 930.0230420000162,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 1275.048083999991,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 755.1647919999596,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1058.6134170000037,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 4515.370335,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1376.3217929999882,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1367.5080419999972,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1678.0758759999799,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 1441.9677509999929,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 1366.1477510000282,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1413.5760000000346,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 1433.58841700001,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1763.1042499999694,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1365.164166999989,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1470.9873760000391,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1705.0831679999874,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1472.2257509999963,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1567.6240829999983,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1536.7194590000395,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 1284.987166999997,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1560.0206670000034,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1601.1074589999907,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 22
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 6149.978878000013,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 22
+          }
+        ]
+      },
+      {
+        "id": "696b344e-6456-48f9-855b-74093de15e73",
+        "kind": "token_committed",
+        "time": 1793455109.6658022,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 5,
+        "token_id": 220,
+        "ms": 64895.234363999916,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 4.015499999979966,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 1274.379917000033,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 1497.5733339999806,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1466.5121250000084,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1976.080000999957,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1413.8798339999994,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 1389.391167000042,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 1257.982625000011,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1339.0820839999833,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 1467.255042999966,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 1503.3237929999927,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 1451.7881259999967,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1198.5795000000508,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 1752.382291999993,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 2085.739584999942,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 1409.3292500000416,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 2277.104793000035,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1633.22775000006,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 3401.4886259999457,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 3994.6756269999923,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1472.635250000053,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1410.8868340000527,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1481.8298339999956,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 1735.92225099992,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 1256.6134589999365,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1789.6529999999302,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 2036.1135009999316,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1437.4647919999006,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1692.4133339999798,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1475.5773339999223,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1342.2671260000243,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1344.8926259999325,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1490.4592509999475,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1305.2295420000064,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 1398.8227499999084,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1384.5427509999126,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1762.9408340000055,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 23
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 4413.271043999998,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 23
+          }
+        ]
+      },
+      {
+        "id": "57956f22-dc42-4be8-9973-f1618e2d032b",
+        "kind": "token_committed",
+        "time": 1793455174.2435122,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 6,
+        "token_id": 19,
+        "ms": 64571.96165499999,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 6.303375000015876,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 806.5213749999884,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 887.9727920000278,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1001.2668340000346,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1812.2126260000186,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1478.8836260000835,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 977.1601250000685,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 2798.3408349999763,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1685.787667999989,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 641.8208340001001,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 1285.629292000067,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 644.9180840000963,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1213.6140009999963,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 1322.2187090000261,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1991.5005430000292,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 2339.147126000057,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 2254.1913340000974,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1465.3762089999418,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1670.3862929999787,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1706.7415010000104,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1835.7986260000416,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1613.9130010000144,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 1436.0299590000523,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 2009.534541999983,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 2469.3337090000114,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1683.5447509999995,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 1367.430583999976,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1733.5082499999999,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1676.8945419999,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1495.6982930000322,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1414.1502920000448,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 2089.1278760000205,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1946.5999170000714,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1412.3887089999698,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 1523.9371669999855,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1462.582958999974,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1643.0874589999576,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 24
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 6817.111211999986,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 24
+          }
+        ]
+      },
+      {
+        "id": "1f0f4666-10f8-4d63-8325-28f9a788ffbd",
+        "kind": "token_committed",
+        "time": 1793455237.467212,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 7,
+        "token_id": 13,
+        "ms": 63215.40519600001,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 2.8879999999844586,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 1313.099125000008,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 1620.0416259999884,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1138.4519169999976,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1891.1046680000254,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1460.8753339999794,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 2618.843166999909,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 1532.1914599999218,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1548.6947089999603,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 1733.483834000026,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 1238.569042999984,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 1381.1995840000009,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 1642.111166999939,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 1270.174208999947,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1165.845834000038,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 1416.468583999972,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 1571.5493339999966,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1468.8460840000062,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1219.7799589999931,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1541.1241680000103,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 1358.4352929999568,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1520.8833340000183,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 3871.3630020000664,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 3064.062417000059,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 1462.720666999985,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1502.65437500002,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 1607.2782920000463,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 1291.8014179999773,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1057.4302500000385,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1059.6898340000962,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 1233.3050839999942,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1869.687125999917,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 1822.4270009999373,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 1544.099792000111,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 1275.7685840000477,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1538.8512509999828,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1575.3491259999919,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 25
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 5038.239878000013,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 25
+          }
+        ]
+      },
+      {
+        "id": "57976ef5-e38f-4fdc-bc3d-49742a87b4c3",
+        "kind": "token_committed",
+        "time": 1793455321.773442,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "epoch": 0,
+        "offset": 8,
+        "token_id": 151645,
+        "ms": 84293.663456,
+        "trace": [
+          {
+            "node": "node-04",
+            "chunk": "embedding",
+            "ms": 6.806791999906636,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-000",
+            "ms": 1512.2977510000055,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-001",
+            "ms": 1762.338667999984,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-002",
+            "ms": 1103.292834000058,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-003",
+            "ms": 1346.5124169999854,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-004",
+            "ms": 1607.0257510000374,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-05",
+            "chunk": "blocks-005",
+            "ms": 1398.2948750000332,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-006",
+            "ms": 3170.3754180000487,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-007",
+            "ms": 1417.3216670000102,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-008",
+            "ms": 1722.2749170000498,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-009",
+            "ms": 1747.6262509999287,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-010",
+            "ms": 4971.132878000049,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-011",
+            "ms": 2654.884043000038,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-012",
+            "ms": 1565.5935009999666,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-013",
+            "ms": 1273.7695840000924,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-014",
+            "ms": 1623.9190420000114,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-015",
+            "ms": 2045.7499590000907,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-016",
+            "ms": 1707.8218760000254,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-017",
+            "ms": 1664.5330000000058,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-018",
+            "ms": 1679.1947919999757,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-019",
+            "ms": 2345.3664589999335,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-04",
+            "chunk": "blocks-020",
+            "ms": 1703.9793749999035,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-021",
+            "ms": 2869.59237699989,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-01",
+            "chunk": "blocks-022",
+            "ms": 1181.872083999906,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-023",
+            "ms": 1734.6475849999479,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-024",
+            "ms": 1650.60225000002,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-02",
+            "chunk": "blocks-025",
+            "ms": 1868.8213340000175,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-03",
+            "chunk": "blocks-026",
+            "ms": 4355.031168999972,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-027",
+            "ms": 1418.0283339999278,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-028",
+            "ms": 1524.8632089999319,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-029",
+            "ms": 3200.894293000033,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-06",
+            "chunk": "blocks-030",
+            "ms": 1628.7575840000272,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-031",
+            "ms": 2131.026249999991,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "blocks-032",
+            "ms": 3210.575543999994,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-00",
+            "chunk": "blocks-033",
+            "ms": 4281.370876999972,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-09",
+            "chunk": "blocks-034",
+            "ms": 1630.5629590000308,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-08",
+            "chunk": "blocks-035",
+            "ms": 1621.419668000044,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              2560
+            ],
+            "offset": 26
+          },
+          {
+            "node": "node-07",
+            "chunk": "head",
+            "ms": 8355.55496199993,
+            "input_shape": [
+              1,
+              1,
+              2560
+            ],
+            "output_shape": [
+              1,
+              1,
+              151936
+            ],
+            "offset": 26
+          }
+        ]
+      },
+      {
+        "id": "8c1c4456-9e3e-49a4-bbb0-bb1b664716a8",
+        "kind": "request_completed",
+        "time": 1793455321.7807446,
+        "request": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "metrics": {
+          "id": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+          "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+          "status": "completed",
+          "started": 1793454682.6164186,
+          "prompt_tokens": 19,
+          "output_tokens": 9,
+          "recoveries": 0,
+          "token_ms": [
+            92907.87762600002,
+            82301.938412,
+            68778.43640700002,
+            62783.28848699999,
+            55100.315233999994,
+            64895.234363999916,
+            64571.96165499999,
+            63215.40519600001,
+            84293.663456
+          ],
+          "boundary_bytes": 9400320,
+          "ttft_ms": 92908.08271,
+          "elapsed_ms": 639132.935252,
+          "tokens_per_second": 0.01408157756171874
+        }
+      }
+    ],
+    "requests": [
+      {
+        "id": "chatcmpl-612e4e1bc3df4d69869921a8519a4611",
+        "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+        "status": "completed",
+        "started": 1793454682.6164186,
+        "prompt_tokens": 19,
+        "output_tokens": 9,
+        "recoveries": 0,
+        "token_ms": [
+          92907.87762600002,
+          82301.938412,
+          68778.43640700002,
+          62783.28848699999,
+          55100.315233999994,
+          64895.234363999916,
+          64571.96165499999,
+          63215.40519600001,
+          84293.663456
+        ],
+        "boundary_bytes": 9400320,
+        "ttft_ms": 92908.08271,
+        "elapsed_ms": 639132.935252,
+        "tokens_per_second": 0.01408157756171874
+      }
+    ],
+    "time": 1793455322.0580258,
+    "transport": {
+      "request_payload_bytes": 50710,
+      "response_payload_bytes": 5563475,
+      "calls": 9
+    }
+  },
+  "containers": [
+    {
+      "node": "node-00",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 805,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:13.847863918Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-01",
+      "memory_bytes": 3000000000,
+      "memory_swap_bytes": 3000000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 724,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:13.833853376Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-02",
+      "memory_bytes": 3500000000,
+      "memory_swap_bytes": 3500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 796,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:13.847574418Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-03",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 789,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:13.84342371Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-04",
+      "memory_bytes": 3000000000,
+      "memory_swap_bytes": 3000000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 784,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:13.839800168Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-05",
+      "memory_bytes": 3500000000,
+      "memory_swap_bytes": 3500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 1082,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:14.540233752Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-06",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 1120,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:14.555089043Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-07",
+      "memory_bytes": 3000000000,
+      "memory_swap_bytes": 3000000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 1038,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:14.54271246Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-08",
+      "memory_bytes": 3500000000,
+      "memory_swap_bytes": 3500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 1105,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:14.556758585Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "node": "node-09",
+      "memory_bytes": 2500000000,
+      "memory_swap_bytes": 2500000000,
+      "nano_cpus": 1000000000,
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 1089,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-31T13:49:14.556195168Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    }
+  ],
+  "oom_count": 0,
+  "registered_nodes": 10,
+  "completed_inference": true,
+  "log_capture_errors": []
+}

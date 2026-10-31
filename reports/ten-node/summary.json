@@ -1,0 +1,26 @@
+{
+  "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "workers": 10,
+  "registered_workers": 10,
+  "placement_workers": 9,
+  "oom_killed": 0,
+  "inference_completed": false,
+  "token_parity": null,
+  "token_ids": [],
+  "output": null,
+  "server_metrics": {
+    "id": "chatcmpl-febb479590e4422cb33c1f1848327a5a",
+    "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+    "status": "failed",
+    "started": 1793454180.137434,
+    "prompt_tokens": 19,
+    "output_tokens": 0,
+    "recoveries": 1,
+    "token_ms": [],
+    "boundary_bytes": 0
+  },
+  "sampled_peak_worker_cgroup_bytes": 13587447808,
+  "sampled_peak_worker_rss_bytes": 12752203776,
+  "worker_cache_bytes": 8822894624,
+  "loaded_weight_bytes": 7813540352
+}

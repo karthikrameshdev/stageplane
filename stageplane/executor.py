@@ -107,7 +107,15 @@ class Coordinator:
             old_cpu = old.get("metrics", {}).get("available_cpu_cores", 1)
             changed |= node["metrics"].get("available_cpu_cores", 1) < old_cpu * .25
             if changed or any(d.get("capacity", {}).get("status") == "insufficient_capacity" for d in self.deployments.values()):
-                self.rebalance({info.group})
+                group_counts = {d["groups"] for d in self.deployments.values()} or {1}
+                loading_peer = any(peer["active"] and peer["metrics"].get("loading")
+                                   and any(peer["group"] % count == info.group % count for count in group_counts)
+                                   for peer in self.nodes.values())
+                # Loading consumes the group's headroom by design. A spare's
+                # measurements must not move already-ready stages mid-bootstrap.
+                # Membership loss/join and explicit drains still replan normally.
+                if not loading_peer:
+                    self.rebalance({info.group})
         return {"assignments": self.assignments(info.id)}
 
     def assignments(self, nid):

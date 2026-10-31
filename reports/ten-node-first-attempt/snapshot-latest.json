@@ -1,0 +1,1363 @@
+{
+  "models": [
+    {
+      "key": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "source": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "architecture": "qwen3",
+      "stages": [
+        {
+          "id": "embedding",
+          "kind": "embedding",
+          "start": 0,
+          "end": 0,
+          "artifacts": [
+            "embedding"
+          ],
+          "weight_bytes": 777912456
+        },
+        {
+          "id": "blocks-000",
+          "kind": "blocks",
+          "start": 0,
+          "end": 1,
+          "artifacts": [
+            "blocks-000"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-001",
+          "kind": "blocks",
+          "start": 1,
+          "end": 2,
+          "artifacts": [
+            "blocks-001"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-002",
+          "kind": "blocks",
+          "start": 2,
+          "end": 3,
+          "artifacts": [
+            "blocks-002"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-003",
+          "kind": "blocks",
+          "start": 3,
+          "end": 4,
+          "artifacts": [
+            "blocks-003"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-004",
+          "kind": "blocks",
+          "start": 4,
+          "end": 5,
+          "artifacts": [
+            "blocks-004"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-005",
+          "kind": "blocks",
+          "start": 5,
+          "end": 6,
+          "artifacts": [
+            "blocks-005"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-006",
+          "kind": "blocks",
+          "start": 6,
+          "end": 7,
+          "artifacts": [
+            "blocks-006"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-007",
+          "kind": "blocks",
+          "start": 7,
+          "end": 8,
+          "artifacts": [
+            "blocks-007"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-008",
+          "kind": "blocks",
+          "start": 8,
+          "end": 9,
+          "artifacts": [
+            "blocks-008"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-009",
+          "kind": "blocks",
+          "start": 9,
+          "end": 10,
+          "artifacts": [
+            "blocks-009"
+          ],
+          "weight_bytes": 201862896
+        },
+        {
+          "id": "blocks-010",
+          "kind": "blocks",
+          "start": 10,
+          "end": 11,
+          "artifacts": [
+            "blocks-010"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-011",
+          "kind": "blocks",
+          "start": 11,
+          "end": 12,
+          "artifacts": [
+            "blocks-011"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-012",
+          "kind": "blocks",
+          "start": 12,
+          "end": 13,
+          "artifacts": [
+            "blocks-012"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-013",
+          "kind": "blocks",
+          "start": 13,
+          "end": 14,
+          "artifacts": [
+            "blocks-013"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-014",
+          "kind": "blocks",
+          "start": 14,
+          "end": 15,
+          "artifacts": [
+            "blocks-014"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-015",
+          "kind": "blocks",
+          "start": 15,
+          "end": 16,
+          "artifacts": [
+            "blocks-015"
+          ],
+          "weight_bytes": 201862912
+        },
+        {
+          "id": "blocks-016",
+          "kind": "blocks",
+          "start": 16,
+          "end": 17,
+          "artifacts": [
+            "blocks-016"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-017",
+          "kind": "blocks",
+          "start": 17,
+          "end": 18,
+          "artifacts": [
+            "blocks-017"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-018",
+          "kind": "blocks",
+          "start": 18,
+          "end": 19,
+          "artifacts": [
+            "blocks-018"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-019",
+          "kind": "blocks",
+          "start": 19,
+          "end": 20,
+          "artifacts": [
+            "blocks-019"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-020",
+          "kind": "blocks",
+          "start": 20,
+          "end": 21,
+          "artifacts": [
+            "blocks-020"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-021",
+          "kind": "blocks",
+          "start": 21,
+          "end": 22,
+          "artifacts": [
+            "blocks-021"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-022",
+          "kind": "blocks",
+          "start": 22,
+          "end": 23,
+          "artifacts": [
+            "blocks-022"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-023",
+          "kind": "blocks",
+          "start": 23,
+          "end": 24,
+          "artifacts": [
+            "blocks-023"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-024",
+          "kind": "blocks",
+          "start": 24,
+          "end": 25,
+          "artifacts": [
+            "blocks-024"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-025",
+          "kind": "blocks",
+          "start": 25,
+          "end": 26,
+          "artifacts": [
+            "blocks-025"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-026",
+          "kind": "blocks",
+          "start": 26,
+          "end": 27,
+          "artifacts": [
+            "blocks-026"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-027",
+          "kind": "blocks",
+          "start": 27,
+          "end": 28,
+          "artifacts": [
+            "blocks-027"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-028",
+          "kind": "blocks",
+          "start": 28,
+          "end": 29,
+          "artifacts": [
+            "blocks-028"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-029",
+          "kind": "blocks",
+          "start": 29,
+          "end": 30,
+          "artifacts": [
+            "blocks-029"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-030",
+          "kind": "blocks",
+          "start": 30,
+          "end": 31,
+          "artifacts": [
+            "blocks-030"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-031",
+          "kind": "blocks",
+          "start": 31,
+          "end": 32,
+          "artifacts": [
+            "blocks-031"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-032",
+          "kind": "blocks",
+          "start": 32,
+          "end": 33,
+          "artifacts": [
+            "blocks-032"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-033",
+          "kind": "blocks",
+          "start": 33,
+          "end": 34,
+          "artifacts": [
+            "blocks-033"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-034",
+          "kind": "blocks",
+          "start": 34,
+          "end": 35,
+          "artifacts": [
+            "blocks-034"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "blocks-035",
+          "kind": "blocks",
+          "start": 35,
+          "end": 36,
+          "artifacts": [
+            "blocks-035"
+          ],
+          "weight_bytes": 201862904
+        },
+        {
+          "id": "head",
+          "kind": "head",
+          "start": 36,
+          "end": 36,
+          "artifacts": [
+            "head",
+            "embedding"
+          ],
+          "weight_bytes": 777917696
+        }
+      ],
+      "artifact_bytes": 8044982168
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node-07",
+      "url": "http://stageplane-review-58781-node-07:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2999996416,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-07",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:head",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-021",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-027",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-032",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-002",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-003"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 2155282432,
+        "memory_limit_bytes": 2999996416,
+        "memory_used_bytes": 2158133248,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.0,
+        "available_cpu_cores": 0.04,
+        "loaded_weight_bytes": 1787225600,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 1787232200,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.5377083,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-01",
+      "url": "http://stageplane-review-58781-node-01:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2999996416,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-01",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-015",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-022",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-000",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-006"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 1180606464,
+        "memory_limit_bytes": 2999996416,
+        "memory_used_bytes": 1175654400,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.0,
+        "available_cpu_cores": 0.04,
+        "loaded_weight_bytes": 807446528,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 807451608,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.4824429,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-06",
+      "url": "http://stageplane-review-58781-node-06:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2499997696,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-06",
+      "ready": [],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 753483776,
+        "memory_limit_bytes": 2499997696,
+        "memory_used_bytes": 759713792,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 0.9,
+        "available_cpu_cores": 0.041,
+        "loaded_weight_bytes": 0,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 403725800,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.5332277,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-03",
+      "url": "http://stageplane-review-58781-node-03:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2499997696,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-03",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-011",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-012",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-018",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-026"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 1629880320,
+        "memory_limit_bytes": 2499997696,
+        "memory_used_bytes": 1624678400,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.0,
+        "available_cpu_cores": 0.04,
+        "loaded_weight_bytes": 807446528,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 1211177424,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.454452,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-08",
+      "url": "http://stageplane-review-58781-node-08:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 3499999232,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-08",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-019",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-035",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-016"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 961630208,
+        "memory_limit_bytes": 3499999232,
+        "memory_used_bytes": 954667008,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.0,
+        "available_cpu_cores": 0.04,
+        "loaded_weight_bytes": 605584896,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 605588712,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.5371394,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-05",
+      "url": "http://stageplane-review-58781-node-05:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 3499999232,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-05",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-001",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-005"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 790573056,
+        "memory_limit_bytes": 3499999232,
+        "memory_used_bytes": 785338368,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.9,
+        "available_cpu_cores": 0.031000000000000003,
+        "loaded_weight_bytes": 403723264,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 403725792,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.938889,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-02",
+      "url": "http://stageplane-review-58781-node-02:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 3499999232,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-02",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-010",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-023",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-025",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-028",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-004",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-007",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-030"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 1818038272,
+        "memory_limit_bytes": 3499999232,
+        "memory_used_bytes": 1814163456,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.0,
+        "available_cpu_cores": 0.04,
+        "loaded_weight_bytes": 1413031424,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 1413040312,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.7293627,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-00",
+      "url": "http://stageplane-review-58781-node-00:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2499997696,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-00",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-013",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-024",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-029",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-033",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-009"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 1613238272,
+        "memory_limit_bytes": 2499997696,
+        "memory_used_bytes": 1606483968,
+        "available_memory_bytes": 407490560,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 1.9,
+        "available_cpu_cores": 0.031000000000000003,
+        "loaded_weight_bytes": 1009308160,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 1211177416,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.7914867,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-04",
+      "url": "http://stageplane-review-58781-node-04:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2999996416,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-04",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:embedding",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-017",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-020",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-008",
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-014"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 2174164992,
+        "memory_limit_bytes": 2999996416,
+        "memory_used_bytes": 2172362752,
+        "available_memory_bytes": 408567808,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 0.0,
+        "available_cpu_cores": 0.05,
+        "loaded_weight_bytes": 1585358848,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": false,
+        "cache_bytes": 1787226968,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.4559276,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    },
+    {
+      "id": "node-09",
+      "url": "http://stageplane-review-58781-node-09:8101",
+      "grpc_url": "127.0.0.1:0",
+      "transport": "rest",
+      "group": 0,
+      "memory_bytes": 2499997696,
+      "cpu_cores": 0.05,
+      "speed": 1.0,
+      "failure_domain": "node-09",
+      "ready": [
+        "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1:blocks-031"
+      ],
+      "metrics": {
+        "stage_ms": {},
+        "calls": 0,
+        "bytes_received": 0,
+        "bytes_sent": 0,
+        "rss_bytes": 555892736,
+        "memory_limit_bytes": 2499997696,
+        "memory_used_bytes": 679325696,
+        "available_memory_bytes": 410886144,
+        "cpu_limit_cores": 0.05,
+        "cpu_usage_percent": 4.5,
+        "available_cpu_cores": 0.0050000000000000044,
+        "loaded_weight_bytes": 201861632,
+        "available_storage_bytes": 437378564096,
+        "sessions": 0,
+        "errors": {},
+        "loading": true,
+        "cache_bytes": 201862904,
+        "transport": {
+          "request_payload_bytes": 0,
+          "response_payload_bytes": 0,
+          "calls": 0
+        },
+        "device": "cpu",
+        "dtype": "bfloat16"
+      },
+      "last_seen": 1793452316.0805693,
+      "active": true,
+      "quarantined_until": 0,
+      "draining": false
+    }
+  ],
+  "deployments": {
+    "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1": {
+      "replicas": 1,
+      "groups": 1,
+      "placements": {
+        "blocks-002": [
+          "node-07"
+        ],
+        "blocks-003": [
+          "node-07"
+        ],
+        "blocks-021": [
+          "node-07"
+        ],
+        "blocks-027": [
+          "node-07"
+        ],
+        "blocks-032": [
+          "node-07"
+        ],
+        "head": [
+          "node-07"
+        ],
+        "embedding": [
+          "node-04"
+        ],
+        "blocks-015": [
+          "node-01"
+        ],
+        "blocks-010": [
+          "node-02"
+        ],
+        "blocks-011": [
+          "node-03"
+        ],
+        "blocks-012": [
+          "node-03"
+        ],
+        "blocks-013": [
+          "node-00"
+        ],
+        "blocks-014": [
+          "node-04"
+        ],
+        "blocks-016": [
+          "node-08"
+        ],
+        "blocks-017": [
+          "node-04"
+        ],
+        "blocks-018": [
+          "node-03"
+        ],
+        "blocks-019": [
+          "node-08"
+        ],
+        "blocks-020": [
+          "node-04"
+        ],
+        "blocks-022": [
+          "node-01"
+        ],
+        "blocks-023": [
+          "node-02"
+        ],
+        "blocks-024": [
+          "node-00"
+        ],
+        "blocks-025": [
+          "node-02"
+        ],
+        "blocks-026": [
+          "node-03"
+        ],
+        "blocks-028": [
+          "node-02"
+        ],
+        "blocks-029": [
+          "node-00"
+        ],
+        "blocks-030": [
+          "node-02"
+        ],
+        "blocks-031": [
+          "node-09"
+        ],
+        "blocks-033": [
+          "node-00"
+        ],
+        "blocks-034": [
+          "node-09"
+        ],
+        "blocks-035": [
+          "node-08"
+        ],
+        "blocks-000": [
+          "node-01"
+        ],
+        "blocks-001": [
+          "node-05"
+        ],
+        "blocks-004": [
+          "node-02"
+        ],
+        "blocks-005": [
+          "node-05"
+        ],
+        "blocks-006": [
+          "node-01"
+        ],
+        "blocks-007": [
+          "node-02"
+        ],
+        "blocks-008": [
+          "node-04"
+        ],
+        "blocks-009": [
+          "node-00"
+        ]
+      },
+      "capacity": {
+        "status": "planned",
+        "message": "Model placement fits the available nodes.",
+        "reason": null,
+        "unassigned_stages": [],
+        "available_weight_budget_bytes": 21712973312,
+        "required_stage_storage_bytes": 8822894624
+      }
+    }
+  },
+  "events": [
+    {
+      "id": "e6b5f436-5ed3-44bb-9075-60eecf2ecca4",
+      "kind": "node_joined",
+      "time": 1793451416.2116818,
+      "node": "node-07",
+      "group": 0
+    },
+    {
+      "id": "c0b5f64d-97f1-4e70-86b9-62b42536a3d2",
+      "kind": "node_joined",
+      "time": 1793451416.2123888,
+      "node": "node-01",
+      "group": 0
+    },
+    {
+      "id": "317bd9f0-aaa7-4a7e-89dc-c7138512e466",
+      "kind": "node_joined",
+      "time": 1793451416.289658,
+      "node": "node-06",
+      "group": 0
+    },
+    {
+      "id": "3c6b507b-306e-4665-9702-7d75631326ee",
+      "kind": "node_joined",
+      "time": 1793451416.678498,
+      "node": "node-03",
+      "group": 0
+    },
+    {
+      "id": "f6710ba9-4409-4c61-989e-1bb0bef630e2",
+      "kind": "node_joined",
+      "time": 1793451416.9675784,
+      "node": "node-08",
+      "group": 0
+    },
+    {
+      "id": "8ff5b25d-8135-400c-8883-6b1befb5b0f1",
+      "kind": "node_joined",
+      "time": 1793451417.2012527,
+      "node": "node-05",
+      "group": 0
+    },
+    {
+      "id": "66aef3cd-9741-4121-a7ff-3567b09ccfe8",
+      "kind": "node_joined",
+      "time": 1793451417.3034377,
+      "node": "node-02",
+      "group": 0
+    },
+    {
+      "id": "b688290d-ab53-4656-945c-dae3725d38c9",
+      "kind": "node_joined",
+      "time": 1793451418.358584,
+      "node": "node-00",
+      "group": 0
+    },
+    {
+      "id": "c40417bd-a5d4-406b-bee2-2d81bdcccc21",
+      "kind": "node_joined",
+      "time": 1793451418.8726501,
+      "node": "node-04",
+      "group": 0
+    },
+    {
+      "id": "e38e0802-05c2-4b6c-a488-94d76bce200d",
+      "kind": "node_joined",
+      "time": 1793451422.7506254,
+      "node": "node-09",
+      "group": 0
+    },
+    {
+      "id": "5cacf5de-544b-477d-afaf-2beb48558ba8",
+      "kind": "placement",
+      "time": 1793451423.1138422,
+      "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "chunks": [
+        "head",
+        "embedding",
+        "blocks-015",
+        "blocks-010",
+        "blocks-011",
+        "blocks-012",
+        "blocks-013",
+        "blocks-014",
+        "blocks-016",
+        "blocks-017",
+        "blocks-018",
+        "blocks-019",
+        "blocks-020",
+        "blocks-021",
+        "blocks-022",
+        "blocks-023",
+        "blocks-024",
+        "blocks-025",
+        "blocks-026",
+        "blocks-027",
+        "blocks-028",
+        "blocks-029",
+        "blocks-030",
+        "blocks-031",
+        "blocks-032",
+        "blocks-033",
+        "blocks-034",
+        "blocks-035",
+        "blocks-000",
+        "blocks-001",
+        "blocks-002",
+        "blocks-003",
+        "blocks-004",
+        "blocks-005",
+        "blocks-006",
+        "blocks-007",
+        "blocks-008",
+        "blocks-009"
+      ],
+      "placements": {
+        "head": [
+          "node-07"
+        ],
+        "embedding": [
+          "node-04"
+        ],
+        "blocks-015": [
+          "node-01"
+        ],
+        "blocks-010": [
+          "node-02"
+        ],
+        "blocks-011": [
+          "node-03"
+        ],
+        "blocks-012": [
+          "node-03"
+        ],
+        "blocks-013": [
+          "node-00"
+        ],
+        "blocks-014": [
+          "node-03"
+        ],
+        "blocks-016": [
+          "node-00"
+        ],
+        "blocks-017": [
+          "node-04"
+        ],
+        "blocks-018": [
+          "node-03"
+        ],
+        "blocks-019": [
+          "node-08"
+        ],
+        "blocks-020": [
+          "node-04"
+        ],
+        "blocks-021": [
+          "node-07"
+        ],
+        "blocks-022": [
+          "node-01"
+        ],
+        "blocks-023": [
+          "node-02"
+        ],
+        "blocks-024": [
+          "node-00"
+        ],
+        "blocks-025": [
+          "node-02"
+        ],
+        "blocks-026": [
+          "node-03"
+        ],
+        "blocks-027": [
+          "node-07"
+        ],
+        "blocks-028": [
+          "node-02"
+        ],
+        "blocks-029": [
+          "node-00"
+        ],
+        "blocks-030": [
+          "node-06"
+        ],
+        "blocks-031": [
+          "node-04"
+        ],
+        "blocks-032": [
+          "node-07"
+        ],
+        "blocks-033": [
+          "node-00"
+        ],
+        "blocks-034": [
+          "node-03"
+        ],
+        "blocks-035": [
+          "node-08"
+        ],
+        "blocks-000": [
+          "node-01"
+        ],
+        "blocks-001": [
+          "node-05"
+        ],
+        "blocks-002": [
+          "node-07"
+        ],
+        "blocks-003": [
+          "node-07"
+        ],
+        "blocks-004": [
+          "node-02"
+        ],
+        "blocks-005": [
+          "node-05"
+        ],
+        "blocks-006": [
+          "node-01"
+        ],
+        "blocks-007": [
+          "node-02"
+        ],
+        "blocks-008": [
+          "node-04"
+        ],
+        "blocks-009": [
+          "node-06"
+        ]
+      }
+    },
+    {
+      "id": "5c29909e-3510-4dcf-a0d5-3b365f73fcd0",
+      "kind": "placement",
+      "time": 1793452153.6179886,
+      "model": "Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+      "chunks": [
+        "blocks-014",
+        "blocks-016",
+        "blocks-030",
+        "blocks-031",
+        "blocks-034",
+        "blocks-009"
+      ],
+      "placements": {
+        "blocks-002": [
+          "node-07"
+        ],
+        "blocks-003": [
+          "node-07"
+        ],
+        "blocks-021": [
+          "node-07"
+        ],
+        "blocks-027": [
+          "node-07"
+        ],
+        "blocks-032": [
+          "node-07"
+        ],
+        "head": [
+          "node-07"
+        ],
+        "embedding": [
+          "node-04"
+        ],
+        "blocks-015": [
+          "node-01"
+        ],
+        "blocks-010": [
+          "node-02"
+        ],
+        "blocks-011": [
+          "node-03"
+        ],
+        "blocks-012": [
+          "node-03"
+        ],
+        "blocks-013": [
+          "node-00"
+        ],
+        "blocks-014": [
+          "node-04"
+        ],
+        "blocks-016": [
+          "node-08"
+        ],
+        "blocks-017": [
+          "node-04"
+        ],
+        "blocks-018": [
+          "node-03"
+        ],
+        "blocks-019": [
+          "node-08"
+        ],
+        "blocks-020": [
+          "node-04"
+        ],
+        "blocks-022": [
+          "node-01"
+        ],
+        "blocks-023": [
+          "node-02"
+        ],
+        "blocks-024": [
+          "node-00"
+        ],
+        "blocks-025": [
+          "node-02"
+        ],
+        "blocks-026": [
+          "node-03"
+        ],
+        "blocks-028": [
+          "node-02"
+        ],
+        "blocks-029": [
+          "node-00"
+        ],
+        "blocks-030": [
+          "node-02"
+        ],
+        "blocks-031": [
+          "node-09"
+        ],
+        "blocks-033": [
+          "node-00"
+        ],
+        "blocks-034": [
+          "node-09"
+        ],
+        "blocks-035": [
+          "node-08"
+        ],
+        "blocks-000": [
+          "node-01"
+        ],
+        "blocks-001": [
+          "node-05"
+        ],
+        "blocks-004": [
+          "node-02"
+        ],
+        "blocks-005": [
+          "node-05"
+        ],
+        "blocks-006": [
+          "node-01"
+        ],
+        "blocks-007": [
+          "node-02"
+        ],
+        "blocks-008": [
+          "node-04"
+        ],
+        "blocks-009": [
+          "node-00"
+        ]
+      }
+    }
+  ],
+  "requests": [],
+  "time": 1793452317.4995098,
+  "transport": {
+    "request_payload_bytes": 0,
+    "response_payload_bytes": 0,
+    "calls": 0
+  }
+}

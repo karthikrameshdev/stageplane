@@ -1,6 +1,7 @@
 # Stageplane
 
-Latest validation: [repository migration and fresh Qwen3 4B test report](reports/migration/REPORT.md).
+Validation reports: [ten-worker Qwen3 4B test](reports/ten-node/REPORT.md) and
+[repository migration with the direct/four-worker comparison](reports/migration/REPORT.md).
 
 Run the layers of one open-weight language model across a trusted worker pool.
 Stageplane separates **model distribution**, **execution coordination**, and **worker

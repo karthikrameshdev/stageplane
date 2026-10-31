@@ -1,4 +1,5 @@
 from types import SimpleNamespace
+import time
 
 from stageplane import resources
 from stageplane.placement import plan, score
@@ -73,3 +74,32 @@ def test_loading_assignments_survive_transient_cpu_exhaustion():
     # Busy nodes retain their reservations, but receive no new work without CPU.
     nodes[0]["metrics"]["loading"] = False
     assert plan(manifest, nodes, previous=previous)["blocks-0"] == ["idle"]
+
+
+async def test_loading_peer_defers_resource_rebalance_only_in_its_group(tmp_path, monkeypatch):
+    from stageplane.common import NodeInfo
+    from stageplane.executor import Coordinator
+    c = Coordinator(tmp_path / "models")
+    c.deployments["model"] = {"groups": 2, "capacity": {"status": "planned"}}
+    calls = []
+    monkeypatch.setattr(c, "rebalance", lambda groups=None: calls.append(groups))
+    def info(nid, group, free, loading=False):
+        return NodeInfo(id=nid, url="http://" + nid, group=group, memory_bytes=2_000_000_000,
+                        metrics={"available_memory_bytes": free, "rss_bytes": 200_000_000,
+                                 "available_cpu_cores": 1, "loading": loading})
+    try:
+        c.register(info("loader", 0, 1_800_000_000, True))
+        c.register(info("spare", 0, 1_800_000_000))
+        c.register(info("other", 1, 1_800_000_000))
+        calls.clear()
+        c.last_rebalance = time.monotonic() - 31
+        c.register(info("spare", 0, 900_000_000))
+        assert not calls
+        c.register(info("other", 1, 900_000_000))
+        assert calls == [{1}]
+        c.nodes["loader"]["metrics"]["loading"] = False
+        c.register(info("spare", 0, 1_800_000_000))
+        assert calls == [{1}, {0}]
+    finally:
+        c.db.close()
+        await c.transport.close()
