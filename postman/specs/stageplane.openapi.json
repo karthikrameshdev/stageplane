@@ -1165,7 +1165,8 @@
             ]
           },
           "serving": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Every stage has at least one healthy ready owner, including retained owners during migration."
           },
           "message": {
             "type": "string"
@@ -1178,22 +1179,26 @@
             "type": "integer"
           },
           "ready_stages": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Stages with at least one active, non-draining, verified-ready replica."
           },
           "total_stages": {
             "type": "integer"
           },
           "loading_stages": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Stages whose assigned target owners have not all become ready."
           },
           "target_ready_stages": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Stages whose nonempty set of assigned target owners are all active, non-draining and verified ready."
           },
           "under_replicated_stages": {
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Stage IDs with fewer healthy verified-ready replicas than replica_target."
           },
           "transitioning_stages": {
             "type": "array",

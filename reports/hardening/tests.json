@@ -1,10 +1,10 @@
 {
   "suite": "full regression suite",
-  "tests": 97,
+  "tests": 104,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "seconds": 48.989,
+  "seconds": 60.055,
   "base_commit": "033c960dd8059e3e80066de7b682151d7d9c1499",
   "environment": "macOS Apple Silicon, Python3.12; ephemeral local worker processes and tiny native transformer fixtures"
 }

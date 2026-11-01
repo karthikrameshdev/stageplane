@@ -149,12 +149,15 @@ class Coordinator:
         if ready_sets is None:
             ready_sets = {nid: set(node.get("ready", [])) for nid, node in self.nodes.items()
                           if node.get("active") and not node.get("draining")}
-        ready = sum(any(model + ":" + stage["id"] in ready_sets.get(nid, set())
-                        for nid in placements.get(stage["id"], [])) for stage in stages)
-        target_ready = sum(any(model + ":" + stage["id"] in ready_sets.get(nid, set())
-                               for nid in deployment.get("placements", {}).get(stage["id"], [])) for stage in stages)
-        under_replicated = [stage["id"] for stage in stages
-                            if len(placements.get(stage["id"], [])) < deployment["replicas"]]
+        ready_counts = {stage["id"]: sum(model + ":" + stage["id"] in ready_sets.get(nid, ())
+                                        for nid in set(placements.get(stage["id"], []))) for stage in stages}
+        ready = sum(count > 0 for count in ready_counts.values())
+        target_ready = 0
+        for stage in stages:
+            targets = deployment.get("placements", {}).get(stage["id"], [])
+            if targets and all(model + ":" + stage["id"] in ready_sets.get(nid, ()) for nid in targets):
+                target_ready += 1
+        under_replicated = [sid for sid, count in ready_counts.items() if count < deployment["replicas"]]
         status.update(replica_target=deployment["replicas"], under_replicated_stages=under_replicated,
                       ready_stages=ready, total_stages=len(stages), loading_stages=len(stages) - target_ready,
                       target_ready_stages=target_ready,

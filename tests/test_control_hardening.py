@@ -427,3 +427,54 @@ async def test_loading_join_replans_once_after_settling_without_resource_change(
     c.register(NodeInfo(id="old", url="http://old", memory_bytes=10**9,
                         ready=["model:blocks-000"], metrics={"loading": False}))
     assert c.rebalance_count == before + 1
+
+
+@pytest.mark.parametrize("secondary, expected_readiness, expected_loading", [
+    ({"active": True, "ready": []}, "degraded", 1),
+    ({"active": False, "ready": ["model:blocks-000"]}, "degraded", 1),
+    ({"active": True, "draining": True, "ready": ["model:blocks-000"]}, "degraded", 1),
+    (None, "degraded", 1),
+    ({"active": True, "ready": ["model:blocks-000"]}, "ready", 0),
+], ids=["loading", "inactive", "draining", "missing", "ready"])
+async def test_replica_readiness_counts_only_healthy_loaded_copies(
+        coordinator, secondary, expected_readiness, expected_loading):
+    c = coordinator
+    c.models["model"] = manifest()
+    c.nodes["primary"] = {"id": "primary", "active": True, "ready": ["model:blocks-000"]}
+    if secondary is not None:
+        c.nodes["secondary"] = {"id": "secondary", **secondary}
+    d = {"replicas": 2, "placements": {"blocks-000": ["primary", "secondary"]},
+         "capacity": {"status": "planned"}}
+    status = c.deployment_status("model", d)
+    assert status["serving"] and status["ready_stages"] == 1
+    assert status["readiness"] == expected_readiness
+    assert status["loading_stages"] == expected_loading
+    assert status["target_ready_stages"] == 1 - expected_loading
+    assert status["under_replicated_stages"] == (["blocks-000"] if expected_readiness == "degraded" else [])
+
+
+async def test_missing_replica_assignment_is_degraded_without_a_loading_target(coordinator):
+    c = coordinator
+    c.models["model"] = manifest()
+    c.nodes["primary"] = {"id": "primary", "active": True, "ready": ["model:blocks-000"]}
+    status = c.deployment_status("model", {
+        "replicas": 2, "placements": {"blocks-000": ["primary"]}, "capacity": {"status": "planned"},
+    })
+    assert status["serving"] and status["readiness"] == "degraded"
+    assert status["under_replicated_stages"] == ["blocks-000"]
+    assert status["target_ready_stages"] == 1 and status["loading_stages"] == 0
+
+
+async def test_ready_retiring_copy_preserves_redundancy_while_target_replica_loads(coordinator):
+    c = coordinator
+    c.models["model"] = manifest()
+    for nid in ("primary", "retiring"):
+        c.nodes[nid] = {"id": nid, "active": True, "ready": ["model:blocks-000"]}
+    c.nodes["replacement"] = {"id": "replacement", "active": True, "ready": []}
+    status = c.deployment_status("model", {
+        "replicas": 2, "placements": {"blocks-000": ["primary", "replacement"]},
+        "retiring_placements": {"blocks-000": ["retiring"]}, "capacity": {"status": "planned"},
+    })
+    assert status["serving"] and status["readiness"] == "rebalancing"
+    assert status["under_replicated_stages"] == []
+    assert status["target_ready_stages"] == 0 and status["loading_stages"] == 1

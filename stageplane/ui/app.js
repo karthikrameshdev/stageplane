@@ -250,7 +250,7 @@ function render() {
   let capacityMessage = capacity?.status === 'insufficient_capacity' ? `${capacity.message || 'Desired placement exceeds available capacity.'}${ready ? ' Existing ready replicas continue serving.' : ''}` : '';
   if (!capacityMessage && capacity?.readiness === 'rebalancing') capacityMessage = `Rebalancing placement. ${formatCount(capacity.target_ready_stages)} / ${formatCount(capacity.total_stages)} target stages ready. Existing ready replicas continue serving while replacements load.`;
   if (!capacityMessage && capacity?.readiness === 'loading') capacityMessage = `Loading model stages. ${formatCount(capacity.ready_stages)} / ${formatCount(capacity.total_stages)} stages ready. Inference becomes available when a complete route is ready.`;
-  if (!capacityMessage && capacity?.readiness === 'degraded') capacityMessage = `${formatCount(list(capacity.under_replicated_stages).length)} stages have fewer than ${formatCount(capacity.replica_target)} target replicas. ${ready ? 'Inference is available on the remaining ready route.' : 'Waiting for a complete ready route.'}`;
+  if (!capacityMessage && capacity?.readiness === 'degraded') capacityMessage = `${formatCount(list(capacity.under_replicated_stages).length)} stages have fewer than ${formatCount(capacity.replica_target)} ready replicas. ${ready ? 'Inference is available on the remaining ready route.' : 'Waiting for a complete ready route.'}`;
   $('capacity-banner').hidden = !capacityMessage;
   $('capacity-banner').textContent = capacityMessage;
   renderRequests(); renderNodes(); renderStages(model); renderEvents(); renderImports(); renderConnection();

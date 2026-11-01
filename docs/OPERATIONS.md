@@ -70,7 +70,9 @@ copies load and verify. They retire after replacements become ready and live
 sessions release their pins. Migration needs spare capacity for overlapping
 copies. Adding a node does not create capacity inside a different placement group.
 The dashboard distinguishes blocked, loading, degraded, rebalancing and ready
-deployments, including target readiness and remaining transitions.
+deployments, including target readiness and remaining transitions. A serving
+route can be degraded: redundancy counts only active, non-draining workers that
+have verified their copy. Target readiness waits for every assigned copy to load.
 
 The executor owns bounded retries. A failed or timed-out chunk moves the request
 to a ready route and replays committed context under a new epoch. Worker REST

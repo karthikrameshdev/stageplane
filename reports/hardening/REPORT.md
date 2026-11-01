@@ -19,14 +19,16 @@ certification of arbitrary model sizes.
 | Credentials | One shared token was used by all clients | Separate internal worker token, operator/viewer roles and tenant inference keys |
 | Request lifecycle | Failed startup/disconnects could leave stale status or worker state | Explicit terminal records, active requests separate from bounded history, shielded tracked cleanup |
 | Operations | Stale status, sparse request visibility, expensive unbounded graph, narrow-screen overflow | Polling/reconnect freshness, request/trace detail, normalized resource metrics, pagination and bounded topology |
+| Replica health | Assignment count could show full redundancy while a second copy was loading | Readiness counts active, non-draining verified copies; target readiness waits for every assigned copy |
 | Maintenance | Drained workers had no explicit return-to-service operation | Authenticated Resume operation with freshness/quarantine checks |
 
 ## Verification results
 
-- **97 tests passed**, zero failures/errors/skips, in **48.99 seconds**.
+- **104 tests passed**, zero failures/errors/skips, in **60.05 seconds**.
 - Coverage includes native logit/token parity for supported tiny model adapters,
   real REST/gRPC/WebSocket worker pools, hard worker loss after token commitment,
-  mutual TLS, concurrent route admission, group isolation, migration warmup,
+  mutual TLS with deterministic network coverage of all three transports,
+  concurrent route admission, group isolation, migration warmup, verified replica health,
   client disconnect cleanup, credential boundaries and malformed artifact rejection.
 - The real HTTP disconnect regression verifies zero active gateway requests and
   zero worker sessions after cancellation, within its 10-second deadline.
