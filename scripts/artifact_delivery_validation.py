@@ -165,6 +165,13 @@ http.server.ThreadingHTTPServer(("0.0.0.0",8000),Handler).serve_forever()
             (output / "services.log").write_text(logs.stdout)
             if not keep:
                 subprocess.run([*command, "down", "--volumes", "--remove-orphans"], check=True)
+                # Compose may omit a former service volume after a cache swap.
+                # Remove only leftovers labelled with this run's unique project.
+                leftovers = subprocess.check_output([
+                    "docker", "volume", "ls", "--quiet", "--filter",
+                    "label=com.docker.compose.project=" + project], text=True).splitlines()
+                if leftovers:
+                    subprocess.run(["docker", "volume", "rm", *leftovers], check=True)
         if keep:
             print(f"Kept local fixture at http://127.0.0.1:{port}; token={TOKEN}; compose={compose}", flush=True)
         else:
