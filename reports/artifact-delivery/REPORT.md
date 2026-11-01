@@ -20,11 +20,13 @@ heartbeat event loop. OS/mount timeouts still govern a stuck filesystem syscall.
 
 ## Validation evidence
 
-- Full regression suite: **142 passed**, zero failures/errors/skips, 51.57 seconds.
-- Additional executor/CLI contract regressions: **16 passed**, 2.89 seconds.
-- **158 unique tests passed** across those runs. Tests cover corrupt/denied/missing
+- Full regression suite: **167 passed**, zero failures/errors/skips, 48.25 seconds.
+- Tests cover corrupt/denied/missing
   sources, timeout cooldowns, credential isolation, partial cleanup, concurrent
   downloads, cancellation, stalled file I/O, disk-full behavior and source ordering.
+- Startup launchers wait on a confirmed matching pending-capacity deployment after
+  a 503, using the existing readiness deadline. Nine regression cases preserve
+  immediate failure for unrelated errors and mismatched plans.
 - OpenAPI syntax and collection lint passed. Local API collections: **4 requests,
   15 assertions, zero failures**.
 - The Docker image built and installed the complete updated application.

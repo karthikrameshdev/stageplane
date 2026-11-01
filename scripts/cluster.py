@@ -20,6 +20,25 @@ def free_port():
         return s.getsockname()[1]
 
 
+def submit_deployment(client, model, replicas=1, groups=1):
+    """Submit once; accept a confirmed pending-capacity plan for readiness waiting."""
+    response = client.post("/api/deployments", json={"model": model, "replicas": replicas, "groups": groups})
+    pending_capacity = False
+    if response.status_code == 503:
+        # Deployment admission persists a capacity-constrained plan before
+        # returning 503. Startup telemetry can settle on a later heartbeat;
+        # confirm that exact pending plan before using the caller's bounded wait.
+        confirmation = client.get("/api/state")
+        confirmation.raise_for_status()
+        deployment = confirmation.json().get("deployments", {}).get(model, {})
+        pending_capacity = (deployment.get("capacity", {}).get("status") == "insufficient_capacity"
+                            and deployment.get("replicas") == replicas
+                            and deployment.get("groups") == groups)
+    if not pending_capacity:
+        response.raise_for_status()
+    return response
+
+
 class Cluster:
     def __init__(self, store, work, nodes=4, replicas=1, groups=1, transports=None, port=None, token="test-stageplane-token", local_artifacts=False, certs=None, dtype="float32", memory_gb=6, threads=2, cpu_kernel="native"):
         self.store, self.work = Path(store).resolve(), Path(work).resolve()
@@ -94,8 +113,7 @@ class Cluster:
             if len(state["nodes"]) == self.count:
                 break
             time.sleep(.25)
-        r = self.http.post("/api/deployments", json={"model": self.model, "replicas": self.replicas, "groups": self.groups})
-        r.raise_for_status()
+        submit_deployment(self.http, self.model, self.replicas, self.groups)
         self.wait_ready()
         return self
 

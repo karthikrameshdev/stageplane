@@ -12,6 +12,7 @@ from pathlib import Path
 
 import httpx
 
+from scripts.cluster import submit_deployment
 from scripts.tiny_checkpoint import make
 from stageplane.distribution import distribute
 
@@ -121,7 +122,7 @@ http.server.ThreadingHTTPServer(("0.0.0.0",8000),Handler).serve_forever()
         with httpx.Client(base_url=f"http://127.0.0.1:{port}", headers={"Authorization": "Bearer " + TOKEN},
                           timeout=120, trust_env=False) as client:
             wait_for(client, lambda s: len(s["nodes"]) == 3, "three registered workers")
-            client.post("/api/deployments", json={"model": model, "replicas": 1, "groups": 3}).raise_for_status()
+            submit_deployment(client, model, replicas=1, groups=3)
             wait_for(client, state_ready, "initial artifact delivery")
             answer, request_id = infer(client)
             metrics = snapshot(client, "local-http-relay", request_id)
