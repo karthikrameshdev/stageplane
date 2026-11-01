@@ -15,9 +15,9 @@ decoder-only serving system and records the limits of the actual experiment.
 | Stateful decode | Native attention KV and hybrid recurrent state | Prefill and repeated decode match native logits |
 | Recovery | Bounded executor retries, chunk deadlines, failed-host exclusion, epoch fencing and committed-prefix replay | Worker killed after output starts; completed output matches uninterrupted run; timeout/exhaustion tests |
 | Admission/backpressure | Gateway request cap, worker sessions/compute caps, memory estimates | Validation tests; no continuous batching |
-| Operations UI | Light dashboard, Three.js, node health/RSS/stages, traces, imports and drains | Live browser inference verified |
+| Operations UI | Light responsive dashboard, bounded Three.js topology, live request lifecycle, node budgets/utilization, traces, imports and drains | Live browser inference verified |
 | OpenAI protocol | Model list and text chat, sampling, SSE | Actual OpenAI SDK streaming/non-streaming tests |
-| Protected transport | Bearer authentication and mutual TLS | Real certificate-backed test; missing client certificate rejected |
+| Protected transport | Internal worker credential, operator/viewer roles, tenant inference keys and mutual TLS | Real certificate-backed test; missing client certificate rejected |
 | Evaluation | Native direct vs one/four workers; raw tokens, timings, RSS, storage | Raw JSON and report retained |
 | CPU budgets | Explicit cores/millicores/percent; detected cgroup quota; bare-host CPU governor | Exact default-capacity registration test and measured governor sample; bare-host RAM flag is admission, Docker RAM limit is enforced |
 | Coordinator failover | SQLite deployment persistence only | Consensus HA and transferable gateway sessions not implemented |
@@ -31,3 +31,7 @@ is neither assumed nor guaranteed. The local experiment does not establish the
 paper's enterprise goodput, productivity, energy or cost hypotheses. Those require
 physical heterogeneous hosts, calibrated service objectives, representative
 concurrent workloads, and task-quality evaluation.
+
+For credential provisioning, deployment boundaries and large-model capacity planning,
+see the [operator guide](OPERATIONS.md). Current validation is recorded in the
+[hardening report](../reports/hardening/REPORT.md).

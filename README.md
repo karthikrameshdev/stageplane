@@ -22,6 +22,9 @@ transformer inference. You can use, modify, and redistribute the project under
 the terms of its [license](LICENSE). Model weights retain their own upstream
 licenses and access conditions.
 
+Operational setup and limits: [operator guide](docs/OPERATIONS.md).
+Latest hardening evidence: [validation report](reports/hardening/REPORT.md).
+
 Validation reports: [ten-worker Qwen3 4B test](reports/ten-node/REPORT.md) and
 [repository migration with the direct/four-worker comparison](reports/migration/REPORT.md).
 

@@ -51,7 +51,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/ClusterState"
                 }
               }
             }
@@ -64,6 +64,9 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         },
         "tags": [
@@ -73,7 +76,8 @@
           {
             "bearer": []
           }
-        ]
+        ],
+        "description": "Operator snapshot with live requests, resource telemetry, placement readiness and cumulative lifecycle counters. Requires an admin or viewer credential; tenant inference credentials cannot inspect operations."
       }
     },
     "/v1/models": {
@@ -99,6 +103,9 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         },
         "tags": [
@@ -140,6 +147,12 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
           }
         },
         "tags": [
@@ -185,6 +198,12 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
           }
         },
         "tags": [
@@ -230,6 +249,12 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
           }
         },
         "tags": [
@@ -285,6 +310,12 @@
           },
           "503": {
             "description": "Insufficient memory, compute, or storage; deployment remains pending until capacity is added."
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
           }
         },
         "tags": [
@@ -330,6 +361,12 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
           }
         },
         "tags": [
@@ -375,6 +412,9 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         },
         "tags": [
@@ -421,6 +461,9 @@
           },
           "503": {
             "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         },
         "tags": [
@@ -498,6 +541,12 @@
           },
           "401": {
             "description": "Invalid bearer token"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
           }
         }
       }
@@ -546,6 +595,9 @@
           },
           "404": {
             "description": "Unknown job"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         }
       }
@@ -586,8 +638,63 @@
           },
           "404": {
             "description": "Unknown model"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         }
+      }
+    },
+    "/api/nodes/{node_id}/resume": {
+      "post": {
+        "operationId": "resume_node",
+        "summary": "Resume assignments on a drained worker",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "No complete ready route or recovery exhausted"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "413": {
+            "description": "Request body exceeds configured byte limit"
+          }
+        },
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "Clear the drain flag and replan its placement group. Stale or quarantined workers remain inactive until a valid heartbeat."
       }
     }
   },
@@ -595,7 +702,8 @@
     "securitySchemes": {
       "bearer": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Internal STAGEPLANE_TOKEN or an executor API key from STAGEPLANE_API_KEYS_FILE. Roles: admin (control and inference), viewer (read operational state), inference (model list and tenant-isolated chat). Worker registration, heartbeat and artifact access require the internal token. Use TLS."
       }
     },
     "schemas": {
@@ -860,6 +968,238 @@
             "type": "string",
             "default": ".",
             "description": "Bundle directory within a Git repository."
+          }
+        }
+      },
+      "ClusterSummary": {
+        "type": "object",
+        "properties": {
+          "active_nodes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "total_nodes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "draining_nodes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "active_requests": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "completed_requests": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "failed_requests": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cancelled_requests": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "rebalance_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "uptime_seconds": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      },
+      "RequestStatus": {
+        "type": "object",
+        "required": [
+          "id",
+          "model",
+          "status",
+          "started"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "tenant": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "running",
+              "completed",
+              "failed",
+              "cancelled",
+              "recovering"
+            ]
+          },
+          "started": {
+            "type": "number"
+          },
+          "updated": {
+            "type": "number"
+          },
+          "finished": {
+            "type": "number"
+          },
+          "elapsed_ms": {
+            "type": "number"
+          },
+          "output_tokens": {
+            "type": "integer"
+          },
+          "recoveries": {
+            "type": "integer"
+          },
+          "route": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "error": {
+            "type": "string"
+          },
+          "last_trace": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "ClusterState": {
+        "type": "object",
+        "properties": {
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "deployments": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "capacity": {
+                  "$ref": "#/components/schemas/DeploymentCapacity"
+                },
+                "placements": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "retiring_placements": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequestStatus"
+            }
+          },
+          "summary": {
+            "$ref": "#/components/schemas/ClusterSummary"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "time": {
+            "type": "number"
+          },
+          "transport": {
+            "type": "object"
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "DeploymentCapacity": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "readiness": {
+            "type": "string",
+            "enum": [
+              "blocked",
+              "loading",
+              "degraded",
+              "rebalancing",
+              "ready"
+            ]
+          },
+          "serving": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "replica_target": {
+            "type": "integer"
+          },
+          "ready_stages": {
+            "type": "integer"
+          },
+          "total_stages": {
+            "type": "integer"
+          },
+          "loading_stages": {
+            "type": "integer"
+          },
+          "target_ready_stages": {
+            "type": "integer"
+          },
+          "under_replicated_stages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "transitioning_stages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

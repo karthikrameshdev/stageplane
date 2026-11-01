@@ -1,0 +1,68 @@
+{
+  "kind": "synthetic-placement-only",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "peak_process_rss_bytes": 34406400,
+  "assumptions": "BF16, equal whole-stage weights, unique failure domains, idle workers; no tensor execution, KV cache, network or gateway throughput measured.",
+  "results": [
+    {
+      "synthetic_parameters": 100000000000,
+      "bf16_weight_bytes": 200000000000,
+      "stages": 80,
+      "workers": 32,
+      "worker_memory_gib": 64,
+      "groups": 4,
+      "replicas": 2,
+      "placement_seconds": 0.0013956669718027115,
+      "failure_rebalance_seconds": 0.0004064589738845825,
+      "unaffected_group_changes": 0,
+      "max_assigned_weight_bytes_per_worker": 22500000000,
+      "stage_bytes": 2500000000,
+      "status": "passed"
+    },
+    {
+      "synthetic_parameters": 1000000000000,
+      "bf16_weight_bytes": 2000000000000,
+      "stages": 128,
+      "workers": 128,
+      "worker_memory_gib": 96,
+      "groups": 8,
+      "replicas": 2,
+      "placement_seconds": 0.004251958103850484,
+      "failure_rebalance_seconds": 0.0006765841972082853,
+      "unaffected_group_changes": 0,
+      "max_assigned_weight_bytes_per_worker": 93750000000,
+      "stage_bytes": 15625000000,
+      "status": "passed"
+    },
+    {
+      "synthetic_parameters": 10000000000000,
+      "bf16_weight_bytes": 20000000000000,
+      "stages": 256,
+      "workers": 1024,
+      "worker_memory_gib": 256,
+      "groups": 16,
+      "replicas": 2,
+      "placement_seconds": 0.021285458002239466,
+      "failure_rebalance_seconds": 0.0022719590924680233,
+      "unaffected_group_changes": 0,
+      "max_assigned_weight_bytes_per_worker": 234375000000,
+      "stage_bytes": 78125000000,
+      "status": "passed"
+    },
+    {
+      "synthetic_parameters": 10000000000000,
+      "bf16_weight_bytes": 20000000000000,
+      "stages": 256,
+      "workers": 10000,
+      "worker_memory_gib": 256,
+      "groups": 32,
+      "replicas": 2,
+      "placement_seconds": 0.10971558396704495,
+      "failure_rebalance_seconds": 0.009472667006775737,
+      "unaffected_group_changes": 0,
+      "max_assigned_weight_bytes_per_worker": 156250000000,
+      "stage_bytes": 78125000000,
+      "status": "passed"
+    }
+  ]
+}

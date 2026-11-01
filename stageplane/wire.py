@@ -30,6 +30,8 @@ def pack(meta: dict, tensor: torch.Tensor):
     header = json.dumps(meta, separators=(",", ":")).encode()
     if len(header) > 65536:
         raise ValueError("Oversized envelope")
+    if tensor.numel() * tensor.element_size() + len(header) + 4 > MAX_FRAME:
+        raise ValueError("Tensor frame exceeds limit")
     data = struct.pack("<I", len(header)) + header + save({"value": tensor.contiguous()})
     if len(data) > MAX_FRAME:
         raise ValueError("Tensor frame exceeds limit")
@@ -103,12 +105,18 @@ class Transport:
                 if not isinstance(result, bytes):
                     raise ValueError(result)
                 return result
-        r = await self.http.post(node["url"] + "/v1/forward", content=data,
-                                 headers={"Content-Type": "application/octet-stream"}, timeout=float(os.environ.get("STAGEPLANE_ROUTE_RPC_TIMEOUT", "180")))
-        if r.status_code >= 500:
-            raise ChunkFailure(node.get("node", "unknown"), node.get("chunk", "unknown"), "worker_error")
-        r.raise_for_status()
-        return r.content
+        async with self.http.stream("POST", node["url"] + "/v1/forward", content=data,
+                                    headers={"Content-Type": "application/octet-stream"},
+                                    timeout=float(os.environ.get("STAGEPLANE_ROUTE_RPC_TIMEOUT", "180"))) as response:
+            if response.status_code in (409, 429) or response.status_code >= 500:
+                raise ChunkFailure(node.get("node", "unknown"), node.get("chunk", "unknown"), "worker_unavailable")
+            response.raise_for_status()
+            body = bytearray()
+            async for block in response.aiter_bytes(1024 * 1024):
+                if len(body) + len(block) > MAX_FRAME:
+                    raise ChunkFailure(node.get("node", "unknown"), node.get("chunk", "unknown"), "oversized_response")
+                body.extend(block)
+            return bytes(body)
 
     async def close(self):
         await self.http.aclose()

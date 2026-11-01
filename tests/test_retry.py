@@ -56,8 +56,8 @@ async def test_execution_retry_is_bounded_and_uses_another_ready_node(tmp_path, 
         raise ChunkFailure(hop["node"], hop["chunk"], "chunk_timeout")
     monkeypatch.setattr(c.transport, "send", fail)
     # Keep all healthy replicas ready; no client-level retries participate.
-    async def ready(model, timeout=None, exclude=()):
-        return c.get_route(model, exclude)
+    async def ready(model, timeout=None, exclude=(), reuse_nodes=()):
+        return c.get_route(model, exclude, reuse_nodes)
     monkeypatch.setattr(c, "ready_route", ready)
     request = ChatRequest(model=m["key"], messages=[{"role": "user", "content": "hello"}], max_tokens=1)
     try:

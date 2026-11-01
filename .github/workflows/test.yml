@@ -10,7 +10,9 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --python 3.13 --extra test --locked
-      - run: uv run --extra test pytest -q
+      - run: uv run --locked --extra test pytest -q
+      - run: uv run --locked python -m scripts.scale_validation --output /tmp/stageplane-scale.json
+      - run: node --check stageplane/ui/app.js
       - run: docker compose config --quiet
         env:
           STAGEPLANE_TOKEN: ci-configuration-only

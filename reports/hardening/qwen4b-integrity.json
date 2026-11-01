@@ -1,0 +1,26 @@
+{
+  "checked_at_utc": "2026-11-01T02:06:24.070817+00:00",
+  "result": "passed",
+  "path": "/Users/karthikramesh/Projects/Self/OSS/stageplane/data/review/qwen3-4b/layer-models/Qwen--Qwen3-4B-Instruct-2507-cdbee75f17c0-l1",
+  "source": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "manifest_sha256": "5eab0bbfa7ed6cf7b4dc33c1aa9ce11e7592469d84d7a30ec4ffd1690572dddd",
+  "file_count": 46,
+  "file_bytes": 8060883348,
+  "tensor_bytes": 8044936192,
+  "tensor_count": 398,
+  "stored_parameter_count": 4022468096,
+  "artifact_count": 38,
+  "stage_count": 38,
+  "decoder_layers": 36,
+  "layers_per_block_stage": 1,
+  "elapsed_seconds": 4.679,
+  "checks": [
+    "manifest SHA-256 and structural validation",
+    "every retained file SHA-256 and byte length",
+    "no duplicate tensor names across artifacts",
+    "all decoder layer indices present exactly within declared layer range",
+    "one decoder layer per block stage"
+  ],
+  "limitations": "Integrity and layout validation of retained 4B artifacts; no new inference benchmark or tensor materialization."
+}

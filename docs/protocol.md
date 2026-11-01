@@ -44,7 +44,9 @@ weight/workspace and storage estimates constrain placement. Membership changes
 replan only affected groups. Idle workers with material resource changes can
 trigger a group-local replan at most once per 30 seconds. Missing capacity stays
 unready and emits distinct memory, compute or storage cautions. Partial routes
-receive no assignments. Healthy requests retain their route while it is in use.
+receive no assignments. Healthy requests retain their route while it is in use. Previous ready owners
+remain available during feasible replacement loading, with overlapping capacity
+reserved until new targets are ready and active sessions have released old copies.
 
 ## Data plane
 
@@ -101,11 +103,12 @@ also expire so workers cannot execute indefinitely without authority.
 
 ## Operating boundary
 
-Non-loopback listeners require `STAGEPLANE_TOKEN`. The same token currently grants
-control and inference access. mTLS verifies channels and certificates on all
-three transports. Role-based authorization, per-tenant API keys, and certificate
-revocation/discovery are future work. Internal tenant IDs isolate caches; the
-public gateway currently serves one default tenant. Managed workers and artifact
+Non-loopback listeners require `STAGEPLANE_TOKEN`. The internal token grants worker and control access.
+`STAGEPLANE_API_KEYS_FILE` adds separate admin, viewer and tenant inference keys;
+see [the operator guide](OPERATIONS.md). mTLS verifies channels and certificates on all
+three transports. Admin/viewer credentials are cluster-wide operator roles. Inference credentials
+select a configured tenant for cache ownership. Certificate revocation/discovery,
+per-tenant quotas and model entitlements remain future work. Managed workers and artifact
 sources must be trusted. TLS does not hide activations from participating workers.
 
 SQLite preserves deployment metadata across executor restart. In-flight client

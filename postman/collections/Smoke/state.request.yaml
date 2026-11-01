@@ -11,3 +11,4 @@ scripts:
     language: text/javascript
     code: |
       pm.test("Response contract", () => { pm.expect(pm.response.json().nodes).to.be.an("array"); });
+      pm.test("Operational summary", () => { const s = pm.response.json(); pm.expect(s.summary.active_requests).to.be.a("number"); pm.expect(s.requests).to.be.an("array"); });

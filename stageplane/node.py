@@ -44,11 +44,13 @@ class Worker:
         self.process = psutil.Process()
         self.process.cpu_percent(None)
         self.background_compute = set()
+        self.abandoned_reservations = {}
+        self.inflight = {}
         self.loading = False
         self.loading_finished = 0
 
     async def ensure_file(self, model, name, expected):
-        root = self.cache / model
+        root = safe_path(self.cache, model)
         root.mkdir(parents=True, exist_ok=True)
         path = safe_path(root, name)
         if path.exists() and await asyncio.to_thread(digest, path) == expected["sha256"]:
@@ -62,20 +64,23 @@ class Worker:
                 os.link(source, path)
                 return path
         tmp = path.with_suffix(".partial")
-        async with self.transport.http.stream("GET", f"{self.executor}/api/artifacts/{model}/{name}") as r:
-            r.raise_for_status()
-            total = 0
-            with tmp.open("wb") as out:
-                async for block in r.aiter_bytes(1024 * 1024):
-                    total += len(block)
-                    if total > expected["bytes"]:
-                        raise ValueError("Artifact larger than declared size")
-                    out.write(block)
-        if tmp.stat().st_size != expected["bytes"] or await asyncio.to_thread(digest, tmp) != expected["sha256"]:
+        try:
+            async with self.transport.http.stream("GET", f"{self.executor}/api/artifacts/{model}/{name}") as r:
+                r.raise_for_status()
+                total = 0
+                with tmp.open("wb") as out:
+                    async for block in r.aiter_bytes(1024 * 1024):
+                        total += len(block)
+                        if total > expected["bytes"]:
+                            raise ValueError("Artifact larger than declared size")
+                        out.write(block)
+            if tmp.stat().st_size != expected["bytes"] or await asyncio.to_thread(digest, tmp) != expected["sha256"]:
+                tmp.unlink(missing_ok=True)
+                raise ValueError("Artifact integrity check failed")
+            tmp.replace(path)
+            return path
+        finally:
             tmp.unlink(missing_ok=True)
-            raise ValueError("Artifact integrity check failed")
-        tmp.replace(path)
-        return path
 
     async def reconcile(self, desired):
         wanted = set()
@@ -120,7 +125,7 @@ class Worker:
             finally:
                 self.loading = False
                 self.loading_finished = time.monotonic()
-        busy = {k[2] for k in self.sessions}
+        busy = {k[2] for k in self.sessions} | {k[2] for k, task in self.inflight.items() if not task.done()}
         for key in list(self.loaded):
             if key not in wanted and key not in busy:
                 del self.loaded[key]
@@ -131,7 +136,9 @@ class Worker:
         self.info.metrics = {**self.metrics, **sample(self.info.memory_bytes, self.process, self.info.cpu_cores),
                              "loaded_weight_bytes": sum(parameters.values()),
                              "available_storage_bytes": shutil.disk_usage(self.cache if self.cache.exists() else self.cache.parent).free,
-                             "sessions": len({s[:2] for s in self.sessions}), "errors": self.errors,
+                             "sessions": len({s[:2] for s in self.sessions}), "max_sessions": self.max_sessions,
+                             "reserved_session_bytes": sum(self.reservations.values()) + sum(self.abandoned_reservations.values()),
+                             "background_compute": len(self.background_compute), "errors": self.errors,
                              "loading": self.loading or time.monotonic() - self.loading_finished < 2,
                              "cache_bytes": sum(p.stat().st_size for p in self.cache.glob("*/*.safetensors")),
                              "transport": self.transport.metrics.copy(),
@@ -175,6 +182,15 @@ class Worker:
             await asyncio.sleep(1)
 
     async def forward(self, data):
+        # Colocated stage counts must not consume Python recursion depth.
+        while True:
+            data, successor = await self._forward_stage(data)
+            if successor is None:
+                return data
+            if successor["node"] != self.info.id:
+                return await self.transport.send(successor, data)
+
+    async def _forward_stage(self, data):
         meta, value = unpack(data)
         route, index = meta["route"], meta["index"]
         if not 0 <= index < len(route) <= 1024:
@@ -217,12 +233,18 @@ class Worker:
                     raise ValueError("Missing prefix state: replay required")
                 if len({s[:2] for s in self.sessions}) >= self.max_sessions and identity not in {s[:2] for s in self.sessions}:
                     raise ValueError("Worker session capacity exhausted")
-                reserve = cache_budget(stage.cfg, stage.spec, meta.get("context_budget", MAX_CONTEXT))
-                if psutil.Process().memory_info().rss + sum(self.reservations.values()) + reserve > self.info.memory_bytes:
+                budget = meta.get("context_budget", MAX_CONTEXT)
+                if type(budget) is not int or not offset + value.shape[1] <= budget <= MAX_CONTEXT:
+                    raise ValueError("Invalid context reservation")
+                reserve = cache_budget(stage.cfg, stage.spec, budget)
+                if psutil.Process().memory_info().rss + sum(self.reservations.values()) + sum(self.abandoned_reservations.values()) + reserve > self.info.memory_bytes:
                     raise ValueError("Worker memory admission budget exhausted")
                 self.reservations[skey] = reserve
                 self.sessions[skey] = stage.state()
+                self.sessions[skey].context_budget = budget
             state = self.sessions[skey]
+            if offset + value.shape[1] > state.context_budget:
+                raise ValueError("Session context reservation exceeded")
             started = time.perf_counter()
             executing = False
             async def execute():
@@ -231,23 +253,33 @@ class Worker:
                     executing = True
                     return await asyncio.to_thread(stage, value, state, offset)
             work = asyncio.create_task(execute())
+            self.inflight[skey] = work
+            def finish(task):
+                self.background_compute.discard(task)
+                self.abandoned_reservations.pop(task, None)
+                if self.inflight.get(skey) is task:
+                    self.inflight.pop(skey, None)
+                if not task.cancelled():
+                    task.exception()
+            work.add_done_callback(finish)
             try:
                 result = await asyncio.wait_for(asyncio.shield(work), float(os.environ.get("STAGEPLANE_CHUNK_TIMEOUT", "30")))
-            except TimeoutError as e:
+            except (Exception, asyncio.CancelledError) as error:
                 self.sessions.pop(skey, None)
-                self.reservations.pop(skey, None)
-                if not executing:
-                    work.cancel()
-                else:
-                    # Native kernels cannot be cancelled. Keep their compute
-                    # permit until completion, and discard the abandoned state.
-                    self.background_compute.add(work)
-                    def finish(task):
-                        self.background_compute.discard(task)
-                        if not task.cancelled():
-                            task.exception()
-                    work.add_done_callback(finish)
-                raise ChunkFailure(self.info.id, hop["chunk"], "chunk_timeout") from e
+                reserve = self.reservations.pop(skey, 0)
+                if not work.done():
+                    if not executing:
+                        work.cancel()
+                    else:
+                        # Native kernels retain both their compute permit and
+                        # admission reservation until their thread exits.
+                        self.background_compute.add(work)
+                        self.abandoned_reservations[work] = self.abandoned_reservations.get(work, 0) + reserve
+                if isinstance(error, TimeoutError):
+                    raise ChunkFailure(self.info.id, hop["chunk"], "chunk_timeout") from error
+                raise
+            if self.epochs.get(identity) != epoch or self.sessions.get(skey) is not state:
+                raise ValueError("Session was released during execution")
             elapsed = (time.perf_counter() - started) * 1000
             state.touched = time.time()
             self.metrics["stage_ms"][hop["chunk"]] = elapsed
@@ -259,19 +291,18 @@ class Worker:
         meta["index"] += 1
         outgoing = pack(meta, result)
         self.metrics["bytes_sent"] += len(outgoing)
-        if meta["index"] < len(route):
-            nxt = route[meta["index"]]
-            # Stages colocated on one node execute without a network boundary.
-            if nxt["node"] == self.info.id:
-                return await self.forward(outgoing)
-            return await self.transport.send(nxt, outgoing)
-        return outgoing
+        return outgoing, route[meta["index"]] if meta["index"] < len(route) else None
 
     def cleanup(self, tenant, session, keep_epoch=False):
         for key in list(self.sessions):
             if key[:2] == (tenant, session):
                 del self.sessions[key]
-                self.reservations.pop(key, None)
+                reserve = self.reservations.pop(key, 0)
+                task = self.inflight.get(key)
+                if task is not None and not task.done():
+                    self.background_compute.add(task)
+                    self.abandoned_reservations[task] = self.abandoned_reservations.get(task, 0) + reserve
+        self.identity_touched[(tenant, session)] = time.time()
         # Retain a bounded stale-epoch tombstone until TTL cleanup.
         if not keep_epoch:
             self.epochs[(tenant, session)] = max(self.epochs.get((tenant, session), -1), 2**53)
