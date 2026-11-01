@@ -9,6 +9,43 @@ field. Assignments pin that digest. Workers verify it and each artifact before
 loading. The trusted executor and its authenticated channel are the authority;
 hashes are integrity checks, not signatures or remote execution attestations.
 
+The directory is configurable: a producer can write `--store /srv/stageplane/models`
+while an executor reads the same storage mounted at `--store /mnt/central/models`.
+`--store` is a filesystem registry, not an HTTP URL. Shared mounts are provisioned
+by the operator. Keep `STAGEPLANE_STATE_FILE` on writable local disk when the model
+registry is shared or read-only.
+
+### Direct artifact acquisition and executor fallback
+
+`--artifact-source ROOT` is repeatable on executor and worker. A root names a
+directory containing `<model-key>/<filename>`, expressed as an absolute local
+path, local `file://` URL, or HTTP(S) URL. Each list is bounded to eight roots.
+Executor-specified roots replace the default advertisement of its absolute store
+path; worker-specified roots take priority over advertised roots. Roots carry
+location hints, not model identity or execution authority.
+
+For each assigned artifact the worker tries its size/hash-verified local cache,
+then its own roots, then advertised roots, then authenticated
+`GET /api/artifacts/{model}/{name}` on the executor. Duplicate roots are removed
+while preserving order. The manifest is still obtained from the authenticated
+executor and pinned to the assignment digest. Missing, unavailable, oversized,
+truncated, or hash-invalid direct artifacts are skipped. Source failure does not
+remove the executor fallback; a cache write/storage failure remains a local error.
+
+Normal copies stream into a temporary cache file and are published by atomic
+replacement only after SHA-256 and exact byte-size validation. Local shared files
+are copied, not loaded in place. `--cache` controls the local worker cache root;
+it is independent of the central source path. The legacy same-filesystem hardlink
+optimization remains an explicit local benchmark option, not normal delivery.
+
+Direct HTTP acquisition uses a separate unauthenticated client: executor bearer
+credentials, client certificates, cookies, and environment proxies are not
+forwarded. HTTP(S) root URLs reject userinfo, query strings, and fragments. Direct
+connections have a three-second connect timeout and ten-second read timeout;
+network failures suppress that origin for 30 seconds before another direct
+attempt. The authenticated executor transport remains the final source. Git,
+Drive, bundles, and catalogs are executor import formats, not direct worker roots.
+
 Published `.stageplane` archives, directories and catalogs retain this same manifest.
 Executors can import them from local paths, HTTP, Git/LFS and public Google Drive
 files. Every artifact is verified before an atomic install; an optional external
@@ -34,9 +71,16 @@ Resource-driven replans wait while a worker in the same placement group is
 loading, so a spare's falling headroom does not restart an otherwise healthy
 bootstrap. Other groups, membership changes and explicit drains remain eligible.
 Responses contain
-`{model, chunk, manifest_sha256}` assignments. Loading runs separately from
+`{model, chunk, manifest_sha256, artifact_sources}` assignments, with ordered
+advertised roots in `artifact_sources`. Workers also accept assignments without
+the source field and retain authenticated executor fallback. Loading runs separately from
 heartbeats. A shape/finite-output fixture precedes readiness. Whole-route numerical
 parity comes from tests, not process health.
+
+Worker metrics include `artifact_transfers`: verified cache hits, successful
+direct-local/direct-HTTP/executor file counts, direct failures, fallback attempts,
+and verified bytes by direct versus executor origin. Counters reset with the
+worker process. Fetch location never changes an assignment's manifest digest.
 
 Deployments select model, replica target, and group count. Weighted rendezvous
 uses current CPU headroom, declared speed and observed stage cost; conservative

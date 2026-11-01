@@ -1,0 +1,32 @@
+$kind: http-request
+name: artifact delivery state
+order: 1000
+method: GET
+url: "{{baseUrl}}/api/state"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      const s = pm.response.json();
+      pm.test("HTTP 200", () => pm.response.to.have.status(200));
+      pm.test("Three fixture workers", () => pm.expect(s.nodes.length).to.eql(3));
+      pm.test("No active requests", () => pm.expect(s.summary.active_requests).to.eql(0));
+      pm.test("Verified transfer telemetry", () => {
+        for (const n of s.nodes) {
+          pm.expect(n.active).to.eql(true);
+          for (const key of ["cache_hits", "direct_local", "direct_http", "executor", "fallbacks", "direct_failures", "bytes_direct", "bytes_executor"]) {
+            pm.expect(n.metrics.artifact_transfers[key]).to.be.a("number");
+            pm.expect(n.metrics.artifact_transfers[key]).to.be.at.least(0);
+          }
+          pm.expect(n.metrics.sessions).to.eql(0);
+        }
+      });
+      pm.test("Deployment ready", () => {
+        for (const d of Object.values(s.deployments)) {
+          pm.expect(d.capacity.readiness).to.eql("ready");
+          pm.expect(d.capacity.serving).to.eql(true);
+        }
+      });

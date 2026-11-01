@@ -1,0 +1,16 @@
+{
+  "full_suite": {
+    "tests": "142",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "51.558"
+  },
+  "additional_assignment_tests": {
+    "tests": 16,
+    "failures": 0,
+    "seconds": 2.89
+  },
+  "total_unique_tests": 158,
+  "base_commit": "86cbe89ddd1b1c106872e5c744c0a6962ade3e02"
+}

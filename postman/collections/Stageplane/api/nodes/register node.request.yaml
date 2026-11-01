@@ -31,3 +31,16 @@ auth:
 settings: {}
 examples: ./.resources/register node.resources/examples
 order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Worker assignment contract", () => {
+        pm.response.to.have.status(200);
+        for (const a of pm.response.json().assignments) {
+          pm.expect(a.manifest_sha256).to.match(/^[0-9a-f]{64}$/);
+          pm.expect(a.artifact_sources).to.be.an("array");
+          pm.expect(a.artifact_sources.length).to.be.at.most(8);
+          for (const root of a.artifact_sources) pm.expect(root.length).to.be.at.most(2048);
+        }
+      });

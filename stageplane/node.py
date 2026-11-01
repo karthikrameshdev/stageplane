@@ -11,12 +11,12 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import grpc
-import httpx
 import psutil
 import torch
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
 
-from .common import MAX_CONTEXT, MAX_FRAME, NodeInfo, auth_headers, authorize, authorize_ws, digest, safe_path, tls_kwargs
+from .artifacts import ArtifactFetcher
+from .common import MAX_CONTEXT, MAX_FRAME, NodeInfo, authorize, authorize_ws
 from .runtime import Stage, cache_budget
 from .wire import ChunkFailure, Transport, error_frame, pack, unpack
 from .resources import available_limits, sample
@@ -25,7 +25,9 @@ log = logging.getLogger("stageplane.node")
 
 
 class Worker:
-    def __init__(self, info: NodeInfo, executor: str, cache: Path, device="cpu", dtype="float32", max_sessions=8):
+    def __init__(self, info: NodeInfo, executor: str, cache: Path, device="cpu", dtype="float32", max_sessions=8,
+                 artifact_sources=None):
+        self.artifacts = ArtifactFetcher(artifact_sources)
         self.info, self.executor, self.cache = info, executor.rstrip("/"), cache.resolve()
         total_memory, total_cpu = available_limits()
         if "memory_bytes" not in info.model_fields_set:
@@ -49,38 +51,9 @@ class Worker:
         self.loading = False
         self.loading_finished = 0
 
-    async def ensure_file(self, model, name, expected):
-        root = safe_path(self.cache, model)
-        root.mkdir(parents=True, exist_ok=True)
-        path = safe_path(root, name)
-        if path.exists() and await asyncio.to_thread(digest, path) == expected["sha256"]:
-            return path
-        # Explicit test optimization; ordinary workers fetch every assigned artifact.
-        local = os.environ.get("STAGEPLANE_LOCAL_ARTIFACTS")
-        if local:
-            source = safe_path(Path(local), model + "/" + name)
-            if source.exists() and await asyncio.to_thread(digest, source) == expected["sha256"]:
-                path.unlink(missing_ok=True)
-                os.link(source, path)
-                return path
-        tmp = path.with_suffix(".partial")
-        try:
-            async with self.transport.http.stream("GET", f"{self.executor}/api/artifacts/{model}/{name}") as r:
-                r.raise_for_status()
-                total = 0
-                with tmp.open("wb") as out:
-                    async for block in r.aiter_bytes(1024 * 1024):
-                        total += len(block)
-                        if total > expected["bytes"]:
-                            raise ValueError("Artifact larger than declared size")
-                        out.write(block)
-            if tmp.stat().st_size != expected["bytes"] or await asyncio.to_thread(digest, tmp) != expected["sha256"]:
-                tmp.unlink(missing_ok=True)
-                raise ValueError("Artifact integrity check failed")
-            tmp.replace(path)
-            return path
-        finally:
-            tmp.unlink(missing_ok=True)
+    async def ensure_file(self, model, name, expected, sources=()):
+        return await self.artifacts.ensure(self.cache, model, name, expected, self.executor,
+                                           self.transport.http, sources)
 
     async def reconcile(self, desired):
         wanted = set()
@@ -107,7 +80,7 @@ class Worker:
                 spec = next(s for s in m["stages"] if s["id"] == sid)
                 for a in spec["artifacts"]:
                     name = m["artifacts"][a]["file"]
-                    await self.ensure_file(model, name, m["files"][name])
+                    await self.ensure_file(model, name, m["files"][name], assignment.get("artifact_sources", ()))
                 stage = await asyncio.to_thread(Stage, m, spec, self.cache / model, self.device, self.dtype)
                 # A real fixture is executed before declaring readiness.
                 state = stage.state()
@@ -142,6 +115,7 @@ class Worker:
                              "loading": self.loading or time.monotonic() - self.loading_finished < 2,
                              "cache_bytes": sum(p.stat().st_size for p in self.cache.glob("*/*.safetensors")),
                              "transport": self.transport.metrics.copy(),
+                             "artifact_transfers": self.artifacts.metrics.copy(),
                              "device": self.device, "dtype": self.dtype}
         return self.info.model_dump()
 
@@ -343,6 +317,7 @@ def create_app(worker: Worker, grpc_port=0):
             await hb
         if server:
             await server.stop(2)
+        await worker.artifacts.close()
         await worker.transport.close()
 
     app = FastAPI(title="Stageplane worker", lifespan=lifespan)

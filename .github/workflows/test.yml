@@ -12,6 +12,8 @@ jobs:
       - run: uv sync --python 3.13 --extra test --locked
       - run: uv run --locked --extra test pytest -q
       - run: uv run --locked python -m scripts.scale_validation --output /tmp/stageplane-scale.json
+      - run: docker build -t stageplane:ci .
+      - run: uv run --locked python -m scripts.artifact_delivery_validation --image stageplane:ci --output /tmp/stageplane-artifact-delivery
       - run: node --check stageplane/ui/app.js
       - run: docker compose config --quiet
         env:

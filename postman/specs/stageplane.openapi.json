@@ -185,7 +185,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/WorkerAssignments"
                 }
               }
             }
@@ -223,7 +223,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Internal worker operation. Returns assigned immutable stages and ordered direct artifact roots. Workers prefer verified cache and configured/advertised sources, then use the authenticated executor artifact endpoint if direct access fails."
       }
     },
     "/api/nodes/{node_id}/heartbeat": {
@@ -236,7 +237,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/WorkerAssignments"
                 }
               }
             }
@@ -284,7 +285,8 @@
               "type": "string"
             }
           }
-        ]
+        ],
+        "description": "Internal worker operation. Returns assigned immutable stages and ordered direct artifact roots. Workers prefer verified cache and configured/advertised sources, then use the authenticated executor artifact endpoint if direct access fails."
       }
     },
     "/api/deployments": {
@@ -491,7 +493,8 @@
               "type": "string"
             }
           }
-        ]
+        ],
+        "description": "Authenticated worker fallback when direct central-store access is unavailable or fails verification. Streams the executor-accessible file; workers enforce manifest byte count and SHA-256 before atomic cache publication. The executor must retain access to complete files in its --store."
       }
     },
     "/api/models/import": {
@@ -799,7 +802,12 @@
             }
           },
           "metrics": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+              "artifact_transfers": {
+                "$ref": "#/components/schemas/ArtifactTransfers"
+              }
+            }
           },
           "cpu_cores": {
             "type": "number",
@@ -1205,6 +1213,92 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "ArtifactSource": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048,
+        "description": "Trusted immutable model-store root: absolute local path, local file:// URL, or HTTP(S) directory URL. Append /MODEL_KEY/FILENAME. URL credentials, query strings and fragments are not accepted. Paths are interpreted on the receiving worker, not automatically mounted."
+      },
+      "WorkerAssignment": {
+        "type": "object",
+        "required": [
+          "model",
+          "chunk",
+          "manifest_sha256"
+        ],
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "chunk": {
+            "type": "string"
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "artifact_sources": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "$ref": "#/components/schemas/ArtifactSource"
+            },
+            "description": "Ordered executor-advertised roots. A worker checks verified cache, its configured roots, then these roots. An absent/empty list still permits authenticated executor fallback. Direct-source failures or integrity errors fall back; the pinned manifest is unchanged."
+          }
+        }
+      },
+      "WorkerAssignments": {
+        "type": "object",
+        "required": [
+          "assignments"
+        ],
+        "properties": {
+          "assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerAssignment"
+            }
+          }
+        }
+      },
+      "ArtifactTransfers": {
+        "type": "object",
+        "description": "Cumulative worker-local counters. Success requires size/hash verification and atomic cache publication. Counters do not expose source URLs or credentials.",
+        "properties": {
+          "cache_hits": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "direct_local": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "direct_http": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "executor": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fallbacks": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "direct_failures": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bytes_direct": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bytes_executor": {
+            "type": "integer",
+            "minimum": 0
           }
         }
       }

@@ -91,6 +91,69 @@ after the manifest is complete. Malformed shapes/offsets, duplicate tensors,
 missing language layers and insufficient storage fail before publication.
 Failed attempts are cleaned up; interrupted whole-model builds currently restart.
 
+### Central store and worker copies
+
+The producer writes a model registry with `--store /srv/stageplane/models`.
+An executor can read those same files from its own mount with
+`--store /mnt/central/models`; the path names need not match across machines.
+Provision the mount and permissions outside Stageplane. For dedicated roles,
+three machines are one producer, one executor, and one worker; ten machines are
+one producer, one executor, and eight workers. More workers do not change the
+immutable stage boundaries.
+
+Set `STAGEPLANE_STATE_FILE` to a writable **local** path on the executor. Its
+default is inside `--store`; using a separate path avoids putting SQLite/WAL on
+a shared filesystem or a read-only artifact mount. The executor needs write
+permission to `--store` only when it imports/distributes models there. Keep the
+model registry available for manifest discovery and authenticated fallback even
+when all workers normally download from a central HTTP server.
+
+An executor advertises its absolute store path by default. Repeat
+`--artifact-source ROOT` to advertise explicit central filesystem/HTTP(S) roots
+instead. Each root must contain `MODEL_KEY/FILENAME`. A worker can set its own
+roots to account for mount aliases or preferred mirrors, for example
+`--artifact-source /mnt/models --artifact-source https://models.example/models`.
+The worker checks its verified cache first, then its own roots, then advertised
+roots, then the authenticated executor artifact endpoint. Explicit roots never
+disable that final fallback. Sources are bounded to eight roots per list.
+
+Workers keep copies under `--cache/NODE_ID/MODEL_KEY/`; changing the source does
+not change cache ownership. Normal transfers verify SHA-256 and size before
+atomic publication, including local filesystem copies. A worker only fetches
+artifacts needed for assigned stages. Budget local cache disk separately from
+central model storage, serving weight memory, and temporary transfer space.
+
+Direct HTTP sources receive no executor bearer token, client certificate,
+cookies, or proxy settings. URLs with credentials, query parameters, or fragments
+are rejected. Provision a worker-reachable endpoint with trusted HTTPS
+certificates or a read-only filesystem mount; otherwise rely on executor fallback.
+Do not place tokens, private configuration, or executor SQLite state in a publicly
+served model root. Direct artifact access does not replace control-plane trust.
+
+Local filesystem operations run off the worker event loop, so slow copies do not
+block heartbeats. A genuinely unresponsive NFS/SMB syscall is governed by OS/mount
+timeouts; cancellation waits for in-flight file I/O before cleaning up.
+
+The direct client's connect/read timeouts are three/ten seconds. A network-failed
+HTTP origin cools down for 30 seconds to avoid repeating a slow mirror attempt
+for every chunk. Missing or corrupt files are skipped and later sources tried.
+Failures writing the local cache are reported as destination failures, not
+hidden by repeatedly downloading the same bytes from different sources.
+
+Workers must reach the executor for registration, manifests, heartbeats, and
+fallback downloads. Executors and workers must reach the advertised worker
+HTTP endpoints and selected gRPC/WebSocket transport endpoints for execution;
+central storage connectivity alone does not establish a usable inference route.
+See [network requirements](LOCAL_TESTING.md#network-reachability) and the
+[HTTPS directory example](LOCAL_TESTING.md#central-https-directory).
+
+Inspect `nodes[].metrics.artifact_transfers` in authenticated `/api/state` to
+distinguish cache reuse, direct-local/HTTP copies, and executor transfers.
+`fallbacks` counts attempts; successful executor copies are counted separately.
+Counters reset on worker restart. Pair these counters with readiness and loading
+errors, rather than interpreting an empty cache after reassignment as proof that
+central downloads succeeded. See the [counter definitions](LOCAL_TESTING.md#confirm-which-source-served-a-worker).
+
 The default import budget is 256 GiB (`STAGEPLANE_BUNDLE_MAX_BYTES`). Header metadata
 is capped separately by `STAGEPLANE_MAX_TOTAL_HEADER_BYTES` (128 MiB by default).
 Increase limits deliberately for larger trusted models and provision the required

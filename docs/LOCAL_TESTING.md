@@ -1,9 +1,258 @@
-# Local producer, publisher, executor, and worker test
+# Test central artifact delivery and published models
 
-This guide tests a model produced by one user and consumed by another executor.
-The consumer imports existing Stageplane stages; it does not download the original
-checkpoint or repeat chunking. Anyone with access to the published files can
-import the bundle into their own executor and deploy their own worker pool.
+Choose one of two workflows:
+
+- **Central store:** the producer writes chunks once, the executor reads them
+  through its own filesystem mount, and workers fetch directly from mounted or
+  HTTP(S) sources before falling back to the executor.
+- **Portable publication:** export a `.stageplane` bundle, directory, or catalog;
+  another executor imports it from local storage, HTTP, Git/LFS, or public Google
+  Drive. Imported files can then be served through the same direct-first workflow.
+
+The [main README](../README.md#quick-start) contains the complete multi-machine
+Qwen3.5-0.8B path, from distribution through an OpenAI-compatible request. This
+guide explains source selection, local reproduction, and larger Qwen3 4B tests.
+
+## Central artifact workflow
+
+### Machine roles and directory layout
+
+Machine counts include the roles you deploy. With dedicated roles, three machines
+mean **one producer, one executor, and one worker**. Ten machines mean **one
+producer, one executor, and eight workers**. A three-worker Docker test instead
+uses three worker containers plus its executor and publisher on one host; it does
+not measure three independent physical machines.
+
+The producer can write to any provisioned directory:
+
+```sh
+stageplane distribute Qwen/Qwen3.5-0.8B \
+  --revision 2fc06364715b967f1860aea9cf38778875588b17 \
+  --layers-per-chunk 2 --store /srv/stageplane/models
+```
+
+The resulting central layout is:
+
+```text
+/srv/stageplane/models/
+└── Qwen--Qwen3--5-0--8B-2fc06364715b/
+    ├── manifest.json
+    ├── embedding.safetensors
+    ├── blocks-000.safetensors
+    ├── ...
+    └── configuration, tokenizer, license, and other declared artifacts
+```
+
+Use the actual filenames in `manifest.json`; tied embedding/head stages may
+reference one artifact. Do not rename chunks or alter the immutable manifest.
+
+| Option | Process | Meaning |
+| --- | --- | --- |
+| `--store /srv/stageplane/models` | Producer | Write the complete immutable model registry here |
+| `--store /mnt/central/models` | Executor | Read the registry visible at this local mount; import operations also write here |
+| `--artifact-source ROOT` | Executor | Advertise a worker-readable directory root; repeat for mirrors |
+| `--artifact-source ROOT` | Worker | Try this machine's preferred root before advertised roots; repeat for mirrors |
+| `--cache data/node-cache` | Worker | Keep verified local copies under `data/node-cache/NODE_ID/MODEL_KEY/` |
+
+`--store` already existed. Direct-first worker acquisition is the additional
+provision supplied by `--artifact-source`. Neither flag mounts NFS/SMB, creates a
+shared volume, nor infers how another host names its mounts. Provision that
+infrastructure before starting the services.
+
+### Exact fetch order
+
+For each required artifact, a worker follows this order:
+
+1. Its existing local cache, if the manifest's SHA-256 **and byte size** match.
+2. Its own `--artifact-source` roots, in command-line order.
+3. Roots advertised by the executor, in command-line order.
+4. Authenticated `GET /api/artifacts/MODEL_KEY/FILENAME` on its executor.
+
+Duplicate roots are tried only once. Each list accepts at most eight roots. Without
+explicit executor roots, the executor advertises the absolute path of its
+`--store`. Supplying executor roots replaces that default advertisement, but
+**never removes executor HTTP fallback**. A worker's own roots precede advertised
+ones; they do not replace them. Assignment and manifest authority remains with
+the authenticated executor; a storage mirror cannot select a different model.
+
+A root is an absolute filesystem path, a local `file://` directory URL, or an
+HTTP(S) directory URL. It must resolve `ROOT/MODEL_KEY/FILENAME`. Do not pass a
+single-model directory, `manifest.json`, archive, Git URL, or Drive share link as
+a direct root. Those published-model forms use `import-bundle` instead.
+
+Missing files, invalid hashes/sizes, and inaccessible sources cause the worker to
+try the next source. Direct HTTP connects time out after three seconds, with a
+ten-second read timeout; connection/network failures cool down that origin for
+30 seconds. Source errors do not prevent executor fallback. A full or unwritable
+**destination cache** still fails explicitly; changing the source cannot fix it.
+All normal local/HTTP copies use temporary files, verify size and hash, and
+atomically replace the cache file only after success. Shared-source files are
+copied into the cache; workers do not execute directly from mutable shared files.
+
+Direct HTTP uses a separate client without the executor's bearer token, client
+certificate, cookies, or environment proxies. Root URLs cannot contain embedded
+credentials, query strings, or fragments, so signed query URLs are not direct
+roots. Use a network-accessible central endpoint with trusted HTTPS certificates,
+a mounted filesystem for private storage, or the authenticated executor fallback.
+An HTTPS mirror does not replace worker/executor authentication.
+
+### Different mount paths
+
+Suppose the same central files are visible at these locations:
+
+| Machine | Local view of the central model root |
+| --- | --- |
+| Producer | `/srv/stageplane/models` |
+| Executor | `/mnt/central/models` |
+| Worker A | `/mnt/models` |
+| Worker B | No shared filesystem mount |
+
+Start the executor with a local state file outside the shared registry:
+
+```sh
+export STAGEPLANE_TOKEN='replace-with-a-random-shared-internal-token'
+export STAGEPLANE_STATE_FILE="$PWD/data/executor-state/executor.sqlite"
+stageplane executor --store /mnt/central/models --host 0.0.0.0 --port 8080
+```
+
+Worker A maps its different mount explicitly:
+
+```sh
+export STAGEPLANE_TOKEN='replace-with-a-random-shared-internal-token'
+stageplane node --id worker-a --executor http://executor.example:8080 \
+  --host 0.0.0.0 --port 8101 --advertise-url http://worker-a.example:8101 \
+  --artifact-source /mnt/models --cache data/node-cache \
+  --max-memory 8GiB --max-cpu 2 --group 0
+```
+
+Worker B can omit `--artifact-source`; the nonexistent advertised filesystem root
+fails locally and the executor serves its assigned files. It still requires local
+cache disk space. These are independent copies: a shared model directory does not
+eliminate worker cache or weight-memory requirements.
+
+### Central HTTPS directory
+
+An HTTP(S) source supplements the executor's local registry. The executor still
+needs its mounted or independently imported copy so it can read manifests and
+serve fallback downloads. Expose **only model artifacts**, not tokens, SQLite
+state, private configuration, or unrelated directories.
+
+For example, with an existing Nginx installation and a certificate trusted by
+workers, map `/models/` to the producer's `/srv/stageplane/models/`:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name models.example;
+    ssl_certificate /etc/nginx/tls/models.crt;
+    ssl_certificate_key /etc/nginx/tls/models.key;
+    root /srv/stageplane;
+    location /models/ {
+        autoindex off;
+        limit_except GET { deny all; }
+    }
+    location / { return 404; }
+}
+```
+
+The server account needs read access. An artifact is reachable at
+`https://models.example/models/MODEL_KEY/FILENAME`. A normal static GET server is
+sufficient; direct chunk downloads do not require range support or a Stageplane
+service on the storage host.
+
+Advertise the central HTTPS root, optionally followed by another mirror:
+
+```sh
+stageplane executor --store /mnt/central/models --host 0.0.0.0 --port 8080 \
+  --artifact-source https://models.example/models \
+  --artifact-source https://models-backup.example/models
+```
+
+A worker can prefer its local mount and use the advertised HTTP mirrors if that
+mount is missing or has an invalid copy:
+
+```sh
+stageplane node --id worker-a --executor http://executor.example:8080 \
+  --host 0.0.0.0 --port 8101 --advertise-url http://worker-a.example:8101 \
+  --artifact-source /mnt/models --cache data/node-cache \
+  --max-memory 8GiB --max-cpu 2
+```
+
+Keep the token and local `STAGEPLANE_STATE_FILE` environment settings from the
+previous examples. Configure TLS/mTLS for control and worker links separately.
+
+### Network reachability
+
+Direct model download and activation forwarding are separate connections.
+Central HTTP availability alone is not enough to run inference.
+
+| Connection | Required access |
+| --- | --- |
+| API client/browser → executor | Executor HTTP(S), normally port 8080 |
+| Worker → executor | Registration, heartbeats, manifests, artifact fallback |
+| Worker → central storage | Its chosen filesystem mount or HTTP(S) source |
+| Executor/worker → worker | Advertised HTTP(S) endpoint; required for REST/WebSocket execution and management |
+| Executor/worker → gRPC worker | Advertised gRPC endpoint, in addition to the worker's HTTP listener |
+
+Use routable hostnames/IPs in `--advertise-url` and `--grpc-url`. `127.0.0.1` refers
+to the current machine/container and is only appropriate when services truly
+share that network namespace. For Docker, use service/container DNS names on a
+shared network. For gRPC, set both `--grpc-port 9101` and a reachable
+`--grpc-url worker-a.example:9101 --transport grpc`. For WebSocket,
+`--transport websocket` uses the worker's advertised HTTP listener. Firewall and
+certificate names must cover every required link; Stageplane does not create
+firewall rules or discover NAT mappings.
+
+### Confirm which source served a worker
+
+An authenticated `GET /api/state` includes each node's
+`metrics.artifact_transfers`. Inspect the counters after assignments become ready:
+
+```sh
+curl --fail-with-body http://127.0.0.1:8080/api/state \
+  -H "Authorization: Bearer $STAGEPLANE_TOKEN" \
+  | python -c 'import json,sys; s=json.load(sys.stdin); print(json.dumps({n["id"]:n.get("metrics",{}).get("artifact_transfers",{}) for n in s["nodes"]},indent=2))'
+```
+
+`direct_local` and `direct_http` count verified files copied from central roots;
+`executor` counts verified files received from the executor. `cache_hits` counts
+successful reuse of existing verified cache files. `direct_failures` records
+failed source attempts, while `fallbacks` counts entry into executor fallback
+after configured direct sources were exhausted or skipped. A fallback attempt
+does not itself prove a successful transfer; check `executor`, loading errors,
+and stage readiness. `bytes_direct` and `bytes_executor` count successfully
+verified bytes. Counters reset on worker restart, so a warm-cache restart can
+show cache hits without new downloads. They are counts, not throughput metrics.
+
+### Three-worker Docker source and fallback test
+
+This test creates a tiny offline checkpoint and three Docker workers, then checks
+actual mounted-file, central HTTP, and executor fallback paths in an isolated
+network. It is a delivery/correctness test, not a Qwen performance measurement.
+It does not download a public checkpoint or reuse an existing live demo.
+
+```sh
+uv sync --extra test --locked
+docker build -t stageplane:local .
+uv run python -m scripts.artifact_delivery_validation \
+  --image stageplane:local --output reports/artifact-delivery
+```
+
+The script removes only its own containers/network by default and retains its
+report artifacts. To keep its test services available for inspection on port
+8082, use `--keep`; ensure that port is free first:
+
+```sh
+uv run python -m scripts.artifact_delivery_validation \
+  --image stageplane:local --output reports/artifact-delivery --keep
+```
+
+Read the generated report for actual source counters, inference results, and
+failures. The commands above are reproduction instructions, not a claim that a
+particular machine has passed them. The separate procedures below preserve the
+published Qwen3 4B review workflow and historical resource measurements.
+
+## Published Qwen3 4B workflow
 
 ## Requirements and fixed review locations
 
@@ -205,9 +454,12 @@ stageplane executor --store data/consumer-models \
   --bundle http://127.0.0.1:8801/qwen3-4b.stageplane --port 8080
 ```
 
-`--bundle` imports before serving and can be repeated. Workers do not need access
-to the publisher: they receive the imported immutable manifest and assigned files
-from the executor.
+`--bundle` imports before serving and can be repeated. The executor retains the
+imported model in `--store`. Workers obtain the authoritative manifest from the
+executor, try their direct artifact roots, and use executor HTTP fallback when
+needed. They do not require access to the original bundle publisher. To enable
+direct publisher downloads, expose a directory with the root layout described
+above and advertise it with `--artifact-source`; an archive URL is not a direct root.
 
 An already running executor supports asynchronous import:
 
@@ -302,7 +554,10 @@ python -m scripts.dev_cluster \
 Open http://127.0.0.1:8080 and enter `local-stageplane-development` through settings.
 Inspect all 38 stages across four workers; each worker may host multiple stages.
 The local script hardlinks verified cache files to reduce disk duplication. Omit
-`--local-artifacts` to exercise real worker downloads. Ctrl-C stops owned services.
+`--local-artifacts` to exercise ordinary verified copies; with a readable default
+store path on the same host these can be local copies rather than network
+downloads. Use the isolated Docker source/fallback test above to distinguish
+direct HTTP from executor HTTP delivery. Ctrl-C stops owned services.
 
 To reproduce the measured native/four-worker comparison:
 

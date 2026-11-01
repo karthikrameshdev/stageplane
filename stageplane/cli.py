@@ -13,24 +13,27 @@ def main():
     dist.add_argument("--hf-source", help="Exact original Safetensors repository for an Ollama model")
     dist.add_argument("--revision", default="main")
     dist.add_argument("--layers-per-chunk", type=int, default=2)
-    dist.add_argument("--store", type=Path, default=Path("data/models"))
+    dist.add_argument("--store", type=Path, default=Path("data/models"), help="Output root for versioned model manifests and chunk files")
     rec = commands.add_parser("rechunk", help="Change block grouping using existing verified model tensors")
     rec.add_argument("directory", type=Path)
-    rec.add_argument("--store", type=Path, default=Path("data/models"))
+    rec.add_argument("--store", type=Path, default=Path("data/models"), help="Output root for the new chunk layout")
     rec.add_argument("--layers-per-chunk", type=int, default=1)
     export = commands.add_parser("export", help="Package a verified model for public hosting")
     export.add_argument("model", help="Immutable model key")
-    export.add_argument("--store", type=Path, default=Path("data/models"))
+    export.add_argument("--store", type=Path, default=Path("data/models"), help="Input root containing the model to export")
     export.add_argument("--output", type=Path, required=True)
     export.add_argument("--format", choices=["archive", "directory"], default="archive")
     bundle = commands.add_parser("import-bundle", help="Import published stages without downloading the original checkpoint")
     bundle.add_argument("source", help="Local path, HTTP URL, git+URL, or public Google Drive file URL")
-    bundle.add_argument("--store", type=Path, default=Path("data/models"))
+    bundle.add_argument("--store", type=Path, default=Path("data/models"), help="Output root for verified imported model artifacts")
     bundle.add_argument("--manifest-sha256")
     bundle.add_argument("--revision", default="HEAD")
     bundle.add_argument("--subdir", default=".")
     exe = commands.add_parser("executor")
-    exe.add_argument("--store", type=Path, default=Path("data/models"))
+    exe.add_argument("--store", type=Path, default=Path("data/models"),
+                     help="Model root produced by distribute/import-bundle; reads ROOT/MODEL_KEY/manifest.json")
+    exe.add_argument("--artifact-source", action="append", default=None, metavar="ROOT",
+                     help="Worker-readable artifact root: absolute path, local file:// URL, or HTTP(S) URL; repeat up to 8. Defaults to --store")
     exe.add_argument("--host", default="127.0.0.1")
     exe.add_argument("--port", type=int, default=8080)
     exe.add_argument("--bundle", action="append", default=[], help="Import a local/remote published bundle before serving; repeatable")
@@ -49,13 +52,23 @@ def main():
     node.add_argument("--max-memory", default="100%", help="Examples: 500MB, 2GiB, 50%%; default 100%% of node/container capacity")
     node.add_argument("--max-cpu", "--max-compute", default="100%", help="Cores, millicores (50m), or percent; default 100%% of node/container capacity")
     node.add_argument("--speed", type=float, default=1)
-    node.add_argument("--cache", type=Path, default=Path("data/nodes"))
+    node.add_argument("--cache", type=Path, default=Path("data/nodes"), help="Local worker cache root; files are stored below NODE_ID")
+    node.add_argument("--artifact-source", action="append", default=None, metavar="ROOT",
+                      help="Node-local artifact root tried before executor-advertised roots; absolute path, local file:// URL, or HTTP(S); repeat up to 8")
     node.add_argument("--device", default="cpu")
     node.add_argument("--dtype", choices=["float32", "bfloat16", "float16"], default="float32")
     node.add_argument("--cpu-kernel", choices=["native", "bounded-f32"], default="native")
     node.add_argument("--threads", type=int, help="Native compute threads, bounded by the allocated CPU cores")
     node.add_argument("--max-sessions", type=int, default=8)
     args = parser.parse_args()
+    artifact_sources = None
+    if args.command in ("executor", "node"):
+        from .artifacts import normalize_sources
+        try:
+            if args.artifact_source is not None:
+                artifact_sources = normalize_sources(args.artifact_source)
+        except ValueError as error:
+            parser.error(str(error))
     if args.command == "rechunk":
         from .distribution import rechunk
         print(rechunk(args.directory, args.store, args.layers_per_chunk)["key"])
@@ -106,7 +119,7 @@ def main():
         for source in args.bundle:
             import_bundle(source, args.store)
         from .executor import Coordinator, create_app
-        app = create_app(Coordinator(args.store.resolve()))
+        app = create_app(Coordinator(args.store.resolve(), artifact_sources=artifact_sources))
     else:
         import torch
         from .common import NodeInfo
@@ -116,7 +129,8 @@ def main():
                         grpc_url=args.grpc_url or f"127.0.0.1:{args.grpc_port}", transport=args.transport,
                         group=args.group, memory_bytes=memory_bytes, cpu_cores=cpu_cores, speed=args.speed,
                         failure_domain=args.failure_domain or args.id)
-        app = create_app(Worker(info, args.executor, args.cache / args.id, args.device, args.dtype, args.max_sessions), args.grpc_port)
+        app = create_app(Worker(info, args.executor, args.cache / args.id, args.device, args.dtype, args.max_sessions,
+                               artifact_sources=artifact_sources), args.grpc_port)
     uvicorn.run(app, host=args.host, port=args.port, ws_max_size=64 * 1024**2, **tls)
 
 

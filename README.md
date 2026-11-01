@@ -23,7 +23,8 @@ the terms of its [license](LICENSE). Model weights retain their own upstream
 licenses and access conditions.
 
 Operational setup and limits: [operator guide](docs/OPERATIONS.md).
-Latest hardening evidence: [validation report](reports/hardening/REPORT.md).
+Hardening evidence: [validation report](reports/hardening/REPORT.md).
+Direct-first storage and fallback: [Docker validation report](reports/artifact-delivery/REPORT.md).
 
 Validation reports: [ten-worker Qwen3 4B test](reports/ten-node/REPORT.md) and
 [repository migration with the direct/four-worker comparison](reports/migration/REPORT.md).
@@ -38,60 +39,173 @@ Heterogeneous Devices](http://127.0.0.1:4179/thesis/distributed-transformer-infe
 This is a runnable research implementation. See the [implementation map](docs/architecture.md)
 for the distinction between implemented mechanisms and research extensions.
 
-## Local testing and published models
-
-See [the detailed local testing README](docs/LOCAL_TESTING.md) for the complete
-producer → publisher → remote executor → worker workflow, Qwen3 4B commands,
-exact resource allocations, 50 heterogeneous containers, and bounded recovery.
-The retained chunks are under `data/review/qwen3-4b/`; the guide lists every path.
-The measured Qwen3 4B results are in the
-[four-worker report](reports/qwen3-4b/FOUR_NODE_REPORT.md) and the
-[50-worker resource report](reports/qwen3-4b/FIFTY_NODE_REPORT.md).
-The four-worker run matched direct output tokens in all five trials. The 50-worker
-pool rejected this model because its largest complete stages exceed the workers'
-RAM limits; the report records the actual admission and OOM evidence.
-
-A producer can export a `.stageplane` ZIP64 bundle and upload it to any public host.
-Executors import the same verified stages from a local path, HTTP directory or
-archive, Git/Git LFS/catalog, or public Google Drive file. Importing a published
-bundle does not rechunk or fetch the original checkpoint.
-
-```sh
-stageplane export MODEL_KEY --store data/models --output dist/model.stageplane
-stageplane import-bundle https://models.example/model.stageplane --store data/consumer-models
-stageplane executor --store data/consumer-models --bundle https://models.example/model.stageplane
-```
-
 ## Quick start
+
+The producer chunks a model once into a central directory. The executor reads
+that directory through its own mount and assigns stages. Workers first reuse
+verified cache files, then try configured central sources directly, and finally
+download through the authenticated executor if direct access fails.
+
+| Role | Example location | Responsibility |
+| --- | --- | --- |
+| Producer | `/srv/stageplane/models` | Download original weights and publish immutable chunks |
+| Executor | `/mnt/central/models` | Read the same central files, plan placement, route requests |
+| Worker | `/mnt/models` → local `data/node-cache` | Copy assigned artifacts into a verified local cache and execute stages |
+
+These paths can name the **same storage mounted differently on each machine**.
+Provision the shared storage, mount it, and grant the producer write access before
+starting Stageplane. Stageplane does not mount NFS/SMB or copy directories between
+machines automatically. The executor must have a local filesystem view of its
+`--store`; an HTTP source is a worker download location, not a replacement for
+its model registry.
+
+With separate roles, **3 machines = 1 producer + 1 executor + 1 worker**;
+**10 machines = 1 producer + 1 executor + 8 workers**. A three-worker Docker test
+has three worker containers in addition to its executor and artifact publisher.
+
+### 1. Install on each machine
 
 Python 3.11+ is required; Python 3.12 and 3.13 were tested on Apple Silicon.
 
 ```sh
-uv sync --extra test
+git clone https://github.com/karthikrameshdev/stageplane.git
+cd stageplane
+uv sync --locked
 source .venv/bin/activate
-
-# Download every checkpoint tensor into hashed Safetensors artifacts.
-# One complete decoder block per chunk, independent of node count.
-stageplane distribute Qwen/Qwen3-4B-Instruct-2507 --layers-per-chunk 1
-
-# Four worker processes, mixed REST/gRPC/WebSocket links, one executor.
-python -m scripts.dev_cluster --nodes 4 --port 8080 --dtype bfloat16 --cpu-kernel bounded-f32 --local-artifacts
 ```
 
-Open **http://127.0.0.1:8080**. Enter the default development token,
-`local-stageplane-development`, through the dashboard settings button.
-`--local-artifacts` hardlinks verified files for same-disk testing; omit it to
-exercise worker downloads. Ctrl-C stops all services owned by the script.
+### 2. Producer: create the central model files
 
-For an offline correctness fixture:
+On the producer, with `/srv/stageplane/models` provisioned and writable:
 
 ```sh
+stageplane distribute Qwen/Qwen3.5-0.8B \
+  --revision 2fc06364715b967f1860aea9cf38778875588b17 \
+  --layers-per-chunk 2 --store /srv/stageplane/models
+```
+
+This pinned checkpoint produces the model key
+`Qwen--Qwen3--5-0--8B-2fc06364715b`. Use the key printed by your own distribution
+command when choosing another checkpoint or revision. Files are published under
+`/srv/stageplane/models/MODEL_KEY/`, including `manifest.json` and stage files.
+Chunk boundaries follow model layers; they do not depend on worker count.
+
+### 3. Executor: read the central store
+
+Mount the producer's model directory at `/mnt/central/models` on the executor.
+Provision the same internal token on the executor and every trusted worker.
+The following HTTP addresses assume a private test network; use
+[TLS/mTLS](#mutual-tls) for deployment across real networks.
+
+On the executor, in a terminal that stays running:
+
+```sh
+export STAGEPLANE_TOKEN='replace-with-a-random-shared-internal-token'
+# Keep SQLite on local disk, outside the shared/read-only model directory.
+export STAGEPLANE_STATE_FILE="$PWD/data/executor-state/executor.sqlite"
+stageplane executor --host 0.0.0.0 --port 8080 --store /mnt/central/models
+```
+
+The executor advertises `/mnt/central/models` to workers by default. If workers
+see that storage under another path, set their own `--artifact-source` as below.
+Alternatively, advertise a central HTTP(S) directory with
+`--artifact-source https://models.example/models`; see the
+[central HTTPS example](docs/LOCAL_TESTING.md#central-https-directory).
+
+### 4. Worker: fetch assigned chunks and execute
+
+On the worker, mount the same central directory at `/mnt/models`. Replace the
+example DNS names with addresses reachable from the executor **and other workers**:
+
+```sh
+export STAGEPLANE_TOKEN='replace-with-a-random-shared-internal-token'
+stageplane node --id worker-a \
+  --executor http://executor.example:8080 \
+  --host 0.0.0.0 --port 8101 --advertise-url http://worker-a.example:8101 \
+  --artifact-source /mnt/models --cache data/node-cache \
+  --max-memory 8GiB --max-cpu 2 --dtype float32 --group 0
+```
+
+`--artifact-source` is repeatable on both executor and worker. Each root must
+contain `MODEL_KEY/FILENAME`; it is not the path to one model or a `.stageplane`
+archive. A worker tries its own roots before the executor's advertised roots.
+Missing, unreachable, or corrupt direct copies fall back to the executor's
+authenticated artifact endpoint. Executor credentials are never sent to central
+HTTP(S) sources. `--cache` remains a local worker copy, even with shared storage.
+
+Repeat the worker command on further machines with unique IDs and reachable
+endpoints. Omit `--artifact-source` on a worker without a mount: executor downloads
+still work. The example memory/CPU budgets are starting values, not guaranteed
+model requirements; use the readiness and capacity messages to size each worker.
+
+### 5. Deploy and call the OpenAI-compatible endpoint
+
+In another terminal on the executor:
+
+```sh
+export STAGEPLANE_TOKEN='replace-with-a-random-shared-internal-token'
+export MODEL_KEY='Qwen--Qwen3--5-0--8B-2fc06364715b'
+
+curl --fail-with-body http://127.0.0.1:8080/api/deployments \
+  -H "Authorization: Bearer $STAGEPLANE_TOKEN" -H 'Content-Type: application/json' \
+  -d "{\"model\":\"$MODEL_KEY\",\"replicas\":1,\"groups\":1}"
+
+curl --fail-with-body http://127.0.0.1:8080/api/state \
+  -H "Authorization: Bearer $STAGEPLANE_TOKEN"
+```
+
+Open **http://executor.example:8080** and enter the token in **Access settings**.
+Wait for **Route ready** and all target stages to load. One capable worker can
+hold every stage; multiple workers may each hold several stages.
+
+```sh
+curl --fail-with-body -N http://127.0.0.1:8080/v1/chat/completions \
+  -H "Authorization: Bearer $STAGEPLANE_TOKEN" -H 'Content-Type: application/json' \
+  -d "{\"model\":\"$MODEL_KEY\",\"messages\":[{\"role\":\"user\",\"content\":\"Say hello briefly.\"}],\"max_tokens\":32,\"temperature\":0,\"stream\":true}"
+```
+
+For a quick offline correctness fixture on one computer:
+
+```sh
+uv sync --extra test --locked
 python -m scripts.tiny_checkpoint data/fixture
 stageplane distribute data/fixture --store data/fixture-models --layers-per-chunk 1
 python -m scripts.dev_cluster --store data/fixture-models --work data/fixture-run
 ```
 
-The random fixture establishes machinery correctness, not language quality.
+The development launcher starts an executor and four worker processes; enter
+`local-stageplane-development` in its dashboard at `http://127.0.0.1:8080`.
+Ctrl-C stops its owned processes. The random fixture establishes machinery
+correctness, not language quality.
+
+## Local testing and published models
+
+See [the detailed local testing guide](docs/LOCAL_TESTING.md) for source ordering,
+mount mappings, central HTTP(S) hosting, Docker testing, Qwen3 4B commands,
+resource allocations, and bounded recovery. `--store` already selects the
+producer/executor model directory; `--artifact-source` adds direct worker access
+before executor fallback. It does not change model chunking.
+
+When a consumer cannot mount the central store, publish a portable bundle instead:
+
+```sh
+stageplane export MODEL_KEY --store /srv/stageplane/models --output dist/model.stageplane
+stageplane import-bundle https://models.example/model.stageplane --store data/consumer-models
+stageplane executor --store data/consumer-models
+```
+
+Executors can import local directories/archives, HTTP directories/archives,
+Git/Git LFS/catalogs, or public Google Drive files. Imports preserve and verify
+existing chunks without rechunking or fetching the original checkpoint.
+Git and Drive resolve through this import workflow; worker direct sources are
+filesystem or HTTP(S) directory roots.
+
+Retained Qwen3 4B chunks are under `data/review/qwen3-4b/`; the guide lists exact
+paths. See the [four-worker report](reports/qwen3-4b/FOUR_NODE_REPORT.md) and
+[50-worker resource report](reports/qwen3-4b/FIFTY_NODE_REPORT.md). The four-worker
+run matched direct output tokens in all five trials. The 50-worker pool rejected
+the model because its largest complete stages exceed those workers' RAM limits;
+the report retains the actual admission and OOM evidence.
 
 ## Model distribution
 

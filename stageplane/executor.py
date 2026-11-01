@@ -25,11 +25,13 @@ from .placement import bucket, plan, route
 from .wire import ChunkFailure, Transport, pack, unpack
 from .resources import capacity, weight_budget, weight_factor
 from .security import AccessPolicy, RequestBodyLimit
+from .artifacts import normalize_sources
 
 
 class Coordinator:
-    def __init__(self, store: Path = ROOT, state_file: Path | None = None):
+    def __init__(self, store: Path = ROOT, state_file: Path | None = None, artifact_sources=None):
         self.store = store.resolve()
+        self.artifact_sources = normalize_sources([str(self.store)] if artifact_sources is None else artifact_sources)
         self.models = manifests(self.store)
         self.nodes, self.deployments, self.tokenizers = {}, {}, {}
         self.events = deque(maxlen=400)
@@ -112,7 +114,8 @@ class Coordinator:
             if model not in self.models:
                 continue
             for chunk, owners in self.effective_placements(deployment).items():
-                assignment = {"model": model, "chunk": chunk, "manifest_sha256": self.models[model]["manifest_sha256"]}
+                assignment = {"model": model, "chunk": chunk, "manifest_sha256": self.models[model]["manifest_sha256"],
+                              "artifact_sources": list(self.artifact_sources)}
                 for nid in owners:
                     if deployment.get("capacity", {}).get("status") == "insufficient_capacity" and model + ":" + chunk not in self.nodes.get(nid, {}).get("ready", []):
                         continue
@@ -285,7 +288,8 @@ class Coordinator:
 
     def assignments(self, nid):
         # Heartbeats scale with that worker's assignments, not the entire cluster graph.
-        return [dict(item) for item in self.assignment_index.get(nid, [])]
+        return [{**item, "artifact_sources": list(item["artifact_sources"])}
+                for item in self.assignment_index.get(nid, [])]
 
     def sweep_nodes(self, now=None):
         now = time.time() if now is None else now
