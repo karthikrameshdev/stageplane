@@ -1,0 +1,464 @@
+[
+  {
+    "name": "single-resident",
+    "deploy": {
+      "routing": "chain",
+      "strategy": "rendezvous"
+    },
+    "node_args": {
+      "0": [
+        "--max-memory",
+        "3GiB"
+      ]
+    },
+    "route": [
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0"
+    ],
+    "nodes": {
+      "node-0": {
+        "ready_stages": [
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009",
+          "blocks-010",
+          "blocks-011",
+          "embedding",
+          "head"
+        ],
+        "streaming": false,
+        "loaded_weight_bytes": 2013345408,
+        "layer_stream": {
+          "hits": 0,
+          "misses": 0,
+          "loaded_bytes": 0,
+          "transient": 0,
+          "pinned_bytes": 0,
+          "budget_bytes": 0
+        }
+      }
+    },
+    "peak_worker_rss_bytes": {
+      "node-0": 1688207360
+    },
+    "prefill_chunks": 9,
+    "runs": [
+      {
+        "text": "The sky appears blue because sunlight scatters off the Earth's",
+        "ttft_s": 1.8542556669563055,
+        "total_s": 22.09305137488991,
+        "usage": {
+          "prompt_tokens": 23,
+          "completion_tokens": 12,
+          "total_tokens": 35
+        }
+      },
+      {
+        "text": "Here are three prime numbers:\n\n1.  **2",
+        "ttft_s": 2.4955155830830336,
+        "total_s": 27.490084124961868,
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 12,
+          "total_tokens": 29
+        }
+      },
+      {
+        "text": "The service handled requests in batches 0\u2013100",
+        "ttft_s": 77.87310270802118,
+        "total_s": 103.4526190829929,
+        "usage": {
+          "prompt_tokens": 2154,
+          "completion_tokens": 12,
+          "total_tokens": 2166
+        }
+      }
+    ],
+    "decode_tokens_per_s": 0.4400956144359647,
+    "matches_single_resident": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "heterogeneous-hub-interleaved",
+    "deploy": {
+      "routing": "hub",
+      "strategy": "capacity"
+    },
+    "node_args": {
+      "0": [
+        "--max-memory",
+        "1400MiB",
+        "--stream-weights",
+        "--layer-cache",
+        "160MiB"
+      ],
+      "1": [
+        "--max-memory",
+        "1400MiB",
+        "--stream-weights",
+        "--layer-cache",
+        "160MiB"
+      ],
+      "2": [
+        "--max-memory",
+        "700MiB",
+        "--stream-weights",
+        "--layer-cache",
+        "32MiB"
+      ]
+    },
+    "route": [
+      "node-0",
+      "node-0",
+      "node-1",
+      "node-2",
+      "node-2",
+      "node-1",
+      "node-0",
+      "node-2",
+      "node-0",
+      "node-2",
+      "node-1",
+      "node-1",
+      "node-0",
+      "node-1"
+    ],
+    "nodes": {
+      "node-2": {
+        "ready_stages": [
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-006",
+          "blocks-008",
+          "blocks-009",
+          "blocks-010"
+        ],
+        "streaming": true,
+        "loaded_weight_bytes": 0,
+        "layer_stream": {
+          "hits": 0,
+          "misses": 365,
+          "loaded_bytes": 15440762560,
+          "transient": 365,
+          "pinned_bytes": 0,
+          "budget_bytes": 33554432
+        }
+      },
+      "node-1": {
+        "ready_stages": [
+          "blocks-001",
+          "blocks-004",
+          "blocks-009",
+          "blocks-010",
+          "embedding",
+          "head"
+        ],
+        "streaming": true,
+        "loaded_weight_bytes": 1183158208,
+        "layer_stream": {
+          "hits": 173,
+          "misses": 183,
+          "loaded_bytes": 7594611520,
+          "transient": 179,
+          "pinned_bytes": 166037440,
+          "budget_bytes": 167772160
+        }
+      },
+      "node-0": {
+        "ready_stages": [
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-005",
+          "blocks-007",
+          "blocks-011",
+          "embedding",
+          "head"
+        ],
+        "streaming": true,
+        "loaded_weight_bytes": 1183158208,
+        "layer_stream": {
+          "hits": 176,
+          "misses": 188,
+          "loaded_bytes": 7515514880,
+          "transient": 184,
+          "pinned_bytes": 166037440,
+          "budget_bytes": 167772160
+        }
+      }
+    },
+    "peak_worker_rss_bytes": {
+      "node-0": 367001600,
+      "node-1": 874233856,
+      "node-2": 203587584
+    },
+    "prefill_chunks": 9,
+    "runs": [
+      {
+        "text": "The sky appears blue because sunlight scatters off the Earth's",
+        "ttft_s": 2.4859307089354843,
+        "total_s": 18.914009624859318,
+        "usage": {
+          "prompt_tokens": 23,
+          "completion_tokens": 12,
+          "total_tokens": 35
+        }
+      },
+      {
+        "text": "Here are three prime numbers:\n\n1.  **2",
+        "ttft_s": 1.8891046671196818,
+        "total_s": 19.094858459196985,
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 12,
+          "total_tokens": 29
+        }
+      },
+      {
+        "text": "The service handled requests in batches 0\u2013100",
+        "ttft_s": 81.8528077499941,
+        "total_s": 108.21386537491344,
+        "usage": {
+          "prompt_tokens": 2154,
+          "completion_tokens": 12,
+          "total_tokens": 2166
+        }
+      }
+    ],
+    "decode_tokens_per_s": 0.6393210162675435,
+    "matches_single_resident": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "single-streaming-edge",
+    "deploy": {
+      "routing": "hub",
+      "strategy": "capacity"
+    },
+    "node_args": {
+      "0": [
+        "--max-memory",
+        "1800MiB",
+        "--stream-weights",
+        "--layer-cache",
+        "96MiB"
+      ]
+    },
+    "route": [
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0"
+    ],
+    "nodes": {
+      "node-0": {
+        "ready_stages": [
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009",
+          "blocks-010",
+          "blocks-011",
+          "embedding",
+          "head"
+        ],
+        "streaming": true,
+        "loaded_weight_bytes": 1103342208,
+        "layer_stream": {
+          "hits": 88,
+          "misses": 992,
+          "loaded_bytes": 41036365440,
+          "transient": 990,
+          "pinned_bytes": 86221440,
+          "budget_bytes": 100663296
+        }
+      }
+    },
+    "peak_worker_rss_bytes": {
+      "node-0": 843005952
+    },
+    "prefill_chunks": 9,
+    "runs": [
+      {
+        "text": "The sky appears blue because sunlight scatters off the Earth's",
+        "ttft_s": 1.9551487499848008,
+        "total_s": 25.953844083007425,
+        "usage": {
+          "prompt_tokens": 23,
+          "completion_tokens": 12,
+          "total_tokens": 35
+        }
+      },
+      {
+        "text": "Here are three prime numbers:\n\n1.  **2",
+        "ttft_s": 2.6164673338644207,
+        "total_s": 27.40109012508765,
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 12,
+          "total_tokens": 29
+        }
+      },
+      {
+        "text": "The service handled requests in batches 0\u2013100",
+        "ttft_s": 79.76511583314277,
+        "total_s": 106.10289258300327,
+        "usage": {
+          "prompt_tokens": 2154,
+          "completion_tokens": 12,
+          "total_tokens": 2166
+        }
+      }
+    ],
+    "decode_tokens_per_s": 0.44382357934837474,
+    "matches_single_resident": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "single-resident-unchunked",
+    "deploy": {
+      "routing": "chain",
+      "strategy": "rendezvous"
+    },
+    "node_args": {
+      "0": [
+        "--max-memory",
+        "3GiB"
+      ]
+    },
+    "route": [
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0",
+      "node-0"
+    ],
+    "nodes": {
+      "node-0": {
+        "ready_stages": [
+          "blocks-000",
+          "blocks-001",
+          "blocks-002",
+          "blocks-003",
+          "blocks-004",
+          "blocks-005",
+          "blocks-006",
+          "blocks-007",
+          "blocks-008",
+          "blocks-009",
+          "blocks-010",
+          "blocks-011",
+          "embedding",
+          "head"
+        ],
+        "streaming": false,
+        "loaded_weight_bytes": 2013345408,
+        "layer_stream": {
+          "hits": 0,
+          "misses": 0,
+          "loaded_bytes": 0,
+          "transient": 0,
+          "pinned_bytes": 0,
+          "budget_bytes": 0
+        }
+      }
+    },
+    "peak_worker_rss_bytes": {
+      "node-0": 1706033152
+    },
+    "prefill_chunks": 1,
+    "runs": [
+      {
+        "text": "The sky appears blue because sunlight scatters off the Earth's",
+        "ttft_s": 1.887825292069465,
+        "total_s": 23.293631709180772,
+        "usage": {
+          "prompt_tokens": 23,
+          "completion_tokens": 12,
+          "total_tokens": 35
+        }
+      },
+      {
+        "text": "Here are three prime numbers:\n\n1.  **2",
+        "ttft_s": 2.5417954579461366,
+        "total_s": 27.51068158284761,
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 12,
+          "total_tokens": 29
+        }
+      },
+      {
+        "text": "The service handled requests in batches 0\u2013100",
+        "ttft_s": 76.2194849580992,
+        "total_s": 101.16044916701503,
+        "usage": {
+          "prompt_tokens": 2154,
+          "completion_tokens": 12,
+          "total_tokens": 2166
+        }
+      }
+    ],
+    "decode_tokens_per_s": 0.441041489328939,
+    "matches_single_resident": [
+      true,
+      true,
+      true
+    ]
+  }
+]

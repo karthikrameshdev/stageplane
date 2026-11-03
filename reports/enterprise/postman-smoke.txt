@@ -1,0 +1,97 @@
+No authorization data found. Please use the `postman login` command.
+Refer:https://learning.postman.com/docs/postman-cli/postman-cli-options/#postman-login
+
+Running your collection...
+postman
+
+Stageplane smoke
+
+Root health
+
+  GET http://127.0.0.1:8099/health [200 OK, 206 B, 6 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Request ID echoed
+  Pass  Response contract
+
+Root liveness
+
+  GET http://127.0.0.1:8099/livez [200 OK, 188 B, 1 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Request ID echoed
+  Pass  Liveness contract
+
+Root readiness
+
+  GET http://127.0.0.1:8099/ready [200 OK, 242 B, 1 ms]
+  Pass  Request ID echoed
+  Pass  Readiness status
+  Pass  Readiness contract
+
+Root models
+
+  GET http://127.0.0.1:8099/v1/models [200 OK, 370 B, 1 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Request ID echoed
+  Pass  Response contract
+  Pass  Model cards
+
+Root state
+
+  GET http://127.0.0.1:8099/api/state [200 OK, 13.99 KB, 2 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Request ID echoed
+  Pass  Response contract
+  Pass  Operational summary
+
+Root deployments
+
+  GET http://127.0.0.1:8099/api/deployments [200 OK, 864 B, 1 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Request ID echoed
+  Pass  Deployment list contract
+
+Root audit
+
+  GET http://127.0.0.1:8099/api/audit?limit=5 [200 OK, 401 B, 2 ms]
+  Pass  HTTP 200
+  Pass  JSON response
+  Pass  Request ID echoed
+  Pass  Audit contract
+
+Root metrics
+
+  GET http://127.0.0.1:8099/metrics [200 OK, 29.75 KB, 1 ms]
+  Pass  Request ID echoed
+  Pass  HTTP 200
+  Pass  Prometheus exposition
+
+------------------------------------------------------------------
+|                         |          executed |           failed |
+--------------------------+-------------------+-------------------
+|              iterations |                 1 |                0 |
+--------------------------+-------------------+-------------------
+|                requests |                 8 |                0 |
+--------------------------+-------------------+-------------------
+|            test-scripts |                 8 |                0 |
+--------------------------+-------------------+-------------------
+|      prerequest-scripts |                 0 |                0 |
+--------------------------+-------------------+-------------------
+|              assertions |                32 |                0 |
+------------------------------------------------------------------
+| total run duration: 240 ms                                     |
+------------------------------------------------------------------
+| total data received: 44.57 KB (approx)                         |
+------------------------------------------------------------------
+| average response time: 2 ms [min: 1 ms, max: 6 ms, s.d.: 1 ms] |
+------------------------------------------------------------------
+
+A new version of Postman CLI is available (v1.84.0). Refer https://go.pstmn.io/cli-release-notes for changelogs.
+To update your Postman CLI, run:
+
+postman update
+

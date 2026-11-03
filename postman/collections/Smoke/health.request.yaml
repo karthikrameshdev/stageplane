@@ -10,4 +10,4 @@ scripts:
   - type: afterResponse
     language: text/javascript
     code: |
-      pm.test("Response contract", () => { pm.expect(pm.response.json().status).to.eql("ok"); });
+      pm.test("Response contract", () => { pm.expect(pm.response.json().status).to.eql("ok"); pm.expect(pm.response.json().version).to.be.a("string"); });

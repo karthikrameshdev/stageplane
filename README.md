@@ -249,9 +249,10 @@ at `/docs`.
 
 Nodes register, heartbeat each second, fetch assignments, download and verify
 artifacts, and materialize only assigned layers. A real readiness fixture precedes
-advertising a stage. Workers retain their attention/recurrent state and forward
-activations directly to the next worker. REST, generic unary gRPC, and WebSocket
-share the same bounded Safetensors protocol. All support TLS and bearer auth.
+advertising a stage. Workers retain their attention/recurrent state. With the default
+`routing: "hub"` the executor forwards every cross-node hop; `routing: "chain"` lets
+workers forward activations directly to the next worker. REST, generic unary gRPC, and
+WebSocket share the same bounded Safetensors protocol. All support TLS and bearer auth.
 
 ```sh
 export STAGEPLANE_TOKEN='choose-a-secret-and-provision-it-on-all-services'
@@ -279,6 +280,17 @@ curl http://127.0.0.1:8080/api/deployments \
   -d '{"model":"Qwen/Qwen3.5-0.8B","replicas":2,"groups":1}'
 ```
 
+`strategy: "capacity"` (default) gives each layer chunk to the node with the lowest
+fill ratio, so ownership is interleaved and proportional to size: a small device
+may run one layer while a large node runs fifteen. `strategy: "rendezvous"` keeps
+the earlier weighted-hash placement.
+
+Memory-constrained devices can join with `--stream-weights --layer-cache 256MiB`.
+Their layers stay on disk; the worker pins as many materialized layers as the cache
+allows and reads the rest from disk, prefetching the next layer while the current one
+computes. The planner charges such nodes only two layers of working memory plus disk
+for the remainder, and prefers resident nodes. Output is identical; only speed changes.
+
 One node can host all chunks. Adding 100 nodes does not change chunk boundaries;
 excess capacity supplies replicas or spares. `groups:1` is an ordinary pool.
 For multiple groups, stages hash to groups and nodes declare `--group`.
@@ -304,12 +316,37 @@ for chunk in client.chat.completions.create(
     print(chunk.choices[0].delta.content or "", end="", flush=True)
 ```
 
-Supported chat fields: text `messages`, `model`, `max_tokens`, `temperature`,
-`top_p`, `seed`, and `stream`. Unknown fields are rejected. Tools, Responses API,
-multimodal inputs, arbitrary OpenAI extensions, and batched tensors are not
-implemented. Context defaults to 2,048 tokens including output, controlled by
-`STAGEPLANE_MAX_CONTEXT`. Default admission: four gateway requests, eight resident
-sessions per worker, one compute operation per worker.
+Supported chat fields: `model`, `messages` (string or text-part content; `developer`
+maps to `system`), `max_tokens`/`max_completion_tokens`, `temperature`, `top_p`,
+`presence_penalty`, `frequency_penalty`, `stop` (up to four sequences), `n=1`, `user`,
+`seed`, `stream`, and `stream_options.include_usage`. Generation also stops on every
+`eos_token_id` in the model's `generation_config.json`. Unknown fields are rejected.
+Tools, the Responses API, multimodal inputs, and batched tensors are not implemented.
+Errors on `/v1/*` use the OpenAI `{"error": {...}}` shape; 429 and 503 carry `Retry-After`.
+
+The context window is the smaller of `STAGEPLANE_MAX_CONTEXT` (default 32,768) and the
+model's `max_position_embeddings`. Prompts run in `STAGEPLANE_PREFILL_CHUNK` (default 512)
+token pieces, so frames and attention scratch memory stay bounded while each worker's KV
+cache grows. Workers reserve session memory using the stage's real element size.
+Default admission: four gateway requests (`STAGEPLANE_MAX_REQUESTS`), optional per-tenant
+in-flight cap (`STAGEPLANE_TENANT_MAX_REQUESTS`), eight resident sessions per worker,
+one compute operation per worker.
+
+## Operations
+
+| Endpoint | Auth | Purpose |
+|---|---|---|
+| `GET /livez` | none | Liveness probe on executor and workers |
+| `GET /ready` | none | 200 once a deployment has a complete ready route (worker: once stages are loaded) |
+| `GET /metrics` | viewer/admin | Prometheus: request counters, TTFT / inter-token / duration histograms by model, HTTP latency by route, node gauges |
+| `GET /api/audit` | viewer/admin | Durable audit of imports, deployments, drains, resumes (`STAGEPLANE_AUDIT_RETENTION`) |
+| `GET/DELETE /api/deployments/{model}` | admin | Inspect or remove a deployment |
+
+Every response carries `X-Request-ID` (propagated when the caller sends a valid one).
+`--log-format json` emits structured logs with that ID. Workers deregister on graceful
+shutdown so placement moves immediately. The container runs as UID 10001 with a
+`stageplane probe` healthcheck; Compose drops all capabilities and uses read-only roots.
+Kubernetes manifests are in [deploy/kubernetes](deploy/kubernetes/stageplane.yaml).
 
 ## Four Docker workers
 
@@ -348,6 +385,7 @@ client certificate or a separately authenticated gateway.
 
 ```sh
 uv run --extra test pytest -q
+uv run --extra test python -m scripts.heterogeneous_validation   # real-model interleaved/streaming check
 uv run --extra test python -m scripts.benchmark \
   --model Qwen--Qwen3--5-0--8B-2fc06364715b --trials 5 --tokens 16
 postman spec lint postman/specs/stageplane.openapi.json --issueType=syntax --no-report-events

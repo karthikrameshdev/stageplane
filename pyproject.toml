@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stageplane"
-version = "0.1.0"
+version = "0.2.0"
 description = "Versioned transformer stages on a trusted heterogeneous worker pool"
 readme = "README.md"
 license = "Apache-2.0"
@@ -53,3 +53,12 @@ asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+extend-exclude = ["reference", "build", "postman", "data"]
+
+[tool.ruff.lint]
+select = ["E9", "F", "B006", "B008", "S102", "S307"]
+ignore = ["B008"]

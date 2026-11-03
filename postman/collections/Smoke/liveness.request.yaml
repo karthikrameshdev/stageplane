@@ -1,0 +1,13 @@
+$kind: http-request
+name: liveness
+order: 1500
+method: GET
+url: "{{baseUrl}}/livez"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Liveness contract", () => pm.expect(pm.response.json()).to.eql({ status: "ok" }));

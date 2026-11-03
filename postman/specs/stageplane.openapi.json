@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Stageplane distributed inference",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Executor control plane and OpenAI compatible text generation. Worker tensor transport is specified in docs/protocol.md."
   },
   "servers": [
@@ -15,6 +15,10 @@
       "get": {
         "operationId": "health",
         "summary": "health",
+        "tags": [
+          "control"
+        ],
+        "description": "Executor process health and version. Unauthenticated.",
         "responses": {
           "200": {
             "description": "Success",
@@ -25,20 +29,8 @@
                 }
               }
             }
-          },
-          "401": {
-            "description": "Missing or incorrect bearer token"
-          },
-          "422": {
-            "description": "Invalid request"
-          },
-          "503": {
-            "description": "No complete ready route or recovery exhausted"
           }
-        },
-        "tags": [
-          "control"
-        ]
+        }
       }
     },
     "/api/state": {
@@ -140,19 +132,66 @@
             }
           },
           "401": {
-            "description": "Missing or incorrect bearer token"
+            "description": "Missing or incorrect bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Invalid request"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No complete ready route or recovery exhausted"
+            "description": "No complete ready route or recovery exhausted; honour Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retrying."
+              }
+            }
           },
           "403": {
             "description": "Credential role does not permit this operation"
           },
           "413": {
             "description": "Request body exceeds configured byte limit"
+          },
+          "429": {
+            "description": "Admission or tenant quota exhausted; honour Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retrying."
+              }
+            }
           }
         },
         "tags": [
@@ -299,7 +338,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/DeploymentRecord"
                 }
               }
             }
@@ -336,6 +375,36 @@
                 "$ref": "#/components/schemas/Deployment"
               }
             }
+          }
+        }
+      },
+      "get": {
+        "operationId": "list_deployments",
+        "summary": "list deployments",
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeploymentList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
           }
         }
       }
@@ -699,6 +768,351 @@
         ],
         "description": "Clear the drain flag and replan its placement group. Stale or quarantined workers remain inactive until a valid heartbeat."
       }
+    },
+    "/livez": {
+      "get": {
+        "operationId": "liveness",
+        "summary": "liveness",
+        "tags": [
+          "control"
+        ],
+        "description": "Unauthenticated liveness probe for container orchestrators. Workers serve the same path.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Liveness"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ready": {
+      "get": {
+        "operationId": "readiness",
+        "summary": "readiness",
+        "tags": [
+          "control"
+        ],
+        "description": "200 when at least one deployment has a complete ready route; 503 otherwise. Unauthenticated.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Readiness"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "No deployment is serving",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Readiness"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "operationId": "metrics",
+        "summary": "prometheus metrics",
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Prometheus text exposition: request counters and latency histograms by model/tenant, node gauges, transport bytes.",
+        "responses": {
+          "200": {
+            "description": "Prometheus text format 0.0.4",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          }
+        }
+      }
+    },
+    "/api/audit": {
+      "get": {
+        "operationId": "audit_log",
+        "summary": "audit log",
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Durable record of administrative changes, newest first.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 100
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "Return entries with id lower than this cursor.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLog"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "422": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/v1/models/{model}": {
+      "get": {
+        "operationId": "get_model",
+        "summary": "get model",
+        "tags": [
+          "inference"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Model"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or ambiguous model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deployments/{model}": {
+      "parameters": [
+        {
+          "name": "model",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get_deployment",
+        "summary": "get deployment",
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeploymentRecord"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "404": {
+            "description": "Unknown model or no deployment"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete_deployment",
+        "summary": "delete deployment",
+        "tags": [
+          "control"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Stops placing the model. Workers unload its stages on their next heartbeat. Refused while requests are active.",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "model",
+                    "deleted"
+                  ],
+                  "properties": {
+                    "model": {
+                      "type": "string"
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "403": {
+            "description": "Credential role does not permit this operation"
+          },
+          "404": {
+            "description": "Unknown model or no deployment"
+          },
+          "409": {
+            "description": "Model has active requests"
+          }
+        }
+      }
+    },
+    "/api/nodes/{node_id}/deregister": {
+      "post": {
+        "operationId": "deregister_node",
+        "summary": "deregister node",
+        "tags": [
+          "worker"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Worker-only: marks the node inactive on graceful shutdown so placement moves without waiting for the heartbeat timeout.",
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Node marked inactive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "active": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or incorrect bearer token"
+          },
+          "403": {
+            "description": "Only the internal worker credential may deregister"
+          },
+          "404": {
+            "description": "Unknown node"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -729,6 +1143,9 @@
             "enum": [
               "ok"
             ]
+          },
+          "version": {
+            "type": "string"
           }
         }
       },
@@ -748,7 +1165,7 @@
           "data": {
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/components/schemas/Model"
             }
           }
         }
@@ -814,6 +1231,14 @@
             "minimum": 0,
             "exclusiveMinimum": true,
             "description": "Resolved maximum allocated CPU cores, e.g. 0.05 for 50m; never a percentage string."
+          },
+          "streaming": {
+            "type": "boolean",
+            "description": "Layers stay on disk with a bounded RAM cache."
+          },
+          "layer_cache_bytes": {
+            "type": "integer",
+            "minimum": 0
           }
         }
       },
@@ -837,6 +1262,24 @@
             "minimum": 1,
             "maximum": 100,
             "default": 1
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "capacity",
+              "rendezvous"
+            ],
+            "default": "capacity",
+            "description": "capacity interleaves layer chunks across nodes in proportion to each node's free memory (or disk for streaming nodes); rendezvous is the stable weighted hash."
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "hub",
+              "chain"
+            ],
+            "default": "hub",
+            "description": "hub returns activations to the executor at every node boundary; chain lets workers forward directly to the next stage owner."
           }
         }
       },
@@ -854,6 +1297,7 @@
           "messages": {
             "type": "array",
             "minItems": 1,
+            "maxItems": 4096,
             "items": {
               "type": "object",
               "required": [
@@ -865,12 +1309,43 @@
                   "type": "string",
                   "enum": [
                     "system",
+                    "developer",
                     "user",
                     "assistant"
                   ]
                 },
                 "content": {
-                  "type": "string"
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "text"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "text"
+                            ]
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 64
                 }
               }
             }
@@ -878,8 +1353,8 @@
           "max_tokens": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 2048,
-            "default": 64
+            "default": 64,
+            "description": "Bounded by the model context window minus prompt tokens."
           },
           "temperature": {
             "type": "number",
@@ -900,6 +1375,63 @@
           },
           "seed": {
             "type": "integer"
+          },
+          "max_completion_tokens": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "OpenAI alias; takes precedence over max_tokens."
+          },
+          "presence_penalty": {
+            "type": "number",
+            "minimum": -2,
+            "maximum": 2,
+            "default": 0
+          },
+          "frequency_penalty": {
+            "type": "number",
+            "minimum": -2,
+            "maximum": 2,
+            "default": 0
+          },
+          "stop": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              {
+                "type": "array",
+                "maxItems": 4,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              }
+            ],
+            "nullable": true
+          },
+          "n": {
+            "type": "integer",
+            "enum": [
+              1
+            ],
+            "default": 1
+          },
+          "user": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "stream_options": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "include_usage": {
+                "type": "boolean",
+                "default": false
+              }
+            }
           }
         }
       },
@@ -936,6 +1468,9 @@
           },
           "usage": {
             "type": "object"
+          },
+          "system_fingerprint": {
+            "type": "string"
           }
         }
       },
@@ -1301,7 +1836,235 @@
             "minimum": 0
           }
         }
+      },
+      "Readiness": {
+        "type": "object",
+        "required": [
+          "ready",
+          "deployments"
+        ],
+        "properties": {
+          "ready": {
+            "type": "boolean"
+          },
+          "deployments": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "Liveness": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok"
+            ]
+          }
+        }
+      },
+      "OpenAIError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "message",
+              "type"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "code": {
+                "type": "integer"
+              },
+              "param": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          },
+          "detail": {
+            "description": "Legacy FastAPI error detail, kept for existing integrations."
+          }
+        }
+      },
+      "DeploymentRecord": {
+        "type": "object",
+        "required": [
+          "model",
+          "replicas",
+          "groups",
+          "placements",
+          "capacity"
+        ],
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "replicas": {
+            "type": "integer"
+          },
+          "groups": {
+            "type": "integer"
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "capacity",
+              "rendezvous"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "hub",
+              "chain"
+            ]
+          },
+          "placements": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "retiring_placements": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "capacity": {
+            "$ref": "#/components/schemas/DeploymentCapacity"
+          }
+        }
+      },
+      "DeploymentList": {
+        "type": "object",
+        "required": [
+          "deployments"
+        ],
+        "properties": {
+          "deployments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeploymentRecord"
+            }
+          }
+        }
+      },
+      "AuditEntry": {
+        "type": "object",
+        "required": [
+          "id",
+          "time",
+          "actor",
+          "role",
+          "action",
+          "target",
+          "detail"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "time": {
+            "type": "number"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "model.import",
+              "deployment.apply",
+              "deployment.delete",
+              "node.drain",
+              "node.resume"
+            ]
+          },
+          "target": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "object"
+          }
+        }
+      },
+      "AuditLog": {
+        "type": "object",
+        "required": [
+          "entries"
+        ],
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditEntry"
+            }
+          }
+        }
+      },
+      "Model": {
+        "type": "object",
+        "required": [
+          "id",
+          "object",
+          "created",
+          "owned_by"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "model"
+            ]
+          },
+          "created": {
+            "type": "integer"
+          },
+          "owned_by": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "context_window": {
+            "type": "integer",
+            "description": "Smaller of STAGEPLANE_MAX_CONTEXT and the model's max_position_embeddings."
+          },
+          "deployed": {
+            "type": "boolean"
+          }
+        }
       }
-    }
+    },
+    "headers": {}
   }
 }

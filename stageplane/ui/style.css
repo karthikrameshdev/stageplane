@@ -136,6 +136,8 @@ input::placeholder, textarea::placeholder { color: #a5b0c1; }
 .deployment-options { display: flex; align-items: center; gap: 10px; margin: 12px 0 18px; }
 .deployment-options label { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #8495ae; }
 .deployment-options input { width: 43px; padding: 5px; font-size: 10px; }
+.deployment-options select { padding: 4px; font-size: 10px; }
+.deployment-options { flex-wrap: wrap; }
 .deployment-options button { margin-left: auto; padding: 6px 9px; font-size: 10px; }
 .capacity-banner { margin-bottom: 16px; padding: 11px 12px; color: #96702c; background: #fff8eb; border: 1px solid #f2e3c6; border-radius: 6px; font-size: 10px; line-height: 1.7; }
 .run-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0 19px; }

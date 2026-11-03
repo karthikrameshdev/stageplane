@@ -80,6 +80,27 @@ def weight_factor(node):
     return 1 if node.get("metrics", {}).get("dtype") in ("bfloat16", "float16") else 2
 
 
+def working_set(node, stage):
+    """Peak transient memory a streaming node needs for a stage: the executing layer plus the
+    prefetched next layer. Zero for resident nodes, which account the whole stage instead."""
+    if not node.get("streaming") or stage.get("kind") != "blocks":
+        return 0
+    layers = max(1, stage.get("end", 1) - stage.get("start", 0))
+    return stage["weight_bytes"] * weight_factor(node) * min(2, layers) // layers
+
+
+def resident_cost(node, stage):
+    """Memory a placed stage permanently holds; streamed layers live on disk and in a shared per-node cache."""
+    if node.get("streaming") and stage.get("kind") == "blocks":
+        return 0
+    return stage["weight_bytes"] * weight_factor(node)
+
+
+def cache_reserve(node):
+    """RAM a streaming node permanently dedicates to pinned layers (its --layer-cache)."""
+    return node.get("layer_cache_bytes", 0) if node.get("streaming") else 0
+
+
 def weight_budget(node):
     metrics = node.get("metrics", {})
     total = min(node["memory_bytes"], metrics.get("memory_limit_bytes", node["memory_bytes"]))
@@ -95,13 +116,13 @@ def capacity(manifest, placements, nodes, groups=1):
     missing = [s["id"] for s in manifest["stages"] if not placements.get(s["id"])]
     active = [n for n in nodes if n.get("active", True) and not n.get("draining")]
     reason = "memory"
-    reserved = {n["id"]: 0 for n in active}
-    stored = reserved.copy()
+    reserved = {n["id"]: cache_reserve(n) for n in active}
+    stored = {n["id"]: 0 for n in active}
     by_id = {n["id"]: n for n in active}
     for stage in manifest["stages"]:
         for nid in placements.get(stage["id"], []):
             if nid in by_id:
-                reserved[nid] += stage["weight_bytes"] * weight_factor(by_id[nid])
+                reserved[nid] += resident_cost(by_id[nid], stage)
                 stored[nid] += stage["weight_bytes"]
     for stage in manifest["stages"]:
         if stage["id"] not in missing:
@@ -111,7 +132,7 @@ def capacity(manifest, placements, nodes, groups=1):
         if candidates and not cpu_nodes:
             reason = "compute"
             break
-        memory_nodes = [n for n in cpu_nodes if reserved[n["id"]] + stage["weight_bytes"] * weight_factor(n)
+        memory_nodes = [n for n in cpu_nodes if reserved[n["id"]] + max(resident_cost(n, stage), working_set(n, stage))
                         + 64 * 1024**2 <= weight_budget(n)]
         if memory_nodes and all(stored[n["id"]] + stage["weight_bytes"] >
                                 n.get("metrics", {}).get("available_storage_bytes", MAX_STORAGE) for n in memory_nodes):

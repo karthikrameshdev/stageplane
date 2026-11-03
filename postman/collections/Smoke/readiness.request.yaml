@@ -1,0 +1,14 @@
+$kind: http-request
+name: readiness
+order: 1600
+method: GET
+url: "{{baseUrl}}/ready"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Readiness status", () => pm.expect(pm.response.code).to.be.oneOf([200, 503]));
+      pm.test("Readiness contract", () => { const r = pm.response.json(); pm.expect(r.ready).to.be.a("boolean"); pm.expect(r.ready).to.eql(pm.response.code === 200); pm.expect(r.deployments).to.be.an("object"); });

@@ -100,7 +100,9 @@ All transports carry identical bytes:
 2. UTF-8 JSON envelope of at most 64 KiB.
 3. Safetensors containing a tensor named `value`.
 
-Frames are bounded to 64 MiB and batch size is one. Embeddings receive `[1,S]`
+Frames are bounded to 64 MiB and batch size is one. The executor splits prompts into
+`STAGEPLANE_PREFILL_CHUNK`-token frames (default 512) with increasing `offset`, so a
+long prompt never needs a frame larger than `chunk x hidden x 4` bytes. Embeddings receive `[1,S]`
 int64 token IDs; blocks/head receive `[1,S,H]` floating-point tensors. The head
 returns `[1,1,V]` float32 logits for the last sequence position. No pickle is used.
 Invalid frame size, dimensions, IDs, revisions, offsets, stale epochs, and expired
@@ -109,10 +111,13 @@ stricter than the nominal context limit.
 
 Envelope fields: `tenant`, `session`, `model`, `revision`, `manifest_sha256`,
 `epoch`, `offset`, `context_budget`, `lease_until`, ordered `route`, current
-`index`, and timing/shape-only `trace`. Each hop names node, chunk, URL, gRPC
-endpoint, and transport. The first worker receives tokens and forwards activations
-directly to successors. Colocated chunks execute locally. Only final logits and
-trace metadata return to the gateway.
+`index`, `hub`, and timing/shape-only `trace`. Each hop names node, chunk, URL, gRPC
+endpoint, and transport. Colocated consecutive chunks execute locally. With `hub: true`
+(deployment `routing: "hub"`, the default) a worker returns the frame to the executor
+as soon as the next hop belongs to another node, and the executor sends it to that node
+with the advanced `index`; placements can therefore interleave layers arbitrarily
+(node A: 1, 6, 8; node B: 2, 4, 7). With `hub: false` the first worker forwards
+activations directly to successors and only final logits return to the gateway.
 
 REST uses `POST /v1/forward` with `application/octet-stream`. gRPC uses the generic
 byte unary method `/stageplane.Worker/Forward`. WebSocket uses `/ws/forward`, one binary

@@ -1,5 +1,4 @@
 import json
-import time
 
 import httpx
 import pytest
@@ -17,12 +16,12 @@ def payload(model, stream=False):
 @pytest.mark.parametrize("architecture", ["qwen3", "qwen3_5_text"])
 def test_four_nodes_mixed_transports_recovery(tmp_path, architecture):
     make(tmp_path / "source", architecture)
-    m = distribute(str(tmp_path / "source"), tmp_path / "models", layers_per_chunk=1)
+    distribute(str(tmp_path / "source"), tmp_path / "models", layers_per_chunk=1)
     cluster = Cluster(tmp_path / "models", tmp_path / "run", replicas=2)
     try:
         cluster.start()
         assert httpx.get(cluster.url + "/api/state", trust_env=False).status_code == 401
-        assert cluster.http.get("/health").json() == {"status": "ok"}
+        assert cluster.http.get("/health").json()["status"] == "ok"
         assert cluster.http.post("/v1/chat/completions", json={**payload(cluster.model), "model": "missing"}).status_code == 404
         first = cluster.http.post("/v1/chat/completions", json=payload(cluster.model))
         assert first.status_code == 200, first.text
