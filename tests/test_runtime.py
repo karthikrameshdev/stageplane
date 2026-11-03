@@ -1,4 +1,3 @@
-import json
 
 import pytest
 import torch
@@ -44,7 +43,7 @@ def test_frame_roundtrip_and_bounds():
 
 def test_immutable_artifacts_and_unsupported(tmp_path):
     make(tmp_path / "original")
-    manifest = distribute(str(tmp_path / "original"), tmp_path / "store")
+    distribute(str(tmp_path / "original"), tmp_path / "store")
     with pytest.raises(ValueError, match="Immutable"):
         distribute(str(tmp_path / "original"), tmp_path / "store")
     with pytest.raises(ValueError, match="GGUF"):

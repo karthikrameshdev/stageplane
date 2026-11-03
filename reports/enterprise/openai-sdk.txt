@@ -1,0 +1,5 @@
+models.retrieve: True
+create: length 6 stageplane-0.2.0
+stream: assistant usage chunk: 9 text equal: True
+NotFoundError message: Error code: 404 - Unknown or ambiguous model; use the immutable model key from /v1/models
+422 typed error: invalid_request_error

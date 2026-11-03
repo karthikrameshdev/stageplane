@@ -20,9 +20,9 @@ def free_port():
         return s.getsockname()[1]
 
 
-def submit_deployment(client, model, replicas=1, groups=1):
+def submit_deployment(client, model, replicas=1, groups=1, **options):
     """Submit once; accept a confirmed pending-capacity plan for readiness waiting."""
-    response = client.post("/api/deployments", json={"model": model, "replicas": replicas, "groups": groups})
+    response = client.post("/api/deployments", json={"model": model, "replicas": replicas, "groups": groups, **options})
     pending_capacity = False
     if response.status_code == 503:
         # Deployment admission persists a capacity-constrained plan before
@@ -40,7 +40,8 @@ def submit_deployment(client, model, replicas=1, groups=1):
 
 
 class Cluster:
-    def __init__(self, store, work, nodes=4, replicas=1, groups=1, transports=None, port=None, token="test-stageplane-token", local_artifacts=False, certs=None, dtype="float32", memory_gb=6, threads=2, cpu_kernel="native"):
+    def __init__(self, store, work, nodes=4, replicas=1, groups=1, transports=None, port=None, token="test-stageplane-token", local_artifacts=False, certs=None, dtype="float32", memory_gb=6, threads=2, cpu_kernel="native", deploy_options=None, node_args=None):
+        self.deploy_options, self.node_args = deploy_options or {}, node_args or {}
         self.store, self.work = Path(store).resolve(), Path(work).resolve()
         self.work.mkdir(parents=True, exist_ok=True)
         self.port, self.count = port or free_port(), nodes
@@ -89,6 +90,13 @@ class Cluster:
             time.sleep(0.25)
         raise TimeoutError(f"No healthy executor; logs: {self.work}")
 
+    def memory_args(self, i):
+        # An explicit per-node budget must not be overridden by the legacy --memory-gb default.
+        extra = self.node_args.get(i, [])
+        if "--max-memory" in extra or "--memory-gb" in extra or self.memory_gb is None:
+            return []
+        return ["--memory-gb", str(self.memory_gb)]
+
     def start_node(self, i):
         port, grpc = free_port(), free_port()
         mode = self.transports[i % len(self.transports)]
@@ -96,8 +104,8 @@ class Cluster:
                  "--port", str(port), "--grpc-port", str(grpc), "--transport", mode,
                  "--advertise-url", f"{'https' if self.certs else 'http'}://127.0.0.1:{port}",
                  "--group", str(i % self.groups), "--cache", str(self.work / "cache"),
-                 "--memory-gb", str(self.memory_gb), "--threads", str(self.threads), "--dtype", self.dtype,
-                 "--cpu-kernel", self.cpu_kernel])
+                 *self.memory_args(i), "--threads", str(self.threads), "--dtype", self.dtype,
+                 "--cpu-kernel", self.cpu_kernel, *self.node_args.get(i, [])])
         self.node_processes[f"node-{i}"] = p
 
     def start(self, model=None):
@@ -113,7 +121,7 @@ class Cluster:
             if len(state["nodes"]) == self.count:
                 break
             time.sleep(.25)
-        submit_deployment(self.http, self.model, self.replicas, self.groups)
+        submit_deployment(self.http, self.model, self.replicas, self.groups, **self.deploy_options)
         self.wait_ready()
         return self
 

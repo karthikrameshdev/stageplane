@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import math
-from .resources import MIN_CPU_CORES, weight_budget, weight_factor
+from .resources import MIN_CPU_CORES, cache_reserve, resident_cost, weight_budget, working_set
 
 
 def bucket(value, groups):
@@ -22,7 +22,7 @@ def score(chunk, node):
 
 
 def plan(manifest, nodes, replicas=1, groups=1, previous=None, changed_groups=None,
-         reserved=None, storage_reserved=None, resident=None):
+         reserved=None, storage_reserved=None, resident=None, strategy="rendezvous"):
     previous = previous or {}
     changed_groups = {g % groups for g in changed_groups} if changed_groups is not None else None
     reserved, storage_reserved = reserved or {}, storage_reserved or {}
@@ -30,17 +30,31 @@ def plan(manifest, nodes, replicas=1, groups=1, previous=None, changed_groups=No
     active = {n["id"]: n for n in nodes if not n.get("draining") and n.get("active", True)
               and (n.get("metrics", {}).get("available_cpu_cores", 1) >= MIN_CPU_CORES
                    or n.get("metrics", {}).get("loading") or n.get("metrics", {}).get("sessions"))}
-    weights = {stage["id"]: stage["weight_bytes"] for stage in manifest["stages"]}
-    assigned = {nid: reserved.get(nid, 0) + sum(weights.get(sid, 0) * weight_factor(active[nid])
-                    for sid in resident.get(nid, set())) for nid in active}
+    kinds = {stage["id"]: stage for stage in manifest["stages"]}
+    # Pinned streamed layers occupy up to layer_cache_bytes and are also reported in
+    # loaded_weight_bytes, which weight_budget adds back as reclaimable; reserve it here.
+    assigned = {nid: reserved.get(nid, 0) + cache_reserve(active[nid]) + sum(resident_cost(active[nid], kinds[sid])
+                    for sid in resident.get(nid, set()) if sid in kinds) for nid in active}
     stored = {nid: storage_reserved.get(nid, 0) for nid in active}
+    streamed = dict.fromkeys(active, 0)
     candidates_by_group = {}
     for node in active.values():
         candidates_by_group.setdefault(node.get("group", 0) % groups, []).append(node)
     ready_sets = {nid: set(node.get("ready", [])) for nid, node in active.items()}
 
     def memory_cost(stage, nid):
-        return 0 if stage["id"] in resident.get(nid, set()) else stage["weight_bytes"] * weight_factor(active[nid])
+        return 0 if stage["id"] in resident.get(nid, set()) else resident_cost(active[nid], stage)
+
+    def fill(nid, stage):
+        # Fraction of the node's own capacity used after taking this stage, so small and
+        # large nodes fill evenly and layers interleave across nodes in proportion to size.
+        node = active[nid]
+        if node.get("streaming"):
+            # Streamed layers live on disk, but speed depends on how many fit in RAM, so share
+            # is still proportional to the node's memory. Streaming nodes rank behind resident
+            # nodes and absorb overflow.
+            return 1 + (streamed[nid] + stage["weight_bytes"]) / max(1, weight_budget(node))
+        return (assigned[nid] + memory_cost(stage, nid)) / max(1, weight_budget(node))
 
     def disk_cost(stage, nid):
         # Free disk excludes files that the worker has already verified and loaded.
@@ -58,13 +72,14 @@ def plan(manifest, nodes, replicas=1, groups=1, previous=None, changed_groups=No
         retained = retained[:replicas]
         for nid in retained:
             cost = memory_cost(stage, nid)
-            if assigned[nid] + cost + 64 * 1024**2 > weight_budget(active[nid]):
+            if assigned[nid] + max(cost, working_set(active[nid], stage)) + 64 * 1024**2 > weight_budget(active[nid]):
                 continue
             if stored[nid] + disk_cost(stage, nid) > active[nid].get("metrics", {}).get("available_storage_bytes", 2**63):
                 continue
             result.setdefault(sid, []).append(nid)
             assigned[nid] += cost
             stored[nid] += disk_cost(stage, nid)
+            streamed[nid] += stage["weight_bytes"]
     for stage in sorted(manifest["stages"], key=lambda s: -s["weight_bytes"]):
         sid = stage["id"]
         if sid in result and len(result[sid]) >= replicas:
@@ -72,7 +87,10 @@ def plan(manifest, nodes, replicas=1, groups=1, previous=None, changed_groups=No
         group = bucket(sid, groups)
         candidates = list(candidates_by_group.get(group, []))
         # No cross-group fallback: it would turn a local join into global movement.
-        candidates.sort(key=lambda n: score(sid, n))
+        if strategy == "capacity":
+            candidates.sort(key=lambda n: (fill(n["id"], stage), score(sid, n)))
+        else:
+            candidates.sort(key=lambda n: score(sid, n))
         selected = result.get(sid, [])
         domains = {active[n].get("failure_domain") or n for n in selected}
         for node in candidates:
@@ -81,7 +99,7 @@ def plan(manifest, nodes, replicas=1, groups=1, previous=None, changed_groups=No
                 continue
             domain = node.get("failure_domain") or nid
             # Conservative CPU F32 expansion of BF16 weights plus working reserve.
-            needed = memory_cost(stage, nid) + 64 * 1024**2
+            needed = max(memory_cost(stage, nid), working_set(node, stage)) + 64 * 1024**2
             if nid in selected or domain in domains or assigned[nid] + needed > weight_budget(node):
                 continue
             if stored[nid] + disk_cost(stage, nid) > node.get("metrics", {}).get("available_storage_bytes", 2**63):
@@ -90,6 +108,7 @@ def plan(manifest, nodes, replicas=1, groups=1, previous=None, changed_groups=No
             domains.add(domain)
             assigned[nid] += memory_cost(stage, nid)
             stored[nid] += disk_cost(stage, nid)
+            streamed[nid] += stage["weight_bytes"]
             if len(selected) >= replicas:
                 break
         result[sid] = selected

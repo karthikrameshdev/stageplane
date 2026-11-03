@@ -8,6 +8,11 @@ x-node: &node
     executor:
       condition: service_healthy
   restart: unless-stopped
+  stop_grace_period: 40s
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: ["no-new-privileges:true"]
+  cap_drop: [ALL]
   mem_limit: 5g
 services:
   executor:
@@ -19,8 +24,12 @@ services:
       STAGEPLANE_STATE_FILE: /data/executor.sqlite
     ports: ["127.0.0.1:8080:8080"]
     volumes: ["./data/models:/models:ro", "executor-state:/data"]
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
     healthcheck:
-      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      test: [CMD, stageplane, probe, --ports, "8080"]
       interval: 5s
       timeout: 3s
       retries: 12

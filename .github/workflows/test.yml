@@ -10,6 +10,7 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --python 3.13 --extra test --locked
+      - run: uvx ruff@0.17.3 check .
       - run: uv run --locked --extra test pytest -q
       - run: uv run --locked python -m scripts.scale_validation --output /tmp/stageplane-scale.json
       - run: docker build -t stageplane:ci .

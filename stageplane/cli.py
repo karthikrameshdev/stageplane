@@ -6,7 +6,12 @@ from pathlib import Path
 
 
 def main():
+    from . import __version__
     parser = argparse.ArgumentParser(prog="stageplane")
+    parser.add_argument("--version", action="version", version=f"stageplane {__version__}")
+    parser.add_argument("--log-level", default=os.environ.get("STAGEPLANE_LOG_LEVEL", "INFO"),
+                        choices=["DEBUG", "INFO", "WARNING", "ERROR"])
+    parser.add_argument("--log-format", default=os.environ.get("STAGEPLANE_LOG_FORMAT", "text"), choices=["text", "json"])
     commands = parser.add_subparsers(dest="command", required=True)
     dist = commands.add_parser("distribute", help="Download and partition a compatible checkpoint")
     dist.add_argument("source", help="HF repo, local checkpoint, static HTTP directory, or ollama:<tag> with --hf-source")
@@ -14,6 +19,9 @@ def main():
     dist.add_argument("--revision", default="main")
     dist.add_argument("--layers-per-chunk", type=int, default=2)
     dist.add_argument("--store", type=Path, default=Path("data/models"), help="Output root for versioned model manifests and chunk files")
+    probe = commands.add_parser("probe", help="Exit 0 when a local executor or worker answers /livez (container healthcheck)")
+    probe.add_argument("--ports", default=os.environ.get("STAGEPLANE_HEALTH_PORT", "8080,8101"))
+    probe.add_argument("--path", default="/livez")
     rec = commands.add_parser("rechunk", help="Change block grouping using existing verified model tensors")
     rec.add_argument("directory", type=Path)
     rec.add_argument("--store", type=Path, default=Path("data/models"), help="Output root for the new chunk layout")
@@ -55,12 +63,31 @@ def main():
     node.add_argument("--cache", type=Path, default=Path("data/nodes"), help="Local worker cache root; files are stored below NODE_ID")
     node.add_argument("--artifact-source", action="append", default=None, metavar="ROOT",
                       help="Node-local artifact root tried before executor-advertised roots; absolute path, local file:// URL, or HTTP(S); repeat up to 8")
+    node.add_argument("--stream-weights", action="store_true",
+                      help="Keep stage layers on disk and hold only a bounded layer cache in RAM; lets small devices host any layer")
+    node.add_argument("--layer-cache", default="256MiB", help="RAM for streamed layers (bytes, MiB, GiB, or percent of --max-memory)")
     node.add_argument("--device", default="cpu")
     node.add_argument("--dtype", choices=["float32", "bfloat16", "float16"], default="float32")
     node.add_argument("--cpu-kernel", choices=["native", "bounded-f32"], default="native")
     node.add_argument("--threads", type=int, help="Native compute threads, bounded by the allocated CPU cores")
     node.add_argument("--max-sessions", type=int, default=8)
     args = parser.parse_args()
+    if args.command == "probe":
+        import ssl
+        import urllib.request
+        context = ssl._create_unverified_context()  # loopback liveness only; no credentials are sent
+        for port in args.ports.split(","):
+            for scheme in ("http", "https"):
+                try:
+                    with urllib.request.urlopen(f"{scheme}://127.0.0.1:{port.strip()}{args.path}", timeout=2,
+                                                context=context if scheme == "https" else None) as response:
+                        if response.status == 200:
+                            raise SystemExit(0)
+                except (OSError, ValueError):
+                    continue
+        raise SystemExit(1)
+    from .observability import configure_logging
+    configure_logging(args.log_level, args.log_format)
     artifact_sources = None
     if args.command in ("executor", "node"):
         from .artifacts import normalize_sources
@@ -125,13 +152,19 @@ def main():
         from .common import NodeInfo
         from .node import Worker, create_app
         torch.set_num_threads(min(args.threads or max(1, math.ceil(cpu_cores)), max(1, math.ceil(cpu_cores))))
+        layer_cache = 0
+        if args.stream_weights:
+            layer_cache = (int(memory_bytes * float(args.layer_cache[:-1]) / 100) if args.layer_cache.endswith("%")
+                           else resolve_limits(args.layer_cache, "100%")[0])
         info = NodeInfo(id=args.id, url=args.advertise_url or f"http://127.0.0.1:{args.port}",
                         grpc_url=args.grpc_url or f"127.0.0.1:{args.grpc_port}", transport=args.transport,
                         group=args.group, memory_bytes=memory_bytes, cpu_cores=cpu_cores, speed=args.speed,
-                        failure_domain=args.failure_domain or args.id)
+                        failure_domain=args.failure_domain or args.id, streaming=args.stream_weights,
+                        layer_cache_bytes=layer_cache)
         app = create_app(Worker(info, args.executor, args.cache / args.id, args.device, args.dtype, args.max_sessions,
-                               artifact_sources=artifact_sources), args.grpc_port)
-    uvicorn.run(app, host=args.host, port=args.port, ws_max_size=64 * 1024**2, **tls)
+                               artifact_sources=artifact_sources, stream_weights=args.stream_weights), args.grpc_port)
+    uvicorn.run(app, host=args.host, port=args.port, ws_max_size=64 * 1024**2, log_level=args.log_level.lower(),
+                timeout_graceful_shutdown=int(os.environ.get("STAGEPLANE_SHUTDOWN_GRACE_SECONDS", "30")), **tls)
 
 
 if __name__ == "__main__":

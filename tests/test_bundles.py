@@ -6,7 +6,6 @@ import subprocess
 import threading
 import zipfile
 from contextlib import contextmanager
-from pathlib import Path
 
 import httpx
 import pytest

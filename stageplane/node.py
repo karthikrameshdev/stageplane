@@ -16,17 +16,19 @@ import torch
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
 
 from .artifacts import ArtifactFetcher
-from .common import MAX_CONTEXT, MAX_FRAME, NodeInfo, authorize, authorize_ws
-from .runtime import Stage, cache_budget
-from .wire import ChunkFailure, Transport, error_frame, pack, unpack
+from .common import MAX_CONTEXT, MAX_FRAME, PREFILL_CHUNK, NodeInfo, authorize, authorize_ws
+from .runtime import LayerBudget, Stage, cache_budget
+from .wire import ChunkFailure, Transport, error_frame, pack, unpack, unpack_meta
 from .resources import available_limits, sample
+from .observability import RequestContext, worker_metrics
+from . import __version__
 
 log = logging.getLogger("stageplane.node")
 
 
 class Worker:
     def __init__(self, info: NodeInfo, executor: str, cache: Path, device="cpu", dtype="float32", max_sessions=8,
-                 artifact_sources=None):
+                 artifact_sources=None, stream_weights=False):
         self.artifacts = ArtifactFetcher(artifact_sources)
         self.info, self.executor, self.cache = info, executor.rstrip("/"), cache.resolve()
         total_memory, total_cpu = available_limits()
@@ -36,6 +38,8 @@ class Worker:
             self.info.cpu_cores = total_cpu
         self.cache.mkdir(parents=True, exist_ok=True)
         self.device, self.dtype, self.max_sessions = device, dtype, max_sessions
+        self.stream_weights = stream_weights
+        self.layer_budget = LayerBudget(info.layer_cache_bytes)
         self.loaded, self.manifests, self.sessions, self.epochs = {}, {}, {}, {}
         self.locks, self.metrics = {}, {"stage_ms": {}, "calls": 0, "bytes_received": 0, "bytes_sent": 0}
         self.identity_touched = {}
@@ -64,6 +68,7 @@ class Worker:
             if key in self.loaded:
                 continue
             self.loading = True
+            stage = None
             try:
                 if model not in self.manifests:
                     r = await self.transport.http.get(f"{self.executor}/api/manifests/{model}")
@@ -81,7 +86,8 @@ class Worker:
                 for a in spec["artifacts"]:
                     name = m["artifacts"][a]["file"]
                     await self.ensure_file(model, name, m["files"][name], assignment.get("artifact_sources", ()))
-                stage = await asyncio.to_thread(Stage, m, spec, self.cache / model, self.device, self.dtype)
+                budget = self.layer_budget if self.stream_weights else None
+                stage = await asyncio.to_thread(Stage, m, spec, self.cache / model, self.device, self.dtype, budget)
                 # A real fixture is executed before declaring readiness.
                 state = stage.state()
                 cfg = m["config"].get("text_config", m["config"])
@@ -93,6 +99,9 @@ class Worker:
                 self.loaded[key] = stage
                 self.errors.pop(key, None)
             except Exception as e:
+                # Return any streamed-layer budget the failed stage pinned during its fixture.
+                if stage is not None and self.loaded.get(key) is not stage:
+                    stage.close()
                 self.errors[key] = str(e)
                 log.exception("Loading %s failed", key)
             finally:
@@ -101,11 +110,11 @@ class Worker:
         busy = {k[2] for k in self.sessions} | {k[2] for k, task in self.inflight.items() if not task.done()}
         for key in list(self.loaded):
             if key not in wanted and key not in busy:
-                del self.loaded[key]
+                self.loaded.pop(key).close()
 
     def stats(self):
         self.info.ready = list(self.loaded)
-        parameters = {p.data_ptr(): p.numel() * p.element_size() for s in self.loaded.values() for p in s.parameters()}
+        parameters = {id(s): s.resident_bytes() for s in self.loaded.values()}
         self.info.metrics = {**self.metrics, **sample(self.info.memory_bytes, self.process, self.info.cpu_cores),
                              "loaded_weight_bytes": sum(parameters.values()),
                              "available_storage_bytes": shutil.disk_usage(self.cache if self.cache.exists() else self.cache.parent).free,
@@ -116,7 +125,10 @@ class Worker:
                              "cache_bytes": sum(p.stat().st_size for p in self.cache.glob("*/*.safetensors")),
                              "transport": self.transport.metrics.copy(),
                              "artifact_transfers": self.artifacts.metrics.copy(),
-                             "device": self.device, "dtype": self.dtype}
+                             "device": self.device, "dtype": self.dtype, "streaming": self.stream_weights,
+                             "layer_stream": {k: sum(s.streamer.stats[k] for s in self.loaded.values() if s.streamer)
+                                              for k in ("hits", "misses", "loaded_bytes", "transient")}
+                                              | {"pinned_bytes": self.layer_budget.used, "budget_bytes": self.layer_budget.limit}}
         return self.info.model_dump()
 
     async def heartbeat(self):
@@ -162,6 +174,9 @@ class Worker:
             if successor is None:
                 return data
             if successor["node"] != self.info.id:
+                if unpack_meta(data).get("hub"):
+                    # Hub routing: the executor owns every cross-node hop.
+                    return data
                 return await self.transport.send(successor, data)
 
     async def _forward_stage(self, data):
@@ -210,7 +225,8 @@ class Worker:
                 budget = meta.get("context_budget", MAX_CONTEXT)
                 if type(budget) is not int or not offset + value.shape[1] <= budget <= MAX_CONTEXT:
                     raise ValueError("Invalid context reservation")
-                reserve = cache_budget(stage.cfg, stage.spec, budget)
+                reserve = cache_budget(stage.cfg, stage.spec, budget, getattr(getattr(stage, "dtype", None), "itemsize", 4),
+                                       PREFILL_CHUNK)
                 if psutil.Process().memory_info().rss + sum(self.reservations.values()) + sum(self.abandoned_reservations.values()) + reserve > self.info.memory_bytes:
                     raise ValueError("Worker memory admission budget exhausted")
                 self.reservations[skey] = reserve
@@ -315,17 +331,35 @@ def create_app(worker: Worker, grpc_port=0):
         hb.cancel()
         with contextlib.suppress(asyncio.CancelledError):
             await hb
+        # Leave the pool promptly instead of waiting for the heartbeat timeout.
+        with contextlib.suppress(Exception):
+            await worker.transport.http.post(f"{worker.executor}/api/nodes/{worker.info.id}/deregister", timeout=2)
         if server:
             await server.stop(2)
         await worker.artifacts.close()
         await worker.transport.close()
 
-    app = FastAPI(title="Stageplane worker", lifespan=lifespan)
+    app = FastAPI(title="Stageplane worker", version=__version__, lifespan=lifespan)
+    app.add_middleware(RequestContext)
     protected = [Depends(authorize)]
 
     @app.get("/health", dependencies=protected)
     async def health():
         return worker.stats()
+
+    @app.get("/livez")
+    async def livez():
+        return {"status": "ok"}
+
+    @app.get("/ready")
+    async def ready():
+        ok = bool(worker.loaded) and not worker.loading
+        return Response(json.dumps({"ready": ok, "stages": len(worker.loaded)}), media_type="application/json",
+                        status_code=200 if ok else 503)
+
+    @app.get("/metrics", dependencies=protected)
+    async def metrics():
+        return Response(worker_metrics(worker.stats()), media_type="text/plain; version=0.0.4")
 
     @app.post("/v1/forward", dependencies=protected)
     async def forward(request: Request):

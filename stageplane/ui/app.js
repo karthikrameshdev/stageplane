@@ -236,9 +236,11 @@ function render() {
   const ready = routeReady(model), deployment = model && state.deployments[model.key];
   const capacity = deployment?.capacity;
   if (deploymentFormModel !== selectedModel) { deploymentFormModel = selectedModel; deploymentFormDirty = false; }
-  if (!deploymentFormDirty && ![$('replicas'), $('groups')].includes(document.activeElement)) {
+  if (!deploymentFormDirty && ![$('replicas'), $('groups'), $('strategy'), $('routing')].includes(document.activeElement)) {
     $('replicas').value = deployment?.replicas || 1;
     $('groups').value = deployment?.groups || 1;
+    $('strategy').value = deployment?.strategy || 'capacity';
+    $('routing').value = deployment?.routing || 'hub';
   }
   $('run').disabled = running || !ready || authBlocked || Date.now() - lastSnapshotAt > 8000;
   $('deploy').disabled = !model || authBlocked;
@@ -303,7 +305,7 @@ function renderStages(model) {
     const layerLabel = stage.kind === 'blocks' ? `Layers ${number(stage.start)}–${number(stage.end) - 1}` : stage.kind;
     return `<div class="stage-row"><div><strong>${escapeHTML(stage.id)}</strong><small>${escapeHTML(layerLabel)} · ${formatBytes(stage.weight_bytes)}</small></div><div>${owners.slice(0, 4).map(id => `<span class="stage-chip ${ready(id, stage) ? 'ready' : ''}" title="${escapeHTML(id)}">${escapeHTML(id)}</span>`).join('')}${owners.length > 4 ? `<span class="stage-chip" title="${escapeHTML(owners.slice(4).join(', '))}">+${owners.length - 4}</span>` : ''}${owners.length ? '' : '<span class="muted">Unassigned</span>'}${retiring.length ? `<small title="${escapeHTML(retiring.join(', '))}">${retiring.length} previous replicas retained</small>` : ''}</div><span class="muted">${owners.filter(id => ready(id, stage)).length}/${owners.length} target ready</span></div>`;
   }).join('') || empty('No model stages yet', 'Select a model to inspect chunk placement and replica readiness.');
-  $('stage-page-info').textContent = `${rangeText(result, 'stages')} · ${deployment ? `${number(deployment.replicas)} target replicas · ${number(deployment.groups)} groups` : 'Not deployed'}`;
+  $('stage-page-info').textContent = `${rangeText(result, 'stages')} · ${deployment ? `${number(deployment.replicas)} target replicas · ${number(deployment.groups)} groups · ${escapeHTML(deployment.strategy || 'rendezvous')} placement · ${escapeHTML(deployment.routing || 'hub')} routing` : 'Not deployed'}`;
 }
 function renderEvents() {
   const operationsOnly = $('activity-filter').value === 'operations';
@@ -337,6 +339,8 @@ function renderDetail() {
       ['Published CPU', `${number(node.cpu_cores ?? metrics.cpu_limit_cores).toFixed(3)} cores`], ['Available CPU', metrics.available_cpu_cores == null ? 'Unreported' : `${number(metrics.available_cpu_cores).toFixed(3)} cores`], ['Free storage', formatBytes(metrics.available_storage_bytes)],
       ['Loaded weight memory', formatBytes(metrics.loaded_weight_bytes)], ['Cached artifacts', formatBytes(metrics.cache_bytes)], ['Heartbeat', timeLabel(node.last_seen)],
       ['Stage calls', formatCount(metrics.calls)], ['Active sessions', formatCount(metrics.sessions)], ['Failure domain', node.failure_domain || 'Unspecified'],
+      ['Weight residency', node.streaming ? `Streamed from disk · ${formatBytes(metrics.layer_stream?.pinned_bytes)} / ${formatBytes(metrics.layer_stream?.budget_bytes)} pinned` : 'Fully resident'],
+      ['Layer cache hits', node.streaming ? `${formatCount(metrics.layer_stream?.hits)} hits · ${formatCount(metrics.layer_stream?.misses)} disk reads` : '—'],
     ])}<div class="detail-section-title">Loaded stages (${list(node.ready).length})</div><div>${list(node.ready).slice(0, 150).map(key => `<span class="stage-chip" title="${escapeHTML(key)}">${escapeHTML(key)}</span>`).join('') || '<span class="muted">No stages loaded.</span>'}${list(node.ready).length > 150 ? '<p class="muted">Showing the first 150 loaded stages.</p>' : ''}</div>${stageTimings.length ? `<div class="detail-section-title">Latest stage execution time</div><div class="table-scroll"><table><thead><tr><th>STAGE</th><th>TIME</th></tr></thead><tbody>${stageTimings.slice(0, 100).map(([stage, ms]) => `<tr><td>${escapeHTML(stage)}</td><td>${duration(ms)}</td></tr>`).join('')}</tbody></table></div>` : ''}${Object.keys(metrics.errors || {}).length ? `<div class="detail-section-title">Load errors</div><div class="error-note">${escapeHTML(Object.entries(metrics.errors).map(([stage, error]) => `${stage}: ${error}`).join('\n'))}</div>` : ''}`;
   } else {
     const request = state.requests.find(request => request.id === detailSelection.id);
@@ -371,7 +375,7 @@ $('clear-token').onclick = () => { $('token').value = ''; setToken(''); $('auth-
 $('refresh-button').onclick = () => { if (authBlocked) showAccess(); else refresh(); };
 $('open-import').onclick = () => openDialog('import-dialog');
 $('model-select').onchange = () => { selectedModel = $('model-select').value; pages.stages = 0; lastTrace = []; traceTime = 0; graphSignature = ''; render(); };
-for (const id of ['replicas', 'groups']) $(id).addEventListener('input', () => { deploymentFormDirty = true; });
+for (const id of ['replicas', 'groups', 'strategy', 'routing']) $(id).addEventListener('input', () => { deploymentFormDirty = true; });
 for (const [control, key] of [['node-search', 'nodes'], ['node-filter', 'nodes'], ['request-filter', 'requests']]) $(control).addEventListener(control === 'node-search' ? 'input' : 'change', () => { pages[key] = 0; scheduleRender(); });
 $('activity-filter').onchange = renderEvents;
 for (const [name, key] of [['node', 'nodes'], ['request', 'requests'], ['stage', 'stages']]) {
@@ -404,7 +408,7 @@ $('deploy').onclick = async () => {
   const replicas = number($('replicas').value), groups = number($('groups').value);
   if (!Number.isInteger(replicas) || replicas < 1 || replicas > 32 || !Number.isInteger(groups) || groups < 1 || groups > 100) { showNotice('Choose 1–32 replicas and 1–100 placement groups.', 'action', true); return; }
   $('deploy').disabled = true;
-  try { await api('/api/deployments', 'POST', { model: selectedModel, replicas, groups }); deploymentFormDirty = false; showNotice('Placement accepted. Workers are verifying and loading their assigned stages.'); }
+  try { await api('/api/deployments', 'POST', { model: selectedModel, replicas, groups, strategy: $('strategy').value, routing: $('routing').value }); deploymentFormDirty = false; showNotice('Placement accepted. Workers are verifying and loading their assigned stages.'); }
   catch (error) { showNotice(error.message, 'action', true); }
   finally { await refresh(); }
 };

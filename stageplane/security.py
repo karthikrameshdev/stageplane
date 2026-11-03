@@ -69,13 +69,13 @@ class AccessPolicy:
         header = request.headers.get("authorization", "")
         principal = self.principal(header[7:] if header.startswith("Bearer ") else "")
         path, method = request.url.path, request.method
-        worker_operation = (path == "/api/nodes/register" or path.endswith("/heartbeat")
+        worker_operation = (path == "/api/nodes/register" or path.endswith(("/heartbeat", "/deregister"))
                             or path.startswith("/api/artifacts/") or path.startswith("/api/manifests/"))
         if worker_operation:
             allowed = principal.internal
         elif path == "/v1/chat/completions":
             allowed = principal.role in ("admin", "inference")
-        elif path == "/v1/models":
+        elif path == "/v1/models" or path.startswith("/v1/models/"):
             allowed = True
         elif method == "GET":
             # A viewer can observe operations, but cannot export model weights.

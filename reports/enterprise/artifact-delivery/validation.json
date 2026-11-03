@@ -1,0 +1,625 @@
+{
+  "image": "stageplane:enterprise",
+  "project": "stageplane-delivery-6e98886e",
+  "fixture": "tiny offline Qwen3; not a real-model benchmark",
+  "phases": [
+    {
+      "phase": "local-http-relay",
+      "transfers": {
+        "node-relay": {
+          "cache_hits": 0,
+          "direct_local": 0,
+          "direct_http": 0,
+          "executor": 1,
+          "fallbacks": 1,
+          "direct_failures": 2,
+          "bytes_direct": 0,
+          "bytes_executor": 38320
+        },
+        "node-http": {
+          "cache_hits": 0,
+          "direct_local": 0,
+          "direct_http": 2,
+          "executor": 0,
+          "fallbacks": 0,
+          "direct_failures": 2,
+          "bytes_direct": 46640,
+          "bytes_executor": 0
+        },
+        "node-local": {
+          "cache_hits": 0,
+          "direct_local": 4,
+          "direct_http": 0,
+          "executor": 0,
+          "fallbacks": 0,
+          "direct_failures": 0,
+          "bytes_direct": 85200,
+          "bytes_executor": 0
+        }
+      },
+      "request": {
+        "id": "chatcmpl-57816ffb0655433ab00362c458de1e2c",
+        "model": "var--folders--hg--fz6lg11n49n0_kpkfkwyktvc0000gn--T--stageplane-delivery-lv3u1ssv--checkpoint-8c8c6f17ac65",
+        "tenant": "default",
+        "status": "completed",
+        "started": 1793687716.8128972,
+        "prompt_tokens": 4,
+        "output_tokens": 4,
+        "recoveries": 0,
+        "token_ms": [
+          118.89754200001335,
+          30.400750000012522,
+          26.326916000016354,
+          22.726792000014484
+        ],
+        "boundary_bytes": 7168,
+        "updated": 1793687717.0120614,
+        "route": [
+          {
+            "chunk": "embedding",
+            "node": "node-http",
+            "url": "http://node-http:8101",
+            "grpc_url": "node-http:9101",
+            "transport": "grpc"
+          },
+          {
+            "chunk": "blocks-000",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-001",
+            "node": "node-http",
+            "url": "http://node-http:8101",
+            "grpc_url": "node-http:9101",
+            "transport": "grpc"
+          },
+          {
+            "chunk": "blocks-002",
+            "node": "node-relay",
+            "url": "http://node-relay:8101",
+            "grpc_url": "node-relay:9101",
+            "transport": "websocket"
+          },
+          {
+            "chunk": "blocks-003",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          },
+          {
+            "chunk": "head",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          }
+        ],
+        "last_trace": [
+          {
+            "node": "node-http",
+            "chunk": "embedding",
+            "ms": 0.25595900001462724,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "blocks-000",
+            "ms": 2.748333999988972,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-http",
+            "chunk": "blocks-001",
+            "ms": 3.4499999999866304,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-relay",
+            "chunk": "blocks-002",
+            "ms": 2.2907080000038604,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "blocks-003",
+            "ms": 3.190416999984791,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "head",
+            "ms": 0.6113339999842538,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              64
+            ],
+            "offset": 6
+          }
+        ],
+        "prefill_chunks": 1,
+        "ttft_ms": 119.09966600001098,
+        "finish_reason": "length",
+        "elapsed_ms": 198.9406659999986,
+        "tokens_per_second": 20.106497482018224,
+        "finished": 1793687717.0120614
+      }
+    },
+    {
+      "phase": "origin-offline-cold-cache",
+      "transfers": {
+        "node-relay": {
+          "cache_hits": 0,
+          "direct_local": 0,
+          "direct_http": 0,
+          "executor": 1,
+          "fallbacks": 1,
+          "direct_failures": 2,
+          "bytes_direct": 0,
+          "bytes_executor": 38320
+        },
+        "node-http": {
+          "cache_hits": 0,
+          "direct_local": 0,
+          "direct_http": 0,
+          "executor": 2,
+          "fallbacks": 2,
+          "direct_failures": 3,
+          "bytes_direct": 0,
+          "bytes_executor": 46640
+        },
+        "node-local": {
+          "cache_hits": 0,
+          "direct_local": 4,
+          "direct_http": 0,
+          "executor": 0,
+          "fallbacks": 0,
+          "direct_failures": 0,
+          "bytes_direct": 85200,
+          "bytes_executor": 0
+        }
+      },
+      "request": {
+        "id": "chatcmpl-0382af24244549fb910ddf4be9979ac9",
+        "model": "var--folders--hg--fz6lg11n49n0_kpkfkwyktvc0000gn--T--stageplane-delivery-lv3u1ssv--checkpoint-8c8c6f17ac65",
+        "tenant": "default",
+        "status": "completed",
+        "started": 1793687746.6186152,
+        "prompt_tokens": 4,
+        "output_tokens": 4,
+        "recoveries": 0,
+        "token_ms": [
+          143.51575000000594,
+          26.11470799999438,
+          20.64408300000764,
+          24.360999999998967
+        ],
+        "boundary_bytes": 7168,
+        "updated": 1793687746.8355422,
+        "route": [
+          {
+            "chunk": "embedding",
+            "node": "node-http",
+            "url": "http://node-http:8101",
+            "grpc_url": "node-http:9101",
+            "transport": "grpc"
+          },
+          {
+            "chunk": "blocks-000",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-001",
+            "node": "node-http",
+            "url": "http://node-http:8101",
+            "grpc_url": "node-http:9101",
+            "transport": "grpc"
+          },
+          {
+            "chunk": "blocks-002",
+            "node": "node-relay",
+            "url": "http://node-relay:8101",
+            "grpc_url": "node-relay:9101",
+            "transport": "websocket"
+          },
+          {
+            "chunk": "blocks-003",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          },
+          {
+            "chunk": "head",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          }
+        ],
+        "last_trace": [
+          {
+            "node": "node-http",
+            "chunk": "embedding",
+            "ms": 0.21658400001456357,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "blocks-000",
+            "ms": 3.127250000005688,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-http",
+            "chunk": "blocks-001",
+            "ms": 1.8171669999844653,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-relay",
+            "chunk": "blocks-002",
+            "ms": 2.230459000003293,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "blocks-003",
+            "ms": 4.351624999998194,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "head",
+            "ms": 0.9643749999952433,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              64
+            ],
+            "offset": 6
+          }
+        ],
+        "prefill_chunks": 1,
+        "ttft_ms": 143.6620839999989,
+        "finish_reason": "length",
+        "elapsed_ms": 216.09520899997392,
+        "tokens_per_second": 18.510359477708192,
+        "finished": 1793687746.8355422
+      }
+    },
+    {
+      "phase": "cache-without-origin",
+      "transfers": {
+        "node-relay": {
+          "cache_hits": 0,
+          "direct_local": 0,
+          "direct_http": 0,
+          "executor": 1,
+          "fallbacks": 1,
+          "direct_failures": 2,
+          "bytes_direct": 0,
+          "bytes_executor": 38320
+        },
+        "node-http": {
+          "cache_hits": 0,
+          "direct_local": 0,
+          "direct_http": 0,
+          "executor": 2,
+          "fallbacks": 2,
+          "direct_failures": 3,
+          "bytes_direct": 0,
+          "bytes_executor": 46640
+        },
+        "node-local": {
+          "cache_hits": 4,
+          "direct_local": 0,
+          "direct_http": 0,
+          "executor": 0,
+          "fallbacks": 0,
+          "direct_failures": 0,
+          "bytes_direct": 0,
+          "bytes_executor": 0
+        }
+      },
+      "request": {
+        "id": "chatcmpl-77c2d4f516d44c7e97324d361689d272",
+        "model": "var--folders--hg--fz6lg11n49n0_kpkfkwyktvc0000gn--T--stageplane-delivery-lv3u1ssv--checkpoint-8c8c6f17ac65",
+        "tenant": "default",
+        "status": "completed",
+        "started": 1793687754.135527,
+        "prompt_tokens": 4,
+        "output_tokens": 4,
+        "recoveries": 0,
+        "token_ms": [
+          60.33800000000156,
+          22.65916700000048,
+          18.067416000008052,
+          24.778249999997115
+        ],
+        "boundary_bytes": 7168,
+        "updated": 1793687754.2619154,
+        "route": [
+          {
+            "chunk": "embedding",
+            "node": "node-http",
+            "url": "http://node-http:8101",
+            "grpc_url": "node-http:9101",
+            "transport": "grpc"
+          },
+          {
+            "chunk": "blocks-000",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          },
+          {
+            "chunk": "blocks-001",
+            "node": "node-http",
+            "url": "http://node-http:8101",
+            "grpc_url": "node-http:9101",
+            "transport": "grpc"
+          },
+          {
+            "chunk": "blocks-002",
+            "node": "node-relay",
+            "url": "http://node-relay:8101",
+            "grpc_url": "node-relay:9101",
+            "transport": "websocket"
+          },
+          {
+            "chunk": "blocks-003",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          },
+          {
+            "chunk": "head",
+            "node": "node-local",
+            "url": "http://node-local:8101",
+            "grpc_url": "node-local:9101",
+            "transport": "rest"
+          }
+        ],
+        "last_trace": [
+          {
+            "node": "node-http",
+            "chunk": "embedding",
+            "ms": 0.30833299999244446,
+            "input_shape": [
+              1,
+              1
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "blocks-000",
+            "ms": 1.5411250000170185,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-http",
+            "chunk": "blocks-001",
+            "ms": 3.0267500000036307,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-relay",
+            "chunk": "blocks-002",
+            "ms": 3.5096670000029917,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "blocks-003",
+            "ms": 5.269874999981994,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              32
+            ],
+            "offset": 6
+          },
+          {
+            "node": "node-local",
+            "chunk": "head",
+            "ms": 0.8116250000114178,
+            "input_shape": [
+              1,
+              1,
+              32
+            ],
+            "output_shape": [
+              1,
+              1,
+              64
+            ],
+            "offset": 6
+          }
+        ],
+        "prefill_chunks": 1,
+        "ttft_ms": 60.4105410000102,
+        "finish_reason": "length",
+        "elapsed_ms": 126.21991600002502,
+        "tokens_per_second": 31.690719870224022,
+        "finished": 1793687754.2619154
+      }
+    }
+  ],
+  "image_id": "sha256:d2535aa7b447cb736cef181496080f159d42af722d114c0818c0679240a659b4",
+  "model": "var--folders--hg--fz6lg11n49n0_kpkfkwyktvc0000gn--T--stageplane-delivery-lv3u1ssv--checkpoint-8c8c6f17ac65",
+  "manifest_sha256": "b5b7114a64d5476f87904404cd8a9b83bcd6da743158cdfd0a409e8bc0ed98dd",
+  "origin_requests": [
+    {
+      "artifact_request": "/var--folders--hg--fz6lg11n49n0_kpkfkwyktvc0000gn--T--stageplane-delivery-lv3u1ssv--checkpoint-8c8c6f17ac65/blocks-001.safetensors",
+      "authorization_present": false,
+      "cookie_present": false
+    },
+    {
+      "artifact_request": "/var--folders--hg--fz6lg11n49n0_kpkfkwyktvc0000gn--T--stageplane-delivery-lv3u1ssv--checkpoint-8c8c6f17ac65/embedding.safetensors",
+      "authorization_present": false,
+      "cookie_present": false
+    }
+  ],
+  "result": "passed",
+  "output": "assistant assistant assistant assistant",
+  "url": "http://127.0.0.1:8082"
+}

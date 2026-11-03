@@ -9,11 +9,13 @@ from pathlib import Path
 from typing import Literal
 
 from fastapi import HTTPException, Request, WebSocket
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 ROOT = Path(os.environ.get("STAGEPLANE_STORE", "data/models")).resolve()
 MAX_FRAME = 64 * 1024 * 1024
-MAX_CONTEXT = int(os.environ.get("STAGEPLANE_MAX_CONTEXT", "2048"))
+MAX_CONTEXT = int(os.environ.get("STAGEPLANE_MAX_CONTEXT", "32768"))
+# Prompts are executed in bounded chunks so frames and activation memory stay flat as context grows.
+PREFILL_CHUNK = max(1, int(os.environ.get("STAGEPLANE_PREFILL_CHUNK", "512")))
 
 
 def digest(path: Path) -> str:
@@ -82,6 +84,8 @@ class NodeInfo(BaseModel):
     cpu_cores: float | None = Field(default=None, gt=0)
     speed: float = Field(default=1, ge=0.01)
     failure_domain: str = ""
+    streaming: bool = False
+    layer_cache_bytes: int = Field(default=0, ge=0)
     ready: list[str] = Field(default_factory=list)
     metrics: dict = Field(default_factory=dict)
 
@@ -90,6 +94,8 @@ class DeployRequest(BaseModel):
     model: str
     replicas: int = Field(default=1, ge=1, le=32)
     groups: int = Field(default=1, ge=1, le=100)
+    routing: Literal["hub", "chain"] = "hub"
+    strategy: Literal["capacity", "rendezvous"] = "capacity"
 
 
 class ImportRequest(BaseModel):
@@ -101,20 +107,55 @@ class ImportRequest(BaseModel):
     subdir: str = "."
 
 
+class TextPart(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    type: Literal["text"]
+    text: str
+
+
 class Message(BaseModel):
-    role: Literal["system", "user", "assistant"]
-    content: str
+    role: Literal["system", "developer", "user", "assistant"]
+    content: str | list[TextPart]
+    name: str | None = Field(default=None, max_length=64)
+
+    def template(self):
+        text = self.content if isinstance(self.content, str) else "".join(p.text for p in self.content)
+        return {"role": "system" if self.role == "developer" else self.role, "content": text}
+
+
+class StreamOptions(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    include_usage: bool = False
 
 
 class ChatRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     model: str
-    messages: list[Message] = Field(min_length=1)
-    max_tokens: int = Field(default=64, ge=1, le=2048)
+    messages: list[Message] = Field(min_length=1, max_length=4096)
+    max_tokens: int | None = Field(default=None, ge=1, le=MAX_CONTEXT)
+    max_completion_tokens: int | None = Field(default=None, ge=1, le=MAX_CONTEXT)
     temperature: float = Field(default=0, ge=0, le=2)
     top_p: float = Field(default=1, gt=0, le=1)
+    presence_penalty: float = Field(default=0, ge=-2, le=2)
+    frequency_penalty: float = Field(default=0, ge=-2, le=2)
+    stop: str | list[str] | None = None
+    n: Literal[1] = 1
+    user: str | None = Field(default=None, max_length=256)
     stream: bool = False
+    stream_options: StreamOptions | None = None
     seed: int = 0
+
+    @field_validator("stop")
+    @classmethod
+    def bounded_stop(cls, value):
+        values = [value] if isinstance(value, str) else value or []
+        if len(values) > 4 or any(not 0 < len(v) <= 256 for v in values):
+            raise ValueError("stop accepts up to 4 non-empty sequences of at most 256 characters")
+        return values
+
+    @property
+    def output_limit(self):
+        return self.max_completion_tokens or self.max_tokens or 64
 
 
 def now():

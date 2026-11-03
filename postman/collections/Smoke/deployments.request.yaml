@@ -1,0 +1,13 @@
+$kind: http-request
+name: deployments
+order: 4000
+method: GET
+url: "{{baseUrl}}/api/deployments"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Deployment list contract", () => { const d = pm.response.json().deployments; pm.expect(d).to.be.an("array"); d.forEach(x => { pm.expect(x.strategy).to.be.oneOf(["capacity", "rendezvous", undefined]); pm.expect(x.capacity).to.be.an("object"); }); });

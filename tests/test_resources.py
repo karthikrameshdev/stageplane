@@ -2,7 +2,7 @@ from types import SimpleNamespace
 import time
 
 from stageplane import resources
-from stageplane.placement import plan, score
+from stageplane.placement import plan
 
 
 def test_cgroup_memory_and_cpu_are_used(monkeypatch):

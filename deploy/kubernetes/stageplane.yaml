@@ -1,0 +1,105 @@
+# Stageplane on Kubernetes: one executor and a StatefulSet of workers.
+# Create the shared credential first:
+#   kubectl -n stageplane create secret generic stageplane-token --from-literal=token="$(openssl rand -hex 32)"
+# Model artifacts are imported through POST /api/models/import or mounted into the executor store.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: stageplane
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: executor-store, namespace: stageplane}
+spec:
+  accessModes: [ReadWriteOnce]
+  resources: {requests: {storage: 50Gi}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: executor, namespace: stageplane, labels: {app.kubernetes.io/name: stageplane, app.kubernetes.io/component: executor}}
+spec:
+  replicas: 1  # The executor owns session state and placement; run exactly one.
+  strategy: {type: Recreate}
+  selector: {matchLabels: {app.kubernetes.io/component: executor}}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: stageplane, app.kubernetes.io/component: executor}
+      annotations: {prometheus.io/scrape: "true", prometheus.io/port: "8080", prometheus.io/path: /metrics}
+    spec:
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, seccompProfile: {type: RuntimeDefault}}
+      terminationGracePeriodSeconds: 45
+      containers:
+        - name: executor
+          image: stageplane:local
+          args: [executor, --host, 0.0.0.0, --store, /models, --log-format, json]
+          env:
+            - {name: STAGEPLANE_TOKEN, valueFrom: {secretKeyRef: {name: stageplane-token, key: token}}}
+            - {name: STAGEPLANE_STATE_FILE, value: /models/.state/executor.sqlite}
+            - {name: STAGEPLANE_MAX_REQUESTS, value: "8"}
+            - {name: STAGEPLANE_TENANT_MAX_REQUESTS, value: "4"}
+          ports: [{name: http, containerPort: 8080}]
+          livenessProbe: {httpGet: {path: /livez, port: http}, periodSeconds: 10}
+          readinessProbe: {httpGet: {path: /livez, port: http}, periodSeconds: 5}
+          resources: {requests: {cpu: "1", memory: 2Gi}, limits: {memory: 4Gi}}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          volumeMounts: [{name: store, mountPath: /models}, {name: tmp, mountPath: /tmp}]
+      volumes:
+        - {name: store, persistentVolumeClaim: {claimName: executor-store}}
+        - {name: tmp, emptyDir: {}}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: executor, namespace: stageplane}
+spec:
+  selector: {app.kubernetes.io/component: executor}
+  ports: [{name: http, port: 8080, targetPort: http}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: workers, namespace: stageplane}
+spec:
+  clusterIP: None  # Stable per-pod DNS for direct activation transfer.
+  selector: {app.kubernetes.io/component: worker}
+  ports: [{name: http, port: 8101}, {name: grpc, port: 9101}]
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: {name: worker, namespace: stageplane, labels: {app.kubernetes.io/name: stageplane, app.kubernetes.io/component: worker}}
+spec:
+  serviceName: workers
+  replicas: 4
+  podManagementPolicy: Parallel
+  selector: {matchLabels: {app.kubernetes.io/component: worker}}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: stageplane, app.kubernetes.io/component: worker}
+      annotations: {prometheus.io/scrape: "true", prometheus.io/port: "8101", prometheus.io/path: /metrics}
+    spec:
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, seccompProfile: {type: RuntimeDefault}}
+      terminationGracePeriodSeconds: 45  # Lets the worker deregister and finish in-flight stages.
+      topologySpreadConstraints:
+        - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: ScheduleAnyway, labelSelector: {matchLabels: {app.kubernetes.io/component: worker}}}
+      containers:
+        - name: worker
+          image: stageplane:local
+          command: [sh, -c]
+          # Add --stream-weights --layer-cache 512MiB on memory-constrained pools.
+          args:
+            - >-
+              exec stageplane --log-format json node --id "$POD_NAME" --executor http://executor:8080 --host 0.0.0.0
+              --advertise-url "http://$POD_NAME.workers:8101" --grpc-port 9101 --grpc-url "$POD_NAME.workers:9101"
+              --failure-domain "$NODE_NAME" --max-memory 90% --cache /cache
+          env:
+            - {name: POD_NAME, valueFrom: {fieldRef: {fieldPath: metadata.name}}}
+            - {name: NODE_NAME, valueFrom: {fieldRef: {fieldPath: spec.nodeName}}}
+            - {name: STAGEPLANE_TOKEN, valueFrom: {secretKeyRef: {name: stageplane-token, key: token}}}
+          ports: [{name: http, containerPort: 8101}, {name: grpc, containerPort: 9101}]
+          livenessProbe: {httpGet: {path: /livez, port: http}, periodSeconds: 10}
+          readinessProbe: {httpGet: {path: /livez, port: http}, periodSeconds: 5}
+          resources: {requests: {cpu: "2", memory: 4Gi}, limits: {memory: 6Gi}}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          volumeMounts: [{name: cache, mountPath: /cache}, {name: tmp, mountPath: /tmp}]
+      volumes: [{name: tmp, emptyDir: {}}]
+  volumeClaimTemplates:
+    - metadata: {name: cache}
+      spec: {accessModes: [ReadWriteOnce], resources: {requests: {storage: 20Gi}}}

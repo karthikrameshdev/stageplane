@@ -1,0 +1,13 @@
+$kind: http-request
+name: audit
+order: 5000
+method: GET
+url: "{{baseUrl}}/api/audit?limit=5"
+headers:
+  - key: Authorization
+    value: "Bearer {{bearerToken}}"
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |
+      pm.test("Audit contract", () => { const e = pm.response.json().entries; pm.expect(e).to.be.an("array"); pm.expect(e.length).to.be.at.most(5); e.forEach(x => pm.expect(x).to.include.keys("id", "time", "actor", "action", "target")); });

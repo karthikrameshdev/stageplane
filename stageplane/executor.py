@@ -11,19 +11,21 @@ from collections import deque
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-import httpx
 import torch
-from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, WebSocket
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from transformers import AutoTokenizer
 
-from .common import MAX_CONTEXT, ROOT, ChatRequest, DeployRequest, ImportRequest, NodeInfo, authorize, safe_path
+from .common import MAX_CONTEXT, PREFILL_CHUNK, ROOT, ChatRequest, DeployRequest, ImportRequest, NodeInfo, safe_path
+from .observability import Metrics, RequestContext
+from . import __version__
 from .distribution import distribute, manifests
 from .bundles import export_bundle, import_bundle
-from .placement import bucket, plan, route
+from .placement import plan, route
 from .wire import ChunkFailure, Transport, pack, unpack
-from .resources import capacity, weight_budget, weight_factor
+from .resources import capacity, resident_cost, weight_budget
 from .security import AccessPolicy, RequestBodyLimit
 from .artifacts import normalize_sources
 
@@ -33,7 +35,8 @@ class Coordinator:
         self.store = store.resolve()
         self.artifact_sources = normalize_sources([str(self.store)] if artifact_sources is None else artifact_sources)
         self.models = manifests(self.store)
-        self.nodes, self.deployments, self.tokenizers = {}, {}, {}
+        self.nodes, self.deployments, self.tokenizers, self.stop_tokens = {}, {}, {}, {}
+        self.metrics = Metrics()
         self.events = deque(maxlen=400)
         self.requests = deque(maxlen=100)
         self.active_requests = {}
@@ -54,12 +57,23 @@ class Coordinator:
         self.retry_limit = int(os.environ.get("STAGEPLANE_EXECUTION_RETRIES", "3"))
         self.transport = Transport()
         self.admission = asyncio.Semaphore(int(os.environ.get("STAGEPLANE_MAX_REQUESTS", "4")))
+        # Per-tenant in-flight cap so one tenant cannot hold every admission slot.
+        self.tenant_limit = int(os.environ.get("STAGEPLANE_TENANT_MAX_REQUESTS", "0"))
+        self.tenant_inflight = {}
         state_file = state_file or Path(os.environ.get("STAGEPLANE_STATE_FILE", str(self.store / "executor.sqlite")))
         state_file.parent.mkdir(parents=True, exist_ok=True)
-        self.db = sqlite3.connect(state_file)
+        try:
+            self.db = sqlite3.connect(state_file)
+            self.db.execute("PRAGMA user_version")
+        except sqlite3.OperationalError as error:
+            raise SystemExit(f"Cannot open executor state database {state_file}: {error}. "
+                             "Set STAGEPLANE_STATE_FILE to a writable local path.") from error
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute("PRAGMA busy_timeout=5000")
         self.db.execute("CREATE TABLE IF NOT EXISTS deployments(model TEXT PRIMARY KEY, body TEXT)")
+        self.db.execute("CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY AUTOINCREMENT, time REAL, "
+                        "actor TEXT, role TEXT, action TEXT, target TEXT, detail TEXT)")
+        self.db.commit()
         for model, body in self.db.execute("SELECT model, body FROM deployments"):
             if model in self.models:
                 self.deployments[model] = json.loads(body)
@@ -70,6 +84,40 @@ class Coordinator:
         for queue in self.clients:
             if not queue.full():
                 queue.put_nowait(item)
+
+    def audit(self, principal, action, target, **detail):
+        actor = getattr(principal, "tenant", "system")
+        role = "internal" if getattr(principal, "internal", False) else getattr(principal, "role", "system")
+        self.db.execute("INSERT INTO audit(time, actor, role, action, target, detail) VALUES (?, ?, ?, ?, ?, ?)",
+                        (time.time(), actor, role, action, target, json.dumps(detail, default=str)))
+        retention = int(os.environ.get("STAGEPLANE_AUDIT_RETENTION", "10000"))
+        self.db.execute("DELETE FROM audit WHERE id <= (SELECT MAX(id) FROM audit) - ?", (retention,))
+        self.db.commit()
+        self.event("audit", actor=actor, role=role, action=action, target=target)
+
+    def audit_log(self, limit=100, before=None):
+        query = "SELECT id, time, actor, role, action, target, detail FROM audit"
+        args = []
+        if before is not None:
+            query += " WHERE id < ?"
+            args.append(before)
+        rows = self.db.execute(query + " ORDER BY id DESC LIMIT ?", (*args, limit)).fetchall()
+        return [{"id": r[0], "time": r[1], "actor": r[2], "role": r[3], "action": r[4], "target": r[5],
+                 "detail": json.loads(r[6])} for r in rows]
+
+    def undeploy(self, model):
+        self.deployments.pop(model, None)
+        self.db.execute("DELETE FROM deployments WHERE model = ?", (model,))
+        self.db.commit()
+        self.rebuild_assignments()
+        self.event("deployment_deleted", model=model)
+
+    def deregister(self, nid):
+        node = self.nodes[nid]
+        if node["active"]:
+            node["active"] = False
+            self.event("node_left", node=nid, group=node["group"])
+            self.rebalance({node["group"]})
 
     def resolve(self, name):
         if name in self.models:
@@ -96,7 +144,7 @@ class Coordinator:
                         continue
                     if deployment.get("capacity", {}).get("status") == "insufficient_capacity" and model + ":" + stage["id"] not in ready[nid]:
                         continue
-                    memory[nid] = memory.get(nid, 0) + stage["weight_bytes"] * weight_factor(node)
+                    memory[nid] = memory.get(nid, 0) + resident_cost(node, stage)
                     if model + ":" + stage["id"] not in ready[nid]:
                         storage[nid] = storage.get(nid, 0) + stage["weight_bytes"]
         return memory, storage
@@ -189,7 +237,8 @@ class Coordinator:
                     if model + ":" + sid in ready.get(nid, set()):
                         resident.setdefault(nid, set()).add(sid)
             after = plan(self.models[model], list(self.nodes.values()), d["replicas"], d["groups"], before,
-                         changed_groups, reserved=reserved, storage_reserved=storage_reserved, resident=resident)
+                         changed_groups, reserved=reserved, storage_reserved=storage_reserved, resident=resident,
+                         strategy=d.get("strategy", "rendezvous"))
             status = capacity(self.models[model], after, list(self.nodes.values()), d["groups"])
             status["available_weight_budget_bytes"] = max(0, status["available_weight_budget_bytes"] - sum(reserved.values()))
             old_capacity = d.get("capacity", {})
@@ -392,6 +441,28 @@ class Coordinator:
         if groups:
             self.rebalance(groups)
 
+    async def forward_pass(self, route_path, meta, tokens, hub):
+        data = await self.transport.send(route_path[0], pack(meta, torch.tensor([tokens], dtype=torch.int64)))
+        result, logits = unpack(data)
+        # Hub routing: every node returns control at each node boundary and
+        # the executor forwards to whichever node owns the next stage.
+        while hub and result["index"] < len(route_path):
+            data = await self.transport.send(route_path[result["index"]], data)
+            result, logits = unpack(data)
+        return result, logits
+
+    def eos_ids(self, model, tokenizer):
+        if model not in self.stop_tokens:
+            eos = getattr(tokenizer, "eos_token_id", None)
+            ids = {eos} if eos is not None else set()
+            path = self.store / model / "generation_config.json"
+            if path.exists():
+                with contextlib.suppress(ValueError, OSError):
+                    configured = json.loads(path.read_text()).get("eos_token_id")
+                    ids.update(configured if isinstance(configured, list) else [configured] if isinstance(configured, int) else [])
+            self.stop_tokens[model] = ids
+        return self.stop_tokens[model]
+
     async def generate(self, request: ChatRequest, tenant="default"):
         model = self.resolve(request.model)
         manifest = self.models[model]
@@ -399,42 +470,57 @@ class Coordinator:
             self.tokenizers[model] = await asyncio.to_thread(AutoTokenizer.from_pretrained, self.store / model,
                                                           trust_remote_code=False, local_files_only=True)
         tokenizer = self.tokenizers[model]
-        messages = [m.model_dump() for m in request.messages]
+        messages = [m.template() for m in request.messages]
         tokens = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True,
                                                enable_thinking=False, return_dict=False)
-        if len(tokens) + request.max_tokens > MAX_CONTEXT:
-            raise HTTPException(422, f"Prompt plus output exceeds {MAX_CONTEXT} token context budget")
+        limit = request.output_limit
+        context_limit = min(MAX_CONTEXT, manifest["config"].get("text_config", manifest["config"]).get(
+            "max_position_embeddings", MAX_CONTEXT))
+        if len(tokens) + limit > context_limit:
+            raise HTTPException(422, f"Prompt ({len(tokens)} tokens) plus max_tokens ({limit}) exceeds the "
+                                     f"{context_limit} token context window")
+        eos_ids = self.eos_ids(model, tokenizer)
+        stops = request.stop or []
         session = "chatcmpl-" + uuid.uuid4().hex
         used_nodes, generated, epoch = {}, [], 0
         record = {"id": session, "model": model, "tenant": tenant, "status": "running", "started": time.time(),
                   "prompt_tokens": len(tokens), "output_tokens": 0, "recoveries": 0, "token_ms": [],
-                  "boundary_bytes": 0, "updated": time.time(), "route": [], "last_trace": []}
+                  "boundary_bytes": 0, "updated": time.time(), "route": [], "last_trace": [],
+                  "prefill_chunks": 0}
         self.active_requests[session] = record
         generator = torch.Generator().manual_seed(request.seed)
         previous_text = ""
+        finish = "length"
         started = time.perf_counter()
         offset, input_tokens = 0, tokens[:]
         failures = 0
         failed_nodes = set()
         resident_session_nodes = set()
+        hub = self.deployments.get(model, {}).get("routing", "hub") == "hub"
         try:
             route_path = self.get_route(model)
             record["route"] = route_path
             self.event("request_started", request=session, model=model, route=route_path, prompt_tokens=len(tokens))
-            for step in range(request.max_tokens):
+            for step in range(limit):
                 token_start = time.perf_counter()
                 while True:
                     used_nodes.update({h["node"]: h for h in route_path})
-                    meta = {"tenant": tenant, "session": session, "model": model, "revision": manifest["revision"],
-                            "manifest_sha256": manifest["manifest_sha256"], "epoch": epoch, "offset": offset,
-                            "context_budget": len(tokens) + request.max_tokens,
-                            "lease_until": time.time() + 120, "route": route_path, "index": 0, "trace": []}
                     try:
-                        frame = pack(meta, torch.tensor([input_tokens], dtype=torch.int64))
-                        data = await self.transport.send(route_path[0], frame)
-                        result, logits = unpack(data)
-                        if result["epoch"] != epoch or result["session"] != session or result["index"] != len(route_path):
-                            raise ValueError("Inconsistent route result")
+                        # Long prompts run in bounded chunks: frames, activations and attention
+                        # scores stay flat while the KV cache grows on each stage.
+                        position = offset
+                        for start in range(0, len(input_tokens), PREFILL_CHUNK):
+                            piece = input_tokens[start:start + PREFILL_CHUNK]
+                            meta = {"tenant": tenant, "session": session, "model": model,
+                                    "revision": manifest["revision"], "manifest_sha256": manifest["manifest_sha256"],
+                                    "epoch": epoch, "offset": position, "context_budget": len(tokens) + limit,
+                                    "lease_until": time.time() + 120, "route": route_path, "index": 0, "trace": [],
+                                    "hub": hub}
+                            result, logits = await self.forward_pass(route_path, meta, piece, hub)
+                            if result["epoch"] != epoch or result["session"] != session or result["index"] != len(route_path):
+                                raise ValueError("Inconsistent route result")
+                            position += len(piece)
+                            record["prefill_chunks"] += step == 0
                         resident_session_nodes.update(hop["node"] for hop in route_path)
                         break
                     except ChunkFailure as error:
@@ -469,6 +555,11 @@ class Coordinator:
                                    previous_node=error.node, attempt=failures, route=route_path)
                         offset, input_tokens = 0, tokens + generated
                 score = logits[0, -1].float()
+                if generated and (request.presence_penalty or request.frequency_penalty):
+                    ids, counts = torch.tensor(generated).unique(return_counts=True)
+                    ids = ids[ids < score.numel()]
+                    counts = counts[:ids.numel()]
+                    score[ids] -= request.presence_penalty + request.frequency_penalty * counts.float()
                 if request.temperature == 0:
                     token = int(torch.argmax(score))
                 else:
@@ -489,29 +580,42 @@ class Coordinator:
                 trace = result["trace"]
                 record.update(last_trace=trace, updated=time.time())
                 hidden_size = manifest["config"].get("text_config", manifest["config"])["hidden_size"]
-                record["boundary_bytes"] += sum(input_tokens.__len__() * hidden_size * 4 for a, b in zip(route_path, route_path[1:]) if a["node"] != b["node"])
+                record["boundary_bytes"] += sum(input_tokens.__len__() * hidden_size * 4 for a, b in zip(route_path, route_path[1:]) if a["node"] != b["node"]) * (2 if hub else 1)
                 self.event("token_committed", request=session, epoch=epoch, offset=step,
                            ms=latency, trace=trace)
                 text = tokenizer.decode(generated, skip_special_tokens=True)
+                cut = min((i for i in (text.find(stop) for stop in stops) if i >= 0), default=-1)
+                if cut >= 0:
+                    text, finish = text[:cut], "stop"
+                    held = 0
+                else:
+                    # Hold back a suffix that may still become a stop sequence.
+                    held = max((n for stop in stops for n in range(1, len(stop)) if text.endswith(stop[:n])), default=0)
+                if token in eos_ids:
+                    finish, held = "stop", 0
+                visible = text[:len(text) - held]
                 # Avoid emitting a partial UTF-8 replacement character.
-                if not text.endswith("\ufffd"):
-                    delta = text[len(previous_text):]
-                    previous_text = text
+                if not visible.endswith("\ufffd") and visible.startswith(previous_text):
+                    delta = visible[len(previous_text):]
+                    previous_text = visible
                 else:
                     delta = ""
                 yield {"id": session, "delta": delta, "token_id": token, "step": step,
                        "model": model, "trace": trace, "finish_reason": None}
-                eos = tokenizer.eos_token_id
-                if token == eos:
+                if finish == "stop":
                     break
                 offset += len(input_tokens)
                 input_tokens = [token]
+            remainder = text[len(previous_text):] if generated and finish == "length" and text.startswith(previous_text) else ""
+            if remainder:
+                yield {"id": session, "delta": remainder, "model": model, "finish_reason": None}
             record["status"] = "completed"
+            record["finish_reason"] = finish
             record["elapsed_ms"] = (time.perf_counter() - started) * 1000
             record["tokens_per_second"] = len(generated) / (record["elapsed_ms"] / 1000)
+            self.metrics.observe(record)
             self.event("request_completed", request=session, metrics=record.copy())
-            yield {"id": session, "delta": "", "model": model,
-                   "finish_reason": "stop" if generated[-1] == tokenizer.eos_token_id else "length",
+            yield {"id": session, "delta": "", "model": model, "finish_reason": finish,
                    "usage": {"prompt_tokens": len(tokens), "completion_tokens": len(generated),
                              "total_tokens": len(tokens) + len(generated)}}
         except BaseException as error:
@@ -527,6 +631,8 @@ class Coordinator:
                 record["status"] = "cancelled"
             self.active_requests.pop(session, None)
             self.request_totals[record["status"]] += 1
+            if record["status"] != "completed":
+                self.metrics.observe(record)
             self.requests.append(record)
             async def release():
                 await self.cleanup(tenant, session, used_nodes)
@@ -563,25 +669,80 @@ def create_app(coordinator: Coordinator):
         await c.transport.close()
         c.db.close()
 
-    app = FastAPI(title="Stageplane executor", version="0.1.0", lifespan=lifespan)
+    app = FastAPI(title="Stageplane executor", version=__version__, lifespan=lifespan)
     app.add_middleware(RequestBodyLimit)
+    app.add_middleware(RequestContext, metrics=c.metrics)
     protected = [Depends(c.access.authorize)]
+
+    def openai_error(request, status, message, headers=None):
+        kind = {400: "invalid_request_error", 401: "authentication_error", 403: "permission_error",
+                404: "not_found_error", 409: "conflict_error", 413: "invalid_request_error",
+                422: "invalid_request_error", 429: "rate_limit_error"}.get(status, "server_error")
+        body = {"detail": message}
+        if request.url.path.startswith("/v1/"):
+            # OpenAI clients read error.message; detail is retained for existing integrations.
+            body["error"] = {"message": message if isinstance(message, str) else json.dumps(message, default=str),
+                             "type": kind, "code": status, "param": None}
+        return JSONResponse(body, status_code=status, headers=headers)
+
+    @app.exception_handler(HTTPException)
+    async def http_error(request: Request, error: HTTPException):
+        return openai_error(request, error.status_code, error.detail, getattr(error, "headers", None))
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_error(request: Request, error: RequestValidationError):
+        details = [{k: v for k, v in item.items() if k in ("loc", "msg", "type")} for item in error.errors()]
+        if not request.url.path.startswith("/v1/"):
+            return JSONResponse({"detail": details}, status_code=422)
+        response = openai_error(request, 422, "; ".join(f"{'.'.join(map(str, d['loc']))}: {d['msg']}" for d in details))
+        body = json.loads(response.body)
+        body["detail"] = details
+        return JSONResponse(body, status_code=422)
 
     @app.get("/health")
     async def health():
+        return {"status": "ok", "version": __version__}
+
+    @app.get("/livez")
+    async def livez():
         return {"status": "ok"}
+
+    @app.get("/ready")
+    async def ready():
+        serving = {model: c.deployment_status(model, d)["serving"]
+                   for model, d in c.deployments.items() if model in c.models}
+        ok = any(serving.values())
+        return JSONResponse({"ready": ok, "deployments": serving}, status_code=200 if ok else 503)
+
+    @app.get("/metrics", dependencies=protected)
+    async def metrics():
+        return PlainTextResponse(c.metrics.render(c), media_type="text/plain; version=0.0.4")
+
+    @app.get("/api/audit", dependencies=protected)
+    async def audit(limit: int = Query(100, ge=1, le=1000), before: int | None = Query(None, ge=1)):
+        return {"entries": c.audit_log(limit, before)}
 
     @app.get("/api/state", dependencies=protected)
     async def state():
         return c.state()
 
+    def model_card(key, m):
+        cfg = m["config"].get("text_config", m["config"])
+        return {"id": key, "object": "model", "created": int(m["created"]), "owned_by": "stageplane",
+                "source": m["source"], "context_window": min(MAX_CONTEXT, cfg.get("max_position_embeddings", MAX_CONTEXT)),
+                "deployed": key in c.deployments}
+
     @app.get("/v1/models", dependencies=protected)
     async def models():
-        return {"object": "list", "data": [{"id": k, "object": "model", "created": int(m["created"]),
-                 "owned_by": "stageplane", "source": m["source"]} for k, m in c.models.items()]}
+        return {"object": "list", "data": [model_card(k, m) for k, m in c.models.items()]}
+
+    @app.get("/v1/models/{model}", dependencies=protected)
+    async def model(model: str):
+        key = c.resolve(model)
+        return model_card(key, c.models[key])
 
     @app.post("/api/models/import", dependencies=protected, status_code=202)
-    async def import_model(body: ImportRequest):
+    async def import_model(body: ImportRequest, request: Request):
         if any(job["status"] == "running" for job in c.jobs.values()):
             raise HTTPException(409, "Another import is running")
         while len(c.jobs) >= 100:
@@ -592,6 +753,7 @@ def create_app(coordinator: Coordinator):
         job_id = uuid.uuid4().hex
         job = {"id": job_id, "status": "running", "source": body.source, "started": time.time()}
         c.jobs[job_id] = job
+        c.audit(request.state.principal, "model.import", body.source, job=job_id, kind=body.kind)
 
         async def run():
             try:
@@ -626,14 +788,40 @@ def create_app(coordinator: Coordinator):
                 await asyncio.to_thread(export_bundle, c.store / model, path)
         return FileResponse(path, media_type="application/zip", filename=model + ".stageplane")
 
+    @app.get("/api/deployments", dependencies=protected)
+    async def list_deployments():
+        return {"deployments": [{"model": model, **d, "capacity": c.deployment_status(model, d)}
+                                for model, d in c.deployments.items() if model in c.models]}
+
+    @app.get("/api/deployments/{model}", dependencies=protected)
+    async def get_deployment(model: str):
+        model = c.resolve(model)
+        if model not in c.deployments:
+            raise HTTPException(404, "Model has no deployment")
+        return {"model": model, **c.deployments[model], "capacity": c.deployment_status(model, c.deployments[model])}
+
+    @app.delete("/api/deployments/{model}", dependencies=protected)
+    async def delete_deployment(model: str, request: Request):
+        model = c.resolve(model)
+        if model not in c.deployments:
+            raise HTTPException(404, "Model has no deployment")
+        if any(r.get("model") == model for r in c.active_requests.values()):
+            raise HTTPException(409, "Model has active requests; retry after they finish")
+        c.undeploy(model)
+        c.audit(request.state.principal, "deployment.delete", model)
+        return {"model": model, "deleted": True}
+
     @app.post("/api/deployments", dependencies=protected)
-    async def deploy(body: DeployRequest):
+    async def deploy(body: DeployRequest, request: Request):
         model = c.resolve(body.model)
         previous = c.deployments.get(model, {})
         c.deployments[model] = {**previous, "replicas": body.replicas, "groups": body.groups,
+                                "routing": body.routing, "strategy": body.strategy,
                                 "placements": previous.get("placements", {})}
         c.rebalance()
         c.persist(model)
+        c.audit(request.state.principal, "deployment.apply", model, replicas=body.replicas, groups=body.groups,
+                routing=body.routing, strategy=body.strategy)
         if c.deployments[model]["capacity"]["status"] == "insufficient_capacity":
             raise HTTPException(503, c.deployments[model]["capacity"]["message"])
         return c.deployments[model]
@@ -650,18 +838,27 @@ def create_app(coordinator: Coordinator):
             raise HTTPException(404, "Register first")
         return c.register(body)
 
-    @app.post("/api/nodes/{node_id}/drain", dependencies=protected)
-    async def drain(node_id: str):
+    @app.post("/api/nodes/{node_id}/deregister", dependencies=protected)
+    async def deregister(node_id: str):
         if node_id not in c.nodes:
             raise HTTPException(404, "Unknown node")
+        c.deregister(node_id)
+        return {"active": False}
+
+    @app.post("/api/nodes/{node_id}/drain", dependencies=protected)
+    async def drain(node_id: str, request: Request):
+        if node_id not in c.nodes:
+            raise HTTPException(404, "Unknown node")
+        c.audit(request.state.principal, "node.drain", node_id)
         c.nodes[node_id]["draining"] = True
         c.rebalance({c.nodes[node_id]["group"]})
         return {"draining": True}
 
     @app.post("/api/nodes/{node_id}/resume", dependencies=protected)
-    async def resume(node_id: str):
+    async def resume(node_id: str, request: Request):
         if node_id not in c.nodes:
             raise HTTPException(404, "Unknown node")
+        c.audit(request.state.principal, "node.resume", node_id)
         node = c.nodes[node_id]
         node["draining"] = False
         now = time.time()
@@ -689,45 +886,77 @@ def create_app(coordinator: Coordinator):
         try:
             c.get_route(model)
         except RuntimeError as e:
-            raise HTTPException(503, str(e)) from e
+            raise HTTPException(503, str(e), headers={"Retry-After": "5"}) from e
+        if c.tenant_limit and c.tenant_inflight.get(tenant, 0) >= c.tenant_limit:
+            raise HTTPException(429, "Tenant concurrent request quota exhausted", headers={"Retry-After": "1"})
+        # Count the tenant before waiting so concurrent waiters cannot all pass the quota check.
+        c.tenant_inflight[tenant] = c.tenant_inflight.get(tenant, 0) + 1
+
+        def leave_tenant():
+            c.tenant_inflight[tenant] -= 1
+            if not c.tenant_inflight[tenant]:
+                del c.tenant_inflight[tenant]
         try:
-            await asyncio.wait_for(c.admission.acquire(), timeout=0.1)
-        except TimeoutError as e:
-            raise HTTPException(429, "Inference admission capacity exhausted") from e
+            await asyncio.wait_for(c.admission.acquire(), timeout=float(os.environ.get("STAGEPLANE_ADMISSION_WAIT", "0.1")))
+        except BaseException as e:
+            leave_tenant()
+            if isinstance(e, TimeoutError):
+                raise HTTPException(429, "Inference admission capacity exhausted", headers={"Retry-After": "1"}) from e
+            raise
+        released = False
+
+        def release():
+            nonlocal released
+            if not released:
+                released = True
+                c.admission.release()
+                leave_tenant()
+        include_usage = bool(body.stream_options and body.stream_options.include_usage)
 
         async def chunks():
+            created = int(time.time())
             try:
                 async with contextlib.aclosing(c.generate(body, tenant=tenant)) as generation:
+                    first = True
                     async for item in generation:
                         if await request.is_disconnected():
                             break
                         delta = {"content": item["delta"]}
-                        payload = {"id": item["id"], "object": "chat.completion.chunk", "created": int(time.time()),
-                                   "model": item["model"], "choices": [{"index": 0, "delta": delta,
-                                   "finish_reason": item["finish_reason"]}]}
-                        if "usage" in item:
+                        if first:
+                            delta["role"], first = "assistant", False
+                        payload = {"id": item["id"], "object": "chat.completion.chunk", "created": created,
+                                   "model": item["model"], "system_fingerprint": "stageplane-" + __version__,
+                                   "choices": [{"index": 0, "delta": delta, "finish_reason": item["finish_reason"]}]}
+                        if "usage" in item and not include_usage:
                             payload["usage"] = item["usage"]
                         yield "data: " + json.dumps(payload) + "\n\n"
+                        if "usage" in item and include_usage:
+                            yield "data: " + json.dumps({**payload, "choices": [], "usage": item["usage"]}) + "\n\n"
+            except HTTPException as e:
+                yield "data: " + json.dumps({"error": {"message": str(e.detail), "type": "invalid_request_error",
+                                                       "code": e.status_code}}) + "\n\n"
             except Exception as e:
                 yield "data: " + json.dumps({"error": {"message": str(e), "type": "inference_error"}}) + "\n\n"
             finally:
-                c.admission.release()
+                release()
             yield "data: [DONE]\n\n"
 
         if body.stream:
-            return StreamingResponse(chunks(), media_type="text/event-stream", headers={"Cache-Control": "no-cache"})
+            return StreamingResponse(chunks(), media_type="text/event-stream",
+                                     headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
         content, final = "", None
         try:
             async for item in c.generate(body, tenant=tenant):
                 content += item["delta"]
                 final = item
             return {"id": final["id"], "object": "chat.completion", "created": int(time.time()), "model": model,
+                    "system_fingerprint": "stageplane-" + __version__,
                     "choices": [{"index": 0, "message": {"role": "assistant", "content": content},
-                                 "finish_reason": final["finish_reason"]}], "usage": final["usage"]}
+                                 "finish_reason": final["finish_reason"], "logprobs": None}], "usage": final["usage"]}
         except RuntimeError as e:
-            raise HTTPException(503, str(e)) from e
+            raise HTTPException(503, str(e), headers={"Retry-After": "5"}) from e
         finally:
-            c.admission.release()
+            release()
 
     @app.websocket("/ws/events")
     async def events(ws: WebSocket):

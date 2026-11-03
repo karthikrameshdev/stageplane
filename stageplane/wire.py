@@ -53,6 +53,13 @@ def unpack(data: bytes):
     return meta, tensor
 
 
+def unpack_meta(data: bytes):
+    size = struct.unpack("<I", data[:4])[0]
+    if size > 65536 or 4 + size >= len(data):
+        raise ValueError("Invalid envelope size")
+    return json.loads(data[4:4 + size])
+
+
 class Transport:
     def __init__(self):
         self.http = httpx.AsyncClient(timeout=60, headers=auth_headers(), **tls_kwargs())

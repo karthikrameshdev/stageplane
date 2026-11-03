@@ -6,7 +6,7 @@ import torch
 
 from stageplane.common import ChatRequest, NodeInfo
 from stageplane.executor import Coordinator
-from stageplane.placement import bucket, plan, route
+from stageplane.placement import bucket, plan
 from stageplane.wire import pack, unpack
 
 

@@ -5,7 +5,6 @@ python -m scripts.benchmark --model MODEL_KEY --trials 5 --tokens 16
 from __future__ import annotations
 
 import argparse
-import gc
 import json
 import os
 import platform

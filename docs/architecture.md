@@ -35,3 +35,9 @@ concurrent workloads, and task-quality evaluation.
 For credential provisioning, deployment boundaries and large-model capacity planning,
 see the [operator guide](OPERATIONS.md). Current validation is recorded in the
 [hardening report](../reports/hardening/REPORT.md).
+
+## Layer placement and routing
+Deployments accept `strategy` (`capacity` interleaves layer chunks by node size; `rendezvous` is the legacy hash)
+and `routing` (`hub`: the executor forwards every cross-node hop; `chain`: workers forward directly).
+Workers started with `--stream-weights --layer-cache SIZE` keep layers on disk with a bounded RAM cache.
+See `reports/COLIBRI-INTEGRATION.md`.

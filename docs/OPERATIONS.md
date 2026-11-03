@@ -175,8 +175,9 @@ These decimal byte totals exclude KV/recurrent caches, activations, runtime
 workspaces, process overhead, duplicated tied tensors and staging storage. FP32
 materialization uses about twice the BF16 weight memory. CPU cores or aggregate
 RAM alone do not determine whether a model fits: **each complete assigned stage
-must fit on an eligible worker**. A large dense layer cannot be split across many
-small-memory workers by cutting its file into arbitrary byte fragments.
+must fit on an eligible worker**, either resident or, with `--stream-weights`, as
+two layers of working memory plus disk for the stage. A large dense layer cannot be
+split across many small-memory workers by cutting its file into arbitrary byte fragments.
 
 The runtime currently supports whole-layer pipeline execution, batch size one,
 64 MiB tensor frames, 64 KiB metadata envelopes and at most 1,024 route hops.
@@ -186,7 +187,8 @@ the meta device when constructing a stage; metadata costs still grow with model
 architecture size.
 
 Tensor parallelism, expert parallelism/MoE, paged KV caches, continuous batching,
-distributed prefill and route-ID-based metadata are not implemented. The executor
+and route-ID-based metadata are not implemented. Prompts are prefilled in bounded
+chunks; there is no prefix cache across requests. The executor
 is a single writer with SQLite persistence. Multiple independent executors must
 use independent worker pools; launching several against one pool is not a
 supported HA deployment. Consensus leadership, durable request ownership and
@@ -197,6 +199,20 @@ group isolation**, not execution support or an enterprise service-level guarante
 Actual deployment certification requires a supported checkpoint, sufficiently
 large workers, real network/storage measurements and failure/load testing on the
 target hardware. See the [validation report](../reports/hardening/REPORT.md).
+
+## Observability and quotas
+
+Scrape `/metrics` on the executor (viewer or admin credential) and each worker (worker
+token). Alert on `stageplane_deployment_ready_stages < stageplane_deployment_total_stages`,
+growth of `stageplane_recoveries_total`, and the p95 of
+`stageplane_inter_token_latency_seconds`. Use `/livez` for liveness and `/ready` for load
+balancer membership. `--log-format json` emits one JSON object per line with `request_id`.
+
+`STAGEPLANE_MAX_REQUESTS` bounds concurrent generations; `STAGEPLANE_TENANT_MAX_REQUESTS`
+caps any one tenant so a single organisation cannot occupy every slot. Rejections are
+429 with `Retry-After`. `STAGEPLANE_ADMISSION_WAIT` (seconds, default 0.1) lets bursts
+queue briefly instead of failing immediately. Administrative changes are written to
+the `audit` table of the state database and served at `/api/audit`.
 
 ## Verification and rollout
 
